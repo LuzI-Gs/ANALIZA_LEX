@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.LinkLabel;
 
 namespace ANALIZA_LEX
 {
@@ -73,13 +74,15 @@ namespace ANALIZA_LEX
                 txtTokens.Text = "";               
                 string strPalabras = LenguajeNat; //TOMA LA ORACION DE CADA LINEA EN EL TEXTBOX INGRESADA
                 string[] Lenguajes = strPalabras.Split(del1);//METE LAS ORACIONES EN UN ARREGLO 
-
+                string evaluacion = "";
+                int linea = 0;
                 int contadoroalabras = 0;
                 int palabrastotales = 0;
                 int contadorletras=0;
 
                 foreach (string palabras in Lenguajes)
-                {                    
+                {
+                    linea++;                 
                     char[] del = { ' ' };//AHORA TOMA CADA PALABRA DE CADA ORACION 
                     char chMuestra = ' ';
                     int j = 0;
@@ -88,10 +91,29 @@ namespace ANALIZA_LEX
                     string strPalabra = palabras;    //TOMA LA PALABRA DE LA ORACION  INGRESADA               
                     string[] Lenguaje = strPalabra.Split(del);     //METE LAS PALABRAS EN UN ARREGLO
                     int banderatipodato = 0;
+                    evaluacion = EvaluarExpresion(palabras);
+                    if (evaluacion == "Expresion incorrecta fsi")
+                    {
+                        MessageBox.Show("Expresion de la linea " + linea + " incorrecta, falta signo de inicio");
+                    }
+                    else
+                    if (evaluacion == "Expresion incorrecta fsf")
+                    {
+                        MessageBox.Show("Expresion de la linea " + linea + " incorrecta, falta signo de final");
+                    }
+                    if (evaluacion == "Expresion incorrecta fci")
+                    {
+                        MessageBox.Show("Expresion de la linea " + linea + " incorrecta, falta corchete de inicio");
+                    }
+                    else
+                    if (evaluacion == "Expresion incorrecta fcf")
+                    {
+                        MessageBox.Show("Expresion de la linea " + linea + " incorrecta, falta corchete de final");
+                    }
+
                     foreach (string palabra in Lenguaje)//RECORRE EL ARREGLO DE LAS PALABRAS 
                     {
-                        //MessageBox.Show($"{palabra}");
-
+                       
                         foreach (string valor in Lenguaje)
                         {                          
                             strValorIde = valor; // toma el ultimo valor de la linea
@@ -522,6 +544,82 @@ namespace ANALIZA_LEX
         private void picSalir_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+        //METODO QUE COMPRUEBA LOS signos¿? y corchetes[]
+        private string EvaluarExpresion(string expresion)
+        {
+            ClasePila pila = new ClasePila();
+            string cadena = expresion;
+            if (cadena.Contains("¿") || cadena.Contains("?"))
+            {
+                for (int i = 0; i < cadena.Length; i++)
+                {
+                    if (cadena.ElementAt(i) == '¿')
+                    {
+                        pila.Insertar(cadena.ElementAt(i));
+                    }
+                    else
+                    {
+                        if (cadena.ElementAt(i) == '?')
+                        {
+                            if (pila.Extraer() != '¿')
+                            {
+                                return "Expresion incorrecta fsi";//falta signo inicio
+                            }
+                        }
+                    }
+                }
+                if (pila.Vacia())
+                {
+                    return "Expresion correcta";
+                }
+                else
+                {
+                    if (pila.Extraer() == '¿')
+                    {
+                        return "Expresion incorrecta fsf";//falta signo final
+                    }
+                    else
+                    {
+                        return "Expresion incorrecta fsi";//falta signo inicio
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < cadena.Length; i++)
+                {
+                    if (cadena.ElementAt(i) == '[')
+                    {
+                        pila.Insertar(cadena.ElementAt(i));
+                    }
+                    else
+                    {
+                        if (cadena.ElementAt(i) == ']')
+                        {
+                            if (pila.Extraer() != '[')
+                            {
+                                return "Expresion incorrecta fci";//falta corchete inicio
+                            }
+                        }
+                    }
+                }
+                if (pila.Vacia())
+                {
+                    return "Expresion correcta";
+                }
+                else
+                {
+                    if (pila.Extraer() == '[')
+                    {
+                        return "Expresion incorrecta fcf";//falta corchete final
+                    }
+                    else
+                    {
+                        return "Expresion incorrecta fci";//falta corchete inicio
+                    }
+                }
+            }
         }
     }
 }
