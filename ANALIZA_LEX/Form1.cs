@@ -95,21 +95,21 @@ namespace ANALIZA_LEX
                     evaluacion = EvaluarExpresion(palabras);
                     if (evaluacion == "Expresion incorrecta fsi")
                     {
-                        MessageBox.Show("Expresion de la linea " + linea + " incorrecta, falta signo de inicio");
+                        dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta signo de inicio");
                     }
                     else
                     if (evaluacion == "Expresion incorrecta fsf")
                     {
-                        MessageBox.Show("Expresion de la linea " + linea + " incorrecta, falta signo de final");
+                        dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta signo de final");
                     }
                     if (evaluacion == "Expresion incorrecta fci")
                     {
-                        MessageBox.Show("Expresion de la linea " + linea + " incorrecta, falta corchete de inicio");
+                        dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta corchete de inicio");
                     }
                     else
                     if (evaluacion == "Expresion incorrecta fcf")
                     {
-                        MessageBox.Show("Expresion de la linea " + linea + " incorrecta, falta corchete de final");
+                        dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta corchete de final");
                     }
 
                     foreach (string palabra in Lenguaje)//RECORRE EL ARREGLO DE LAS PALABRAS 
