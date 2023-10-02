@@ -91,6 +91,7 @@ namespace ANALIZA_LEX
                     string strPalabra = palabras;    //TOMA LA PALABRA DE LA ORACION  INGRESADA               
                     string[] Lenguaje = strPalabra.Split(del);     //METE LAS PALABRAS EN UN ARREGLO
                     int banderatipodato = 0;
+                    //INVOCA EL METODO DE LA PILA PARA VERIFICAR QUE ESTEN CORRECTAMENTE EL BALANCE DE LOS CORCHETES Y SIGNOS DE ?
                     evaluacion = EvaluarExpresion(palabras);
                     if (evaluacion == "Expresion incorrecta fsi")
                     {
