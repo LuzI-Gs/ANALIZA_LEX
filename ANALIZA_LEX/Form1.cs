@@ -176,7 +176,7 @@ namespace ANALIZA_LEX
                                 }
                                 if (banderainicio != 2)
                                 {
-                                    dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Faltan Comillas dobles.");
+                                    dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Cadena Invalida.");
                                 }
                                 break;
                             case "ent":
