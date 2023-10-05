@@ -266,15 +266,35 @@ namespace ANALIZA_LEX
                             //si detecta que es un identificador le agrega un valor a un objeto de la clase Identificador
                             if (token.Trim() == "IDE"  )
                             {
-                                contador++;
+                                //código anterior
+                                /*contador++;
                                 unIdentificador.Numero = contador;                                
-                                unIdentificador.TipoDato = tipoDato;                              
-                                
+                                unIdentificador.TipoDato = tipoDato;  */
+
+                                foreach (var identificador in unaLista)
+                                {
+                                    if (identificador.Nombre == strIDE)
+                                    {
+                                        yaExiste = true;
+                                        token = identificador.strIdentificador;
+                                        identificador.Valor = strValorIde;
+                                    }
+                                }
+                                if (!yaExiste)
+                                {
+                                    contador++;
+                                    unIdentificador.strIdentificador = "IDE" + contador;
+                                    unIdentificador.Numero = contador;
+                                    unIdentificador.TipoDato = tipoDato;
+                                    token = "IDE" + contador;
+                                    unaLista.Add(unIdentificador);
+                                }
+
                             }                            
-                            if (token.Trim() == "IDE" && !yaExiste)
+                            /*if (token.Trim() == "IDE" && !yaExiste)
                             {                                
                                 unaLista.Add(unIdentificador);                               
-                            }
+                            }*/
                             if (token.Trim().StartsWith("ER"))
                             {
                                 Error unError = new Error();
@@ -497,6 +517,8 @@ namespace ANALIZA_LEX
         private void btnValidar_Click_1(object sender, EventArgs e)
         {
             unaLista.Clear();
+            txtLineasLexico.Text = "";
+            contador = 0;
             try
             {
                 //INVOCA EL METODO
@@ -516,7 +538,7 @@ namespace ANALIZA_LEX
                 dgvIden.Rows.Clear();
                 foreach (Identificador miIdentificador in unaLista)
                 {
-                    dgvIden.Rows.Add(miIdentificador.Numero, "IDE" + miIdentificador.Numero, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
+                    dgvIden.Rows.Add(miIdentificador.Numero, miIdentificador.strIdentificador, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
                 }
                 dgvErroresLexicos.Rows.Clear();
                 foreach (Error error in errores)
@@ -525,7 +547,7 @@ namespace ANALIZA_LEX
                 }
                 for (int i = 1; i < contadorLineas; i++)
                 {
-                    txtLineasLexico.AppendText($"\n{i.ToString()}");
+                    txtLineasLexico.AppendText($"\n{i.ToString()}  ");
                 }
             }
             catch (Exception)

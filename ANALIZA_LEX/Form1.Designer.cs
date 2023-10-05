@@ -309,12 +309,13 @@
             this.txtLineasLexico.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLineasLexico.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLineasLexico.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.txtLineasLexico.Location = new System.Drawing.Point(355, 95);
+            this.txtLineasLexico.Location = new System.Drawing.Point(351, 95);
             this.txtLineasLexico.Margin = new System.Windows.Forms.Padding(2);
             this.txtLineasLexico.Multiline = true;
             this.txtLineasLexico.Name = "txtLineasLexico";
-            this.txtLineasLexico.Size = new System.Drawing.Size(22, 259);
+            this.txtLineasLexico.Size = new System.Drawing.Size(24, 259);
             this.txtLineasLexico.TabIndex = 37;
+            this.txtLineasLexico.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtLineasLenguaje
             // 
