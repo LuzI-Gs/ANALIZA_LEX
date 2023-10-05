@@ -495,7 +495,7 @@ namespace ANALIZA_LEX
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            //Ya estoy hasta la coronilla XD
+            Clear(); //ejecuta metodo que limpia tableros, variables globales
         }
 
         bool primerCambio = true;
