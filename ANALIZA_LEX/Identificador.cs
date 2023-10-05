@@ -16,6 +16,13 @@ namespace ANALIZA_LEX
             set { _intNumero = value; }
         }
 
+        private string _strIdentificador;
+        public string strIdentificador
+        {
+            get { return _strIdentificador; }
+            set { _strIdentificador = value; }
+        }
+
         private string _strNombre;
 
         public string Nombre
