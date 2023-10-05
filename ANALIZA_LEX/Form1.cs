@@ -436,6 +436,14 @@ namespace ANALIZA_LEX
         }
         private bool VerificarAsignacion(string linea)
         {
+            //modificaciones para corchetes opraciones
+            string patronOperacion1 = @"CE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11";
+            bool matchOperacion1 = Regex.IsMatch(linea, patronOperacion1, RegexOptions.IgnoreCase);
+            string patronOperacion2 = @"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11";
+           // string patronOperacion2 = @"CE10\s(?:ENTE|ES02|ES03)$\s(?:OPR[1-5])\sCE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11\sCE11";
+            bool matchOperacion2 = Regex.IsMatch(linea, patronOperacion2, RegexOptions.IgnoreCase);
+
+
             // Expresión regular para la estructura 1
             string patronEstructura1 = @"^IDE\sPR05\sCE06\s(?:ENTE|ES02|ES03)$";
             string patronEstructura11 = @"^IDE\sPR08\sCE06\s(?:ES04|ES05|FLOT)$";
@@ -459,7 +467,8 @@ namespace ANALIZA_LEX
             bool matchEstructura3 = Regex.IsMatch(linea, patronEstructura3, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             bool matchEstructura4 = Regex.IsMatch(linea, patronEstructura4, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             bool matchEstructura5 = Regex.IsMatch(linea, patronEstructura5, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-            return matchEstructura1 || matchEstructura11 || matchEstructura12 || matchEstructura13 || matchEstructura2 || matchEstructura3 || matchEstructura4 || matchEstructura5;
+            return matchEstructura1 || matchEstructura11 || matchEstructura12 || matchEstructura13 || matchEstructura2 || matchEstructura3 || matchEstructura4 || matchEstructura5||matchOperacion1||matchOperacion2;
+            
         }
 
         bool primerCambio = true;
