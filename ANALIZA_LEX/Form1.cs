@@ -197,7 +197,7 @@ namespace ANALIZA_LEX
                                     }
                                     else
                                     {
-                                        //dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error2: Se esperaba un valor entero ");
+                                        dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error2: Se esperaba un valor entero ");
                                     }
                                 }
                                 else
@@ -461,23 +461,24 @@ namespace ANALIZA_LEX
             //modificaciones para corchetes opraciones
             string patronOperacion1 = @"CE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11";
             bool matchOperacion1 = Regex.IsMatch(linea, patronOperacion1, RegexOptions.IgnoreCase);
-            string patronOperacion2 = @"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11";
-           // string patronOperacion2 = @"CE10\s(?:ENTE|ES02|ES03)$\s(?:OPR[1-5])\sCE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11\sCE11";
+
+            string patronOperacion2 = @"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11\s\[\d+\]\s\[\d+\]$";//@"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11\s\[\d+\]\s\[\d+\]$";//CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11";                                                                                                             // string patronOperacion2 = @"CE10\s(?:ENTE|ES02|ES03)$\s(?:OPR[1-5])\sCE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11\sCE11";
             bool matchOperacion2 = Regex.IsMatch(linea, patronOperacion2, RegexOptions.IgnoreCase);
             // Expresión regular para la estructura 1
-            string patronEstructura1 = @"^IDE\sPR05\sCE06\s(?:ENTE|ES02|ES03)$";
-            string patronEstructura11 = @"^IDE\sPR08\sCE06\s(?:ES04|ES05|FLOT)$";
-            string patronEstructura12 = @"^IDE\sPR18\sCE06\sES07$";
-            string patronEstructura13 = @"^IDE\sPR18\sCE06\s(?:PR06|PR19)$";
+            string patronEstructura1 = @"^IDE[12N]\sPR05\sCE06\s(?:ENTE|ES02|ES03)$";
+            string patronEstructura11 = @"^IDE[12N]\sPR08\sCE06\s(?:ES04|ES05|FLOT)$";
+            string patronEstructura12 = @"^IDE[12N]\sPR18\sCE06\sES07$";
+            string patronEstructura13 = @"^IDE[12N]\sPR18\sCE06\s(?:PR06|PR19)$";
             // Expresión regular para la estructura 2
-            string patronEstructura2 = @" ^ PR14$|^CE05\sIDE\s(?:OPR[1-5])\sENTE\sCE03$|^PR11$|^PR10\sIDE$|^IDE\sCE06\sIDE\sOPA1\sENTE$|^PR07$";
+            string patronEstructura2 = @"^PR14$|^CE05\sIDE[12N]\sOPR[1-5]\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]\sCE06\sIDE[12N]\sOPA[1-5]\sENTE$|^PR07$";// @"^PR14$|^CE05\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]\sCE06\sIDE[12N]\s(?:OPA[1-5])\sENTE$|^PR07$";
+           
             //Expresion regular para la estrucrura 3
             // string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|IDE)$|^PR07$|^CE05\sIDE\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sENTE\s(?:(?:OPR[1-5])|(?:OPL[1-3]))\sIDE\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sENTE\sCE03$";
-            string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|IDE)$|^PR07$|^CE05\sIDE\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\s(?:(?:OPR[1-5])|(?:OPL[1-3]))\sIDE\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\sCE03$|^PR19$|^PR17$|^PR06$";
+            string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|sIDE[12N])$|^PR07$|^CE05\sIDE[12N]\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\s(?:(?:OPR[1-5])|(?:OPL[1-3]))\sIDE[12N]\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\sCE03$|^PR19$|^PR17$|^PR06$";
             //Expresion regular para la estrucrura 4
-            string patronEstructura4 = @"^PR15$|^CE05\sIDE\sPR05\sCE06\sENTE\sCE02\sIDE\s(?:OPR[1-5])\sENTE\sCE02\sIDE\sCE06\sIDE\sOPA1\sENTE\sCE03$|^PR11$|^PR10\s(?:ES07|IDE)$|^PR07$";
+            string patronEstructura4 = @"^PR15$|^CE05\sIDE[12N]\sPR05\sCE06\sENTE\sCE02\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE02\sIDE[12]\sCE06\sIDE[12N]\sOPA1\sENTE\sCE03$|^PR11$|^PR10\s(?:ES07|sIDE[12N])$|^PR07$";
             //Expresion regular para la estrucrura 5
-            string patronEstructura5 = @"^PR09$|^PR11$|^IDE\sCE06\sIDE\sOPA1\sENTE$|^PR10\sES07$|^PR14$|^CE05\sIDE\s(?:OPR[1-5])\sENTE\sCE03$|^PR07$";
+            string patronEstructura5 = @"^PR09$|^PR11$|^IDE[12N]\sCE06\sIDE[12N]\sOPA1\sENTE$|^PR10\sES07$|^PR14$|^CE05\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE03$|^PR07$";
             // string patronEstructura4 = @"^PR15$|^CE05\sIDE\sPR05\sCE06\sENTE\sCE02\sIDE\sOPR2\sENTE\sCE02\sIDE\sCE06\sIDE\sOPA1\sENTE\sCE03$|^PR11$|^PR10\sIDE$|^PR07$";
             bool matchEstructura1 = Regex.IsMatch(linea, patronEstructura1, RegexOptions.IgnoreCase);
             bool matchEstructura11 = Regex.IsMatch(linea, patronEstructura11, RegexOptions.IgnoreCase);
