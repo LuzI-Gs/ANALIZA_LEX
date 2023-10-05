@@ -24,6 +24,30 @@ namespace ANALIZA_LEX
             InitializeComponent();
             unIdentificador = new Identificador();           
         }
+        private void Clear()
+        {
+            intEstado = 0;                          //Variables
+            contador = 0;
+            contadorLineas = 1;
+            token = "";
+            sintactico = "";
+            LenguajeNat = "";
+            tipoDato = "";
+            strValorIde = "";
+            yaExiste = false;
+            txtLineasLenguaje.Text = "";            //Contador de Lineas
+                                                    //  txtLenguaje.Text = "";                  //Ingresa lineas de codigo
+            txtLineasLexico.Text = "";              //Contador de lineas
+            txtTokens.Text = "";                    //Mostrador de tokens
+            txtSintactico.Text = "";                //Mostrador de estados                                          
+            dgvErroresSemanticos.Rows.Clear();      // Limpia todas las filas
+            dgvErroresSemanticos.Columns.Clear();   // Limpia todas las columnas
+            dgvIden.Rows.Clear();
+            dgvIden.Columns.Clear();
+            dgvErroresLexicos.Rows.Clear();
+            dgvErroresLexicos.Columns.Clear();
+
+        }
         int intEstado = 0, contador = 0, contadorLineas = 1;
         string token = "", sintactico = "", LenguajeNat = "", tipoDato = "", strValorIde = "";
         bool yaExiste = false;
@@ -161,30 +185,31 @@ namespace ANALIZA_LEX
                                 }
                                 break;
                             case "ent":
-                                if (strValorIde[0] != '+' && strValorIde[0] != '-' && !char.IsDigit(strValorIde[0]))
+                                if (char.IsDigit(strValorIde[0]) || strValorIde[0] == '+' || strValorIde[0] == '-')
                                 {
-                                    dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Se esperaba un valor entero");
+                                    bool caracteresNumericos = true;
+                                    for (int i = 0; i < strValorIde.Length; i++)
+                                    {
+                                        if (!char.IsDigit(strValorIde[i]))
+                                        {
+                                            caracteresNumericos = false;
+                                            break; // Salir del bucle si se encuentra un carácter no numérico
+                                        }
+                                    }
+                                    if (caracteresNumericos == true)
+                                    {
+                                        //MessageBox.Show("El formato es válido: " + strValorIde);
+                                    }
+                                    else
+                                    {
+                                        //dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error2: Se esperaba un valor entero ");
+                                    }
+
                                 }
                                 else
                                 {
-                                       bool caracteresNumericos = true;
-                                        for (int i = 0; i < strValorIde.Length; i++)
-                                        {
-                                            if (!char.IsDigit(strValorIde[i]))
-                                            {
-                                                caracteresNumericos = false;
-                                                break; // Salir del bucle si se encuentra un carácter no numérico
-                                            }
-                                        }
-                                        if (caracteresNumericos==true)
-                                        {
-                                            //MessageBox.Show("El formato es válido: " + strValorIde);
-                                        }
-                                        else
-                                        {
-                                            dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Se esperaba un valor entero ");
-                                        }
-                                }                                                                                  
+                                    dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Se esperaba un tipo de dato numerico entero.");
+                                }
                                 break;
                             case "flo":
 
