@@ -36,7 +36,7 @@ namespace ANALIZA_LEX
             strValorIde = "";
             yaExiste = false;
             txtLineasLenguaje.Text = "";            //Contador de Lineas
-                                                    //  txtLenguaje.Text = "";                  //Ingresa lineas de codigo
+            txtLenguaje.Text = "";                  //Ingresa lineas de codigo
             txtLineasLexico.Text = "";              //Contador de lineas
             txtTokens.Text = "";                    //Mostrador de tokens
             txtSintactico.Text = "";                //Mostrador de estados                                          
@@ -103,7 +103,6 @@ namespace ANALIZA_LEX
                 int contadoroalabras = 0;
                 int palabrastotales = 0;
                 int contadorletras=0;
-
                 foreach (string palabras in Lenguajes)
                 {
                     linea++;                 
@@ -135,10 +134,8 @@ namespace ANALIZA_LEX
                     {
                         dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta corchete de final");
                     }
-
                     foreach (string palabra in Lenguaje)//RECORRE EL ARREGLO DE LAS PALABRAS 
-                    {
-                       
+                    {                       
                         foreach (string valor in Lenguaje)
                         {                          
                             strValorIde = valor; // toma el ultimo valor de la linea
@@ -147,9 +144,8 @@ namespace ANALIZA_LEX
                                 tipoDato = valor; // contiene el tipo de dato
                             }
                         }                  
-                        string strIDE = palabra;
-                        //sirve para dectectar los identificadores ya que inician con un _
-                        if (strIDE.StartsWith("_"))
+                        string strIDE = palabra;                        
+                        if (strIDE.StartsWith("_"))//sirve para dectectar los identificadores ya que inician con un _
                         {                            
                             yaExiste = false;
                             foreach (string elemento in tablaSimbolo)
@@ -167,7 +163,6 @@ namespace ANALIZA_LEX
                                 unIdentificador.Valor = strValorIde;
                             }
                         }
-
                         switch (palabra)
                         {
                             case "txt":
@@ -204,7 +199,6 @@ namespace ANALIZA_LEX
                                     {
                                         //dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error2: Se esperaba un valor entero ");
                                     }
-
                                 }
                                 else
                                 {
@@ -236,9 +230,7 @@ namespace ANALIZA_LEX
                                     {
                                         dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Se encontraron valores no numéricos");
                                     }
-                                }                              
-
-                                
+                                }                                                           
                                 break;
                             case "boo":
                                 if (strValorIde[0] == 'v' && strValorIde[1] == 'e' && strValorIde[2] == 'r' && strValorIde[3] =='d')
@@ -257,9 +249,7 @@ namespace ANALIZA_LEX
                                     }
                                 }
                                 break;
-
-                        }                   
-                      
+                        }                                     
                         for (int i = 0; i < strIDE.Length; i++) //CICLO QUE EXTRAE CADA LETRA DE CADA PALABRA
                         { 
                             //Validar tipo de dato string que este completo
@@ -319,14 +309,12 @@ namespace ANALIZA_LEX
                 MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
         //método para buscar las lineas donde surge el error
         int numeroDeLinea = -1;
         private string BuscarLineaError(string valor)
         {
             // Dividir el texto del TextBox en líneas utilizando '\n' como separador.
             string[] lineas = txtLenguaje.Text.Split('\n');
-
             // Buscar "ES03" en cada línea.
             for (int i = 0; i < lineas.Length; i++)
             {
@@ -336,13 +324,8 @@ namespace ANALIZA_LEX
                     break; // Detener la búsqueda una vez que se encuentre la primera ocurrencia.
                 }
             }
-
-            return numeroDeLinea.ToString();
-            
-
+            return numeroDeLinea.ToString();         
         }
-
-
         private void btnValidar_Click(object sender, EventArgs e)
         {
             unaLista.Clear();
@@ -436,10 +419,7 @@ namespace ANALIZA_LEX
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-       
-
+        }     
         private void picMinimizar_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -464,8 +444,6 @@ namespace ANALIZA_LEX
             string patronOperacion2 = @"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11";
            // string patronOperacion2 = @"CE10\s(?:ENTE|ES02|ES03)$\s(?:OPR[1-5])\sCE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11\sCE11";
             bool matchOperacion2 = Regex.IsMatch(linea, patronOperacion2, RegexOptions.IgnoreCase);
-
-
             // Expresión regular para la estructura 1
             string patronEstructura1 = @"^IDE\sPR05\sCE06\s(?:ENTE|ES02|ES03)$";
             string patronEstructura11 = @"^IDE\sPR08\sCE06\s(?:ES04|ES05|FLOT)$";
@@ -490,42 +468,31 @@ namespace ANALIZA_LEX
             bool matchEstructura4 = Regex.IsMatch(linea, patronEstructura4, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             bool matchEstructura5 = Regex.IsMatch(linea, patronEstructura5, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             return matchEstructura1 || matchEstructura11 || matchEstructura12 || matchEstructura13 || matchEstructura2 || matchEstructura3 || matchEstructura4 || matchEstructura5||matchOperacion1||matchOperacion2;
-            
         }
-
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             Clear(); //ejecuta metodo que limpia tableros, variables globales
         }
-
         bool primerCambio = true;
         private void txtLenguaje_TextChanged(object sender, EventArgs e) //se agregan las lineas de codigo cada vez que se detecta el salto de linea
         {          
             string codigoEntrada = txtLenguaje.Text;  // Obtén el texto del primer TextBox
             contadorLineas = 1; // Divide el texto en líneas usando el carácter de salto de línea ('\n')
              string[] lineasCodigo = codigoEntrada.Split('\n');          
-            txtLineasLenguaje.Clear();  // Borra el contenido actual del segundo TextBox
-                                        // Agrega cada línea al segundo TextBox
-
-            int numeroDeLineas = lineasCodigo.Length;
-
-            // Actualizar el contador de líneas y mostrarlo como números de línea de código.
-            StringBuilder codigoConNumerosDeLinea = new StringBuilder();
+            txtLineasLenguaje.Clear();  // Borra el contenido actual del segundo TextBox                                       
+            int numeroDeLineas = lineasCodigo.Length;// Agrega cada línea al segundo TextBox     
+            StringBuilder codigoConNumerosDeLinea = new StringBuilder();// Actualizar el contador de líneas y mostrarlo como números de línea de código.
             if (primerCambio)
             {
                 codigoConNumerosDeLinea.Append("\n");
                 primerCambio = false;
             }
-
             for (int i = 0; i < numeroDeLineas; i++)
             {
                 codigoConNumerosDeLinea.Append(contadorLineas + i + " " + "\n");
-            }
-            // Mostrar el código con números de línea en el TextBox.
-            txtLineasLenguaje.Text = codigoConNumerosDeLinea.ToString();
-
-            // Actualizar el contador de líneas para la próxima vez.
-            contadorLineas += numeroDeLineas;
+            }           
+            txtLineasLenguaje.Text = codigoConNumerosDeLinea.ToString(); // Mostrar el código con números de línea en el TextBox.                    
+            contadorLineas += numeroDeLineas; // Actualizar el contador de líneas para la próxima vez.
         }
         private void btnValidar_Click_1(object sender, EventArgs e)
         {
