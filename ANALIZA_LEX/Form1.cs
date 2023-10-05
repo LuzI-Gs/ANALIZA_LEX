@@ -413,10 +413,7 @@ namespace ANALIZA_LEX
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Application.Restart();
-        }
+       
 
         private void picMinimizar_Click(object sender, EventArgs e)
         {
@@ -469,6 +466,11 @@ namespace ANALIZA_LEX
             bool matchEstructura5 = Regex.IsMatch(linea, patronEstructura5, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             return matchEstructura1 || matchEstructura11 || matchEstructura12 || matchEstructura13 || matchEstructura2 || matchEstructura3 || matchEstructura4 || matchEstructura5||matchOperacion1||matchOperacion2;
             
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            //Ya estoy hasta la coronilla XD
         }
 
         bool primerCambio = true;

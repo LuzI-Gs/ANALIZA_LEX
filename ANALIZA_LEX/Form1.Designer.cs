@@ -47,6 +47,10 @@
             this.strNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.strTipoDato = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.strValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dgvErroresSemanticos = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtLineasLexico = new System.Windows.Forms.TextBox();
             this.txtLineasLenguaje = new System.Windows.Forms.TextBox();
             this.txtTokens = new System.Windows.Forms.RichTextBox();
@@ -57,11 +61,7 @@
             this.txtLenguaje = new System.Windows.Forms.TextBox();
             this.btnValidarSint = new System.Windows.Forms.Button();
             this.btnValidar = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dgvErroresSemanticos = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSalir)).BeginInit();
@@ -272,6 +272,38 @@
             this.strValor.Name = "strValor";
             this.strValor.ReadOnly = true;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.dgvErroresSemanticos);
+            this.tabPage3.Location = new System.Drawing.Point(4, 27);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(1018, 234);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Errores Semanticos";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // dgvErroresSemanticos
+            // 
+            this.dgvErroresSemanticos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvErroresSemanticos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvErroresSemanticos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            this.dgvErroresSemanticos.Location = new System.Drawing.Point(36, 11);
+            this.dgvErroresSemanticos.Name = "dgvErroresSemanticos";
+            this.dgvErroresSemanticos.Size = new System.Drawing.Size(923, 150);
+            this.dgvErroresSemanticos.TabIndex = 0;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Linea";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Error";
+            this.Column2.Name = "Column2";
+            // 
             // txtLineasLexico
             // 
             this.txtLineasLexico.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -404,47 +436,15 @@
             this.btnValidar.UseVisualStyleBackColor = false;
             this.btnValidar.Click += new System.EventHandler(this.btnValidar_Click_1);
             // 
-            // button2
+            // btnLimpiar
             // 
-            this.button2.Location = new System.Drawing.Point(273, 55);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 39;
-            this.button2.Text = "Nuevo";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.dgvErroresSemanticos);
-            this.tabPage3.Location = new System.Drawing.Point(4, 27);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1018, 234);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Errores Semanticos";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // dgvErroresSemanticos
-            // 
-            this.dgvErroresSemanticos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvErroresSemanticos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvErroresSemanticos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.dgvErroresSemanticos.Location = new System.Drawing.Point(36, 11);
-            this.dgvErroresSemanticos.Name = "dgvErroresSemanticos";
-            this.dgvErroresSemanticos.Size = new System.Drawing.Size(923, 150);
-            this.dgvErroresSemanticos.TabIndex = 0;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Linea";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Error";
-            this.Column2.Name = "Column2";
+            this.btnLimpiar.Location = new System.Drawing.Point(273, 55);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 39;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // Form1
             // 
@@ -452,7 +452,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.ClientSize = new System.Drawing.Size(1036, 640);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnValidarSint);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.txtLineasLexico);
@@ -519,7 +519,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox picMinimizar;
         private System.Windows.Forms.PictureBox picSalir;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DataGridView dgvErroresSemanticos;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
