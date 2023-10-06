@@ -143,8 +143,23 @@ namespace ANALIZA_LEX
                             {
                                 tipoDato = valor; // contiene el tipo de dato
                             }
-                        }                  
-                        string strIDE = palabra;                        
+                        }
+                        string strIDE = palabra;
+                        switch (palabra)
+                        {
+                            case "ent":
+                                token = "ENTE";
+                                break;
+                            case "flo":
+                                token = "PR08";
+                                break;
+                            case "txt":
+                                token = "PR018";
+                                break;
+                            case "boo":
+                                token = "PR02";
+                                break;
+                        }
                         if (strIDE.StartsWith("_"))//sirve para dectectar los identificadores ya que inician con un _
                         {                            
                             yaExiste = false;
@@ -163,9 +178,10 @@ namespace ANALIZA_LEX
                                 unIdentificador.Valor = strValorIde;
                             }
                         }
-                        switch (palabra)
+
+                        switch (token)
                         {
-                            case "txt":
+                            case "PR018":
                                 int banderainicio = 0;
                                 for (int i = 0; i < strValorIde.Length; i++)
                                 {
@@ -179,7 +195,7 @@ namespace ANALIZA_LEX
                                     dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Cadena Invalida.");
                                 }
                                 break;
-                            case "ent":
+                            case "ENTE":
                                 if (char.IsDigit(strValorIde[0]) || strValorIde[0] == '+' || strValorIde[0] == '-')
                                 {
                                     bool caracteresNumericos = true;
@@ -197,7 +213,7 @@ namespace ANALIZA_LEX
                                     }
                                     else
                                     {
-                                        dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error2: Se esperaba un valor entero ");
+                                        //dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error2: Se esperaba un valor entero ");
                                     }
                                 }
                                 else
@@ -205,7 +221,7 @@ namespace ANALIZA_LEX
                                     dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Se esperaba un tipo de dato numerico entero.");
                                 }
                                 break;
-                            case "flo":
+                            case "PR08":
 
                                 if (strValorIde[0] != '+' && strValorIde[0] != '-' && !char.IsDigit(strValorIde[0]))
                                 {
@@ -230,10 +246,10 @@ namespace ANALIZA_LEX
                                     {
                                         dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Se encontraron valores no numéricos");
                                     }
-                                }                                                           
+                                }
                                 break;
-                            case "boo":
-                                if (strValorIde[0] == 'v' && strValorIde[1] == 'e' && strValorIde[2] == 'r' && strValorIde[3] =='d')
+                            case "PR02":
+                                if (strValorIde[0] == 'v' && strValorIde[1] == 'e' && strValorIde[2] == 'r' && strValorIde[3] == 'd')
                                 {
                                     MessageBox.Show("Es correcto");
                                 }
@@ -249,7 +265,8 @@ namespace ANALIZA_LEX
                                     }
                                 }
                                 break;
-                        }                                     
+                        }
+
                         for (int i = 0; i < strIDE.Length; i++) //CICLO QUE EXTRAE CADA LETRA DE CADA PALABRA
                         { 
                             //Validar tipo de dato string que este completo
