@@ -327,7 +327,11 @@ namespace ANALIZA_LEX
                         {
                             //si no encuenta el caracter que se ingreso mandara un mensaje diciendo ese mensaje 
                             string strCadenaError ="CARACTER NO VALIDO";
-                            MessageBox.Show($"El caracter ->  {chMuestra}  <- no es valido en este lenguaje por favor ingresa uno que lo sea ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                          
+                            
+                                MessageBox.Show($"El caracter ->  {chMuestra}  <- no es valido en este lenguaje por favor ingresa uno que lo sea ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            
+                          
                             txtTokens.Text = txtTokens.Text + " " +strCadenaError;                        
                         }
                     }                
