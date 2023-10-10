@@ -36,9 +36,9 @@ namespace ANALIZA_LEX
             strValorIde = "";
             yaExiste = false;
             txtLineasLenguaje.Text = "";            //Contador de Lineas
-            txtLenguaje.Text = "";                  //Ingresa lineas de codigo
+            //txtLenguaje.Text = "";                  //Ingresa lineas de codigo
             txtLineasLexico.Text = "";              //Contador de lineas
-            txtTokens.Text = "";                    //Mostrador de tokens
+           // txtTokens.Text = "";                    //Mostrador de tokens
             txtSintactico.Text = "";                //Mostrador de estados                                          
             dgvErroresSemanticos.Rows.Clear();      // Limpia todas las filas
             dgvErroresSemanticos.Columns.Clear();   // Limpia todas las columnas
