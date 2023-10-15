@@ -62,6 +62,10 @@
             this.btnValidarSint = new System.Windows.Forms.Button();
             this.btnValidar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.radInOrden = new System.Windows.Forms.RadioButton();
+            this.radPreorden = new System.Windows.Forms.RadioButton();
+            this.radPostorden = new System.Windows.Forms.RadioButton();
+            this.btnOrdenar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSalir)).BeginInit();
@@ -447,12 +451,58 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
+            // radInOrden
+            // 
+            this.radInOrden.AutoSize = true;
+            this.radInOrden.Location = new System.Drawing.Point(530, 425);
+            this.radInOrden.Name = "radInOrden";
+            this.radInOrden.Size = new System.Drawing.Size(63, 17);
+            this.radInOrden.TabIndex = 46;
+            this.radInOrden.Text = "InOrden";
+            this.radInOrden.UseVisualStyleBackColor = true;
+            // 
+            // radPreorden
+            // 
+            this.radPreorden.AutoSize = true;
+            this.radPreorden.Location = new System.Drawing.Point(530, 402);
+            this.radPreorden.Name = "radPreorden";
+            this.radPreorden.Size = new System.Drawing.Size(70, 17);
+            this.radPreorden.TabIndex = 45;
+            this.radPreorden.Text = "PreOrden";
+            this.radPreorden.UseVisualStyleBackColor = true;
+            // 
+            // radPostorden
+            // 
+            this.radPostorden.AutoSize = true;
+            this.radPostorden.Checked = true;
+            this.radPostorden.Location = new System.Drawing.Point(530, 375);
+            this.radPostorden.Name = "radPostorden";
+            this.radPostorden.Size = new System.Drawing.Size(90, 17);
+            this.radPostorden.TabIndex = 44;
+            this.radPostorden.TabStop = true;
+            this.radPostorden.Text = "radPostOrden";
+            this.radPostorden.UseVisualStyleBackColor = true;
+            // 
+            // btnOrdenar
+            // 
+            this.btnOrdenar.Location = new System.Drawing.Point(414, 390);
+            this.btnOrdenar.Name = "btnOrdenar";
+            this.btnOrdenar.Size = new System.Drawing.Size(75, 23);
+            this.btnOrdenar.TabIndex = 43;
+            this.btnOrdenar.Text = "ordenar";
+            this.btnOrdenar.UseVisualStyleBackColor = true;
+            this.btnOrdenar.Click += new System.EventHandler(this.btnOrdenar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.ClientSize = new System.Drawing.Size(1036, 640);
+            this.Controls.Add(this.radInOrden);
+            this.Controls.Add(this.radPreorden);
+            this.Controls.Add(this.radPostorden);
+            this.Controls.Add(this.btnOrdenar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnValidarSint);
             this.Controls.Add(this.tabControl1);
@@ -525,6 +575,10 @@
         private System.Windows.Forms.DataGridView dgvErroresSemanticos;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.RadioButton radInOrden;
+        private System.Windows.Forms.RadioButton radPreorden;
+        private System.Windows.Forms.RadioButton radPostorden;
+        private System.Windows.Forms.Button btnOrdenar;
     }
 }
 

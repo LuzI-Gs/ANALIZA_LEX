@@ -515,6 +515,9 @@ namespace ANALIZA_LEX
         {
             Clear(); //ejecuta metodo que limpia tableros, variables globales
         }
+
+        
+
         bool primerCambio = true;
         private void txtLenguaje_TextChanged(object sender, EventArgs e) //se agregan las lineas de codigo cada vez que se detecta el salto de linea
         {          
@@ -668,6 +671,10 @@ namespace ANALIZA_LEX
                     }
                 }
             }
+        }
+        private void btnOrdenar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
