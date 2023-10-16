@@ -19,9 +19,13 @@ namespace ANALIZA_LEX
 {
     public partial class Form1 : Form
     {
+        private Nodo raiz;
+        private Arbol arbol;
         public Form1()
         {
             InitializeComponent();
+
+            arbol = new Arbol();
             unIdentificador = new Identificador();           
         }
         private void Clear()
@@ -674,6 +678,32 @@ namespace ANALIZA_LEX
         }
         private void btnOrdenar_Click(object sender, EventArgs e)
         {
+            if (radPreorden.Checked)
+            {
+                arbol.InsertarEnCola(txtLenguaje.Text);
+                raiz = arbol.CrearArbol();
+                arbol.Limpiar();
+
+                MessageBox.Show(arbol.InsertarPre(raiz), "PREORDEN");
+            }
+
+            if (radPostorden.Checked)
+            {
+                arbol.InsertarEnCola(txtLenguaje.Text);
+                raiz = arbol.CrearArbol();
+                arbol.Limpiar();
+
+                MessageBox.Show(arbol.InsertarPost(raiz), "POSTORDEN");
+            }
+
+            if (radInOrden.Checked)
+            {
+                arbol.InsertarEnCola(txtLenguaje.Text);
+                raiz = arbol.CrearArbol();
+                arbol.Limpiar();
+
+                MessageBox.Show(arbol.InsertarIn(raiz), "INORDEN");
+            }
 
         }
     }
