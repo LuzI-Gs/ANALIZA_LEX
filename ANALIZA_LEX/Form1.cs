@@ -690,7 +690,7 @@ namespace ANALIZA_LEX
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
                 rtxt.Text =arbol.InsertarPre(raiz);
-              //  MessageBox.Show(arbol.InsertarPre(raiz), "PREORDEN");
+             
             }
 
             if (radPostorden.Checked)
@@ -699,7 +699,7 @@ namespace ANALIZA_LEX
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
                 rtxt.Text = arbol.InsertarPost(raiz);
-               // MessageBox.Show(arbol.InsertarPost(raiz), "POSTORDEN");
+               
             }
 
             if (radInOrden.Checked)
@@ -708,7 +708,7 @@ namespace ANALIZA_LEX
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
                 rtxt.Text = arbol.InsertarIn(raiz);
-             //   MessageBox.Show(arbol.InsertarIn(raiz), "INORDEN");
+             
             }
 
         }
