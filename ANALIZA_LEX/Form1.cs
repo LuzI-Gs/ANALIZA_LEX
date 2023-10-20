@@ -523,6 +523,12 @@ namespace ANALIZA_LEX
         
 
         bool primerCambio = true;
+
+        private void radPostorden_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void txtLenguaje_TextChanged(object sender, EventArgs e) //se agregan las lineas de codigo cada vez que se detecta el salto de linea
         {          
             string codigoEntrada = txtLenguaje.Text;  // Obtén el texto del primer TextBox
@@ -683,8 +689,8 @@ namespace ANALIZA_LEX
                 arbol.InsertarEnCola(txtLenguaje.Text);
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
-
-                MessageBox.Show(arbol.InsertarPre(raiz), "PREORDEN");
+                rtxt.Text =arbol.InsertarPre(raiz);
+              //  MessageBox.Show(arbol.InsertarPre(raiz), "PREORDEN");
             }
 
             if (radPostorden.Checked)
@@ -692,8 +698,8 @@ namespace ANALIZA_LEX
                 arbol.InsertarEnCola(txtLenguaje.Text);
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
-
-                MessageBox.Show(arbol.InsertarPost(raiz), "POSTORDEN");
+                rtxt.Text = arbol.InsertarPost(raiz);
+               // MessageBox.Show(arbol.InsertarPost(raiz), "POSTORDEN");
             }
 
             if (radInOrden.Checked)
@@ -701,8 +707,8 @@ namespace ANALIZA_LEX
                 arbol.InsertarEnCola(txtLenguaje.Text);
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
-
-                MessageBox.Show(arbol.InsertarIn(raiz), "INORDEN");
+                rtxt.Text = arbol.InsertarIn(raiz);
+             //   MessageBox.Show(arbol.InsertarIn(raiz), "INORDEN");
             }
 
         }
