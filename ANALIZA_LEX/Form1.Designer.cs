@@ -550,6 +550,7 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Expresion_Asignacion";
             this.tabPage5.UseVisualStyleBackColor = true;
+            this.tabPage5.Click += new System.EventHandler(this.tabPage5_Click);
             // 
             // dgvAsignacionConstantes
             // 

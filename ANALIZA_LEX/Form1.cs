@@ -57,7 +57,8 @@ namespace ANALIZA_LEX
         bool yaExiste = false;
         int contadorEnteros = 1;
        
-        bool esUnaConstante= false,esUnaVariable=false;
+        bool esUnaConstante= false,esUnaVariable=false,esUnaVarAceptable=false;
+        string[] varAceptables = { "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j", "_k", "_l", "_m", "_n", "_o", "_p", "_q", "_r", "_s", "_t", "_u", "_v", "_w", "_x", "_y", "_z" };
 
         ConexionBD conexion = new ConexionBD();
         //arreglo donde se almacenan la información para la tabla de simbolos
@@ -100,21 +101,19 @@ namespace ANALIZA_LEX
         public void DescomponerCadenas()
         {
             try
-            {
+            {               
                 char[] del1 = { '\n' };
                 LenguajeNat = txtLenguaje.Text;
                 txtTokens.Text = "";               
                 string strPalabras = LenguajeNat; //TOMA LA ORACION DE CADA LINEA EN EL TEXTBOX INGRESADA
                 string[] Lenguajes = strPalabras.Split(del1);//METE LAS ORACIONES EN UN ARREGLO 
                 string evaluacion = "";
-                int linea = 0;
-                int contadoroalabras = 0;
+                int linea = 0;               
                 int palabrastotales = 0;
-                int contadorletras=0;
+               
                 foreach (string palabras in Lenguajes)
                 {
-                    linea++;
-                  
+                    linea++;                  
                     char[] del = { ' ' };//AHORA TOMA CADA PALABRA DE CADA ORACION 
                     char chMuestra = ' ';
                     int j = 0;
@@ -122,62 +121,7 @@ namespace ANALIZA_LEX
                    // MessageBox.Show($"Cantidad de letras totales: {palabrastotales}");                    
                     string strPalabra = palabras;    //TOMA LA PALABRA DE LA ORACION  INGRESADA               
                     string[] Lenguaje = strPalabra.Split(del);     //METE LAS PALABRAS EN UN ARREGLO
-                    int banderatipodato = 0;
-
-                    for (int i = 0; i < Lenguaje.Length; i++) //Metodo que hace verifica si es una Declaracion de variable o una asignacion a una variable
-                    {
-                        switch (Lenguaje[i])
-                        {
-                            case "ent": 
-                                MessageBox.Show("Declaracion variable");
-                                esUnaVariable = true;
-                                esUnaConstante = false;
-                                //DeclareUnaVariable = true;
-                                break;
-                            case "flo":
-                                MessageBox.Show("Declaracion variable");
-                                esUnaVariable = true;
-                                esUnaConstante = false;
-                                //DeclareUnaVariable = true;                               
-                                break;
-                            case "txt":
-                                MessageBox.Show("Declaracion variable");
-                                //DeclareUnaVariable = true;                               
-                                break;
-                            case "boo":
-                                MessageBox.Show("Declaracion variable");
-                                // DeclareUnaVariable = true;                                
-                                break;
-                            default:
-                                esUnaConstante = true;
-                                if (esUnaConstante==true && esUnaVariable==false)
-                                {
-                                    
-                                    string palabrasParaUnaConstante = Lenguaje[i];
-                                    double result;
-                                    if (double.TryParse(palabrasParaUnaConstante, out result))
-                                    {
-                                        MessageBox.Show("Constante numerica: " + palabrasParaUnaConstante);
-                                        dgvAsignacionConstantes.Rows.Add(contadorEnteros, palabrasParaUnaConstante, $"ENTE{contadorEnteros}");
-                                        contadorEnteros = contadorEnteros + 1;
-                                    }
-                                }                                
-                                break;
-                        }
-
-                        //if (esUnaConstante=true&&esUnaVariable==false)
-                        //{
-                         
-                        //    string palabrasParaUnaConstante = Lenguaje[i];
-                        //    double result;
-                        //    if (double.TryParse(palabrasParaUnaConstante, out result))
-                        //    {
-                        //        MessageBox.Show("Constante numerica: " + palabrasParaUnaConstante);
-                        //        dgvAsignacionConstantes.Rows.Add(contadorEnteros, palabrasParaUnaConstante, $"ENTE{contadorEnteros}");
-                        //        contadorEnteros = contadorEnteros + 1;
-                        //    }
-                        //}
-                    }
+                                      
 
                     //INVOCA EL METODO DE LA PILA PARA VERIFICAR QUE ESTEN CORRECTAMENTE EL BALANCE DE LOS CORCHETES Y SIGNOS DE ?
                     evaluacion = EvaluarExpresion(palabras);
@@ -410,12 +354,45 @@ namespace ANALIZA_LEX
                     {
                         txtTokens.Text =txtTokens.Text +"";   
                     }
+                    //--------                   
+                    for (int i = 0; i < Lenguaje.Length; i++) //Verifica si contiene variables aceptables 
+                    {
+                        for (int x = 0; x < varAceptables.Length; x++)
+                        {
+                            if (Lenguaje[i] == varAceptables[x])
+                            {
+                                esUnaVarAceptable = true;
+                                MessageBox.Show("contiene una variable aceptable");
+                            }
+                        }                        
+                    }
+                    for (int i = 0; i < Lenguaje.Length; i++) //Metodo que hace verifica si es una Declaracion de variable o una asignacion a una variable
+                    {                        
+                        if ( Lenguaje[i] == "ent" || Lenguaje[i] == "flo" || Lenguaje[i] == "txt" || Lenguaje[i] == "boo")
+                        {
+                            esUnaVariable = true;
+                            esUnaConstante = false;
+                            break;
+                        }
+                        else
+                        {
+                            if (esUnaVarAceptable==true &&  Lenguaje[i] != "ent" && Lenguaje[i] != "flo" && Lenguaje[i] != "txt" && Lenguaje[i] != "boo")
+                            {
+                                esUnaVariable = false;
+                                esUnaConstante = true;
+                            }                           
+                        }
+                    }
+                    esUnaVarAceptable = false;
+                    MessageBox.Show($"Sale con estados: \nvariable: {esUnaVariable}\nconstante: {esUnaConstante}");
+
                 }
             }
             catch (Exception)
             {
                 MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
         }
         //método para buscar las lineas donde surge el error
         int numeroDeLinea = -1;
@@ -592,6 +569,11 @@ namespace ANALIZA_LEX
 
         }
 
+        private void tabPage5_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void radPostorden_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -619,14 +601,13 @@ namespace ANALIZA_LEX
         }
         private void btnValidar_Click_1(object sender, EventArgs e)
         {
-
+           
             unaLista.Clear();
             txtLineasLexico.Text = "";
             contador = 0;
             try
-            {
-                //INVOCA EL METODO
-                DescomponerCadenas();
+            {               
+                DescomponerCadenas(); //INVOCA EL METODO
                 LenguajeNat = "";
                 txtTokens.ReadOnly = true;
                 //metodo para quitar la sangria 
@@ -644,11 +625,19 @@ namespace ANALIZA_LEX
                 foreach (Identificador miIdentificador in unaLista)
                 {
                     dgvIden.Rows.Add(miIdentificador.Numero, miIdentificador.strIdentificador, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
-                   
-                    if (esUnaVariable == true )
-                    {                      
+
+
+                    if (esUnaVariable == true && esUnaConstante == false)
+                    {
                         dgvAsignaVariable.Rows.Add(miIdentificador.Numero, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
                         esUnaVariable = false;
+                        esUnaConstante=false;
+                    }
+                    if (esUnaVariable == false && esUnaConstante == true)
+                    {
+                        dgvAsignacionConstantes.Rows.Add(miIdentificador.Numero, miIdentificador.Valor, miIdentificador.TipoDato);
+                        esUnaVariable = false;
+                        esUnaConstante = false;
                     }
 
                 }
