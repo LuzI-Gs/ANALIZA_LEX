@@ -56,7 +56,9 @@ namespace ANALIZA_LEX
         string token = "", sintactico = "", LenguajeNat = "", tipoDato = "", strValorIde = "";
         bool yaExiste = false;
         int contadorEnteros = 1;
-        bool DeclareUnaVariable = true; 
+       
+        bool esUnaConstante= false,esUnaVariable=false;
+
         ConexionBD conexion = new ConexionBD();
         //arreglo donde se almacenan la información para la tabla de simbolos
         List<string> tablaSimbolo = new List<string>();
@@ -112,7 +114,7 @@ namespace ANALIZA_LEX
                 foreach (string palabras in Lenguajes)
                 {
                     linea++;
-                    DeclareUnaVariable = false;
+                  
                     char[] del = { ' ' };//AHORA TOMA CADA PALABRA DE CADA ORACION 
                     char chMuestra = ' ';
                     int j = 0;
@@ -128,11 +130,15 @@ namespace ANALIZA_LEX
                         {
                             case "ent": 
                                 MessageBox.Show("Declaracion variable");
-                                DeclareUnaVariable = true;
+                                esUnaVariable = true;
+                                esUnaConstante = false;
+                                //DeclareUnaVariable = true;
                                 break;
                             case "flo":
                                 MessageBox.Show("Declaracion variable");
-                                DeclareUnaVariable = true;                               
+                                esUnaVariable = true;
+                                esUnaConstante = false;
+                                //DeclareUnaVariable = true;                               
                                 break;
                             case "txt":
                                 MessageBox.Show("Declaracion variable");
@@ -142,19 +148,35 @@ namespace ANALIZA_LEX
                                 MessageBox.Show("Declaracion variable");
                                 // DeclareUnaVariable = true;                                
                                 break;
+                            default:
+                                esUnaConstante = true;
+                                if (esUnaConstante==true && esUnaVariable==false)
+                                {
+                                    
+                                    string palabrasParaUnaConstante = Lenguaje[i];
+                                    double result;
+                                    if (double.TryParse(palabrasParaUnaConstante, out result))
+                                    {
+                                        MessageBox.Show("Constante numerica: " + palabrasParaUnaConstante);
+                                        dgvAsignacionConstantes.Rows.Add(contadorEnteros, palabrasParaUnaConstante, $"ENTE{contadorEnteros}");
+                                        contadorEnteros = contadorEnteros + 1;
+                                    }
+                                }                                
+                                break;
                         }
-                        if (DeclareUnaVariable == false)
-                        {
-                            dgvAsignacionConstantes.Rows.Clear();
-                            string palabrasParaUnaConstante = Lenguaje[i];
-                            double result;
-                            if (double.TryParse(palabrasParaUnaConstante, out result))
-                            {
-                                MessageBox.Show("Constante numerica: " + palabrasParaUnaConstante);
-                                dgvAsignacionConstantes.Rows.Add(contadorEnteros, palabrasParaUnaConstante, $"ENTE{contadorEnteros}");
-                                contadorEnteros = contadorEnteros + 1;
-                            }
-                        }
+
+                        //if (esUnaConstante=true&&esUnaVariable==false)
+                        //{
+                         
+                        //    string palabrasParaUnaConstante = Lenguaje[i];
+                        //    double result;
+                        //    if (double.TryParse(palabrasParaUnaConstante, out result))
+                        //    {
+                        //        MessageBox.Show("Constante numerica: " + palabrasParaUnaConstante);
+                        //        dgvAsignacionConstantes.Rows.Add(contadorEnteros, palabrasParaUnaConstante, $"ENTE{contadorEnteros}");
+                        //        contadorEnteros = contadorEnteros + 1;
+                        //    }
+                        //}
                     }
 
                     //INVOCA EL METODO DE LA PILA PARA VERIFICAR QUE ESTEN CORRECTAMENTE EL BALANCE DE LOS CORCHETES Y SIGNOS DE ?
@@ -565,6 +587,11 @@ namespace ANALIZA_LEX
 
         bool primerCambio = true;
 
+        private void dgvAsignacionConstantes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         private void radPostorden_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -617,10 +644,11 @@ namespace ANALIZA_LEX
                 foreach (Identificador miIdentificador in unaLista)
                 {
                     dgvIden.Rows.Add(miIdentificador.Numero, miIdentificador.strIdentificador, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
-                    if (DeclareUnaVariable == true)
-                    {
+                   
+                    if (esUnaVariable == true )
+                    {                      
                         dgvAsignaVariable.Rows.Add(miIdentificador.Numero, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
-                       
+                        esUnaVariable = false;
                     }
 
                 }

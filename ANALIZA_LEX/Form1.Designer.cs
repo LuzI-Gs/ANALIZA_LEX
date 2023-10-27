@@ -562,6 +562,7 @@
             this.dgvAsignacionConstantes.Name = "dgvAsignacionConstantes";
             this.dgvAsignacionConstantes.Size = new System.Drawing.Size(339, 150);
             this.dgvAsignacionConstantes.TabIndex = 4;
+            this.dgvAsignacionConstantes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAsignacionConstantes_CellContentClick);
             // 
             // Column4
             // 
