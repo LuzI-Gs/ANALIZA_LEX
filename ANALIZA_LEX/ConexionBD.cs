@@ -11,17 +11,17 @@ namespace ANALIZA_LEX
     internal class ConexionBD
     {
         //Cadena de Conexion
-
-         //string conexion = ("server = ARQUITECTURA\\MSSQLSERVER01  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
+        //Hugo
+        string conexion = ("server = ARQUITECTURA\\MSSQLSERVER01  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
 
         //gema
         // string conexion = ("server = GEMA\\SQLEXPRESS01  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
 
         //luz
-        string conexion = ("server = PCGSIL  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
+        //string conexion = ("server = PCGSIL  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
 
         //sarahi
-      //  string conexion = ("server = DESKTOP-GO5913E  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
+        //  string conexion = ("server = DESKTOP-GO5913E  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
 
         /*en server le van a poner el nombre de su servidor en SqlServer, pero primero deben crear una base de datos que se llame 
          MATRIZ_TRANSICION (CREATE DATABASE MATRIZ_TRANSICION;) ya que se haya creado, borran esa linea donde se crea la BD,

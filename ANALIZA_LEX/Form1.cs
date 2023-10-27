@@ -55,6 +55,8 @@ namespace ANALIZA_LEX
         int intEstado = 0, contador = 0, contadorLineas = 1;
         string token = "", sintactico = "", LenguajeNat = "", tipoDato = "", strValorIde = "";
         bool yaExiste = false;
+        int contadorEnteros = 1;
+        bool DeclareUnaVariable = true; 
         ConexionBD conexion = new ConexionBD();
         //arreglo donde se almacenan la información para la tabla de simbolos
         List<string> tablaSimbolo = new List<string>();
@@ -109,7 +111,8 @@ namespace ANALIZA_LEX
                 int contadorletras=0;
                 foreach (string palabras in Lenguajes)
                 {
-                    linea++;                 
+                    linea++;
+                    DeclareUnaVariable = false;
                     char[] del = { ' ' };//AHORA TOMA CADA PALABRA DE CADA ORACION 
                     char chMuestra = ' ';
                     int j = 0;
@@ -118,6 +121,41 @@ namespace ANALIZA_LEX
                     string strPalabra = palabras;    //TOMA LA PALABRA DE LA ORACION  INGRESADA               
                     string[] Lenguaje = strPalabra.Split(del);     //METE LAS PALABRAS EN UN ARREGLO
                     int banderatipodato = 0;
+
+                    for (int i = 0; i < Lenguaje.Length; i++) //Metodo que hace verifica si es una Declaracion de variable o una asignacion a una variable
+                    {
+                        switch (Lenguaje[i])
+                        {
+                            case "ent":
+                                MessageBox.Show("Declaracion variable");
+                                DeclareUnaVariable = true;
+                                break;
+                            case "flo":
+                                MessageBox.Show("Declaracion variable");
+                                // DeclareUnaVariable = true;                               
+                                break;
+                            case "txt":
+                                MessageBox.Show("Declaracion variable");
+                                //DeclareUnaVariable = true;                               
+                                break;
+                            case "boo":
+                                MessageBox.Show("Declaracion variable");
+                                // DeclareUnaVariable = true;                                
+                                break;
+                        }
+                        if (DeclareUnaVariable == false)
+                        {                           
+                            string palabrasParaUnaConstante = Lenguaje[i];
+                            double result;
+                            if (double.TryParse(palabrasParaUnaConstante, out result))
+                            {
+                                MessageBox.Show("Constante numerica: " + palabrasParaUnaConstante);
+                                dgvAsignacionConstantes.Rows.Add(contadorEnteros, palabrasParaUnaConstante, $"ENTE{contadorEnteros}");
+                                contadorEnteros = contadorEnteros + 1;
+                            }
+                        }
+                    }
+
                     //INVOCA EL METODO DE LA PILA PARA VERIFICAR QUE ESTEN CORRECTAMENTE EL BALANCE DE LOS CORCHETES Y SIGNOS DE ?
                     evaluacion = EvaluarExpresion(palabras);
                     if (evaluacion == "Expresion incorrecta fsi")
@@ -576,6 +614,11 @@ namespace ANALIZA_LEX
                 foreach (Identificador miIdentificador in unaLista)
                 {
                     dgvIden.Rows.Add(miIdentificador.Numero, miIdentificador.strIdentificador, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
+                    if (DeclareUnaVariable == true)
+                    {
+                        dgvAsignaVariable.Rows.Add(miIdentificador.Numero, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
+                    }
+
                 }
                 dgvErroresLexicos.Rows.Clear();
                 foreach (Error error in errores)
