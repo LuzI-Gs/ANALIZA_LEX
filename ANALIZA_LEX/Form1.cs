@@ -126,13 +126,13 @@ namespace ANALIZA_LEX
                     {
                         switch (Lenguaje[i])
                         {
-                            case "ent":
+                            case "ent": 
                                 MessageBox.Show("Declaracion variable");
                                 DeclareUnaVariable = true;
                                 break;
                             case "flo":
                                 MessageBox.Show("Declaracion variable");
-                                // DeclareUnaVariable = true;                               
+                                DeclareUnaVariable = true;                               
                                 break;
                             case "txt":
                                 MessageBox.Show("Declaracion variable");
@@ -144,7 +144,8 @@ namespace ANALIZA_LEX
                                 break;
                         }
                         if (DeclareUnaVariable == false)
-                        {                           
+                        {
+                            dgvAsignacionConstantes.Rows.Clear();
                             string palabrasParaUnaConstante = Lenguaje[i];
                             double result;
                             if (double.TryParse(palabrasParaUnaConstante, out result))
@@ -591,6 +592,7 @@ namespace ANALIZA_LEX
         }
         private void btnValidar_Click_1(object sender, EventArgs e)
         {
+
             unaLista.Clear();
             txtLineasLexico.Text = "";
             contador = 0;
@@ -611,12 +613,14 @@ namespace ANALIZA_LEX
                 txtTokens.Text = textoModificado;
                 //mostrar la información en la tabla de simbolos
                 dgvIden.Rows.Clear();
+               
                 foreach (Identificador miIdentificador in unaLista)
                 {
                     dgvIden.Rows.Add(miIdentificador.Numero, miIdentificador.strIdentificador, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
                     if (DeclareUnaVariable == true)
                     {
                         dgvAsignaVariable.Rows.Add(miIdentificador.Numero, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
+                       
                     }
 
                 }
