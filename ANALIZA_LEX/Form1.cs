@@ -152,7 +152,7 @@ namespace ANALIZA_LEX
                         switch (palabra)
                         {
                             case "ent":
-                                token = "ENTE";
+                                token = "PR05";
                                 break;
                             case "flo":
                                 token = "PR08";
@@ -199,25 +199,27 @@ namespace ANALIZA_LEX
                                     dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Cadena Invalida.");
                                 }
                                 break;
-                            case "ENTE":
+                            case "PR05":
                                 if (char.IsDigit(strValorIde[0]) || strValorIde[0] == '+' || strValorIde[0] == '-')
                                 {
-                                    bool caracteresNumericos = true;
-                                    for (int i = 0; i < strValorIde.Length; i++)
+                                    if (char.IsDigit(strValorIde[0]))
                                     {
-                                        if (!char.IsDigit(strValorIde[i]))
+                                        for (int i = 0; i < strValorIde.Length; i++)
                                         {
-                                            caracteresNumericos = false;
-                                            break; // Salir del bucle si se encuentra un carácter no numérico
+                                            // MessageBox.Show($"Empieza en : {i}");  // MessageBox.Show($"{strValorIde[i]}");
+                                            char miCaracter2 = strValorIde[i];
+                                            int valorAscii2 = (int)miCaracter2;
+                                            if (valorAscii2 >= 48 && valorAscii2 <= 57) //valores numericos en ascii para el resto
+                                            {
+                                                //MessageBox.Show($"{strValorIde[i]} - si pertenece a un numero");                                                
+                                            }
+                                            else
+                                            {
+                                                //  MessageBox.Show($"{strValorIde[i]} - no pertenece a un numero");
+                                                dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), $"{strValorIde[i]} - no pertenece a un numero");
+                                                break;
+                                            }
                                         }
-                                    }
-                                    if (caracteresNumericos == true)
-                                    {
-                                        //MessageBox.Show("El formato es válido: " + strValorIde);
-                                    }
-                                    else
-                                    {
-                                        //dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error2: Se esperaba un valor entero ");
                                     }
                                 }
                                 else
