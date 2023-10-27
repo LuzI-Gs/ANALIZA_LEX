@@ -58,7 +58,13 @@ namespace ANALIZA_LEX
         int contadorEnteros = 1;
        
         bool esUnaConstante= false,esUnaVariable=false,esUnaVarAceptable=false;
-        string[] varAceptables = { "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j", "_k", "_l", "_m", "_n", "_o", "_p", "_q", "_r", "_s", "_t", "_u", "_v", "_w", "_x", "_y", "_z" };
+        string[] varAceptablesEnString = { "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j", "_k", "_l", "_m", "_n", "_o", "_p", "_q", "_r", "_s", "_t", "_u", "_v", "_w", "_x", "_y", "_z" };
+        string[] varAceptablesEnChar = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+        char[] charPosicionAbecedario = new char[]
+{
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+};
 
         ConexionBD conexion = new ConexionBD();
         //arreglo donde se almacenan la información para la tabla de simbolos
@@ -354,38 +360,7 @@ namespace ANALIZA_LEX
                     {
                         txtTokens.Text =txtTokens.Text +"";   
                     }
-                    //--------                   
-                    for (int i = 0; i < Lenguaje.Length; i++) //Verifica si contiene variables aceptables 
-                    {
-                        for (int x = 0; x < varAceptables.Length; x++)
-                        {
-                            if (Lenguaje[i] == varAceptables[x])
-                            {
-                                esUnaVarAceptable = true;
-                                MessageBox.Show("contiene una variable aceptable");
-                            }
-                        }                        
-                    }
-                    for (int i = 0; i < Lenguaje.Length; i++) //Metodo que hace verifica si es una Declaracion de variable o una asignacion a una variable
-                    {                        
-                        if ( Lenguaje[i] == "ent" || Lenguaje[i] == "flo" || Lenguaje[i] == "txt" || Lenguaje[i] == "boo")
-                        {
-                            esUnaVariable = true;
-                            esUnaConstante = false;
-                            break;
-                        }
-                        else
-                        {
-                            if (esUnaVarAceptable==true &&  Lenguaje[i] != "ent" && Lenguaje[i] != "flo" && Lenguaje[i] != "txt" && Lenguaje[i] != "boo")
-                            {
-                                esUnaVariable = false;
-                                esUnaConstante = true;
-                            }                           
-                        }
-                    }
-                    esUnaVarAceptable = false;
-                    MessageBox.Show($"Sale con estados: \nvariable: {esUnaVariable}\nconstante: {esUnaConstante}");
-
+                    
                 }
             }
             catch (Exception)
@@ -560,24 +535,7 @@ namespace ANALIZA_LEX
             Clear(); //ejecuta metodo que limpia tableros, variables globales
         }
 
-        
-
-        bool primerCambio = true;
-
-        private void dgvAsignacionConstantes_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void tabPage5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radPostorden_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
+        bool primerCambio = true;      
 
         private void txtLenguaje_TextChanged(object sender, EventArgs e) //se agregan las lineas de codigo cada vez que se detecta el salto de linea
         {          
@@ -600,8 +558,7 @@ namespace ANALIZA_LEX
             contadorLineas += numeroDeLineas; // Actualizar el contador de líneas para la próxima vez.
         }
         private void btnValidar_Click_1(object sender, EventArgs e)
-        {
-           
+        {           
             unaLista.Clear();
             txtLineasLexico.Text = "";
             contador = 0;
@@ -626,20 +583,6 @@ namespace ANALIZA_LEX
                 {
                     dgvIden.Rows.Add(miIdentificador.Numero, miIdentificador.strIdentificador, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
 
-
-                    if (esUnaVariable == true && esUnaConstante == false)
-                    {
-                        dgvAsignaVariable.Rows.Add(miIdentificador.Numero, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
-                        esUnaVariable = false;
-                        esUnaConstante=false;
-                    }
-                    if (esUnaVariable == false && esUnaConstante == true)
-                    {
-                        dgvAsignacionConstantes.Rows.Add(miIdentificador.Numero, miIdentificador.Valor, miIdentificador.TipoDato);
-                        esUnaVariable = false;
-                        esUnaConstante = false;
-                    }
-
                 }
                 dgvErroresLexicos.Rows.Clear();
                 foreach (Error error in errores)
@@ -650,6 +593,7 @@ namespace ANALIZA_LEX
                 {
                     txtLineasLexico.AppendText($"\n{i.ToString()}  ");
                 }
+                evaluaExPresionVariableConstante();
             }
             catch (Exception)
             {
@@ -747,6 +691,123 @@ namespace ANALIZA_LEX
                     }
                 }
             }
+        }
+        int indiceConstante = 0,indiceVariable;
+        string variableAceptada= "";
+        public void evaluaExPresionVariableConstante()
+        {
+            string primerLinea = "";
+            int numeroDeLineas = txtLenguaje.Lines.Length;
+
+            for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
+            {
+                primerLinea= txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty;
+                string expression = primerLinea;
+                string[] tokens = expression.Split(' '); // Dividimos la expresión en tokens por espacios en blanco
+            
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    string token = tokens[i];
+              
+                   if (token.All(char.IsDigit))
+                    {
+                        // El token es una constante numérica
+                        //MessageBox.Show($"{token} es una constante.");
+                        dgvAsignacionConstantes.Rows.Add(indiceConstante=indiceConstante+1,token,"entero");
+                    }
+                    else if (token.All(char.IsLetter))
+                    {
+                        // El token es una variable
+                        //MessageBox.Show($"{token} es una variable.");
+                        //switch (token)
+                        //{
+                        //    case "a":
+                        //        variableAceptada = "_a";
+                        //        break;
+                        //    case "b":
+                        //        variableAceptada = "_b";
+                        //        break;
+                        //    case "c":
+                        //        variableAceptada = "_c";
+                        //        break;
+                        //    case "d":
+                        //        variableAceptada = "_d";
+                        //        break;
+                        //    case "e":
+                        //        variableAceptada = "_e";
+                        //        break;
+                        //    case "f":
+                        //        variableAceptada = "_f";
+                        //        break;
+                        //    case "g":
+                        //        variableAceptada = "_g";
+                        //        break;
+                        //    case "h":
+                        //        variableAceptada = "_h";
+                        //        break;
+                        //    case "i":
+                        //        variableAceptada = "_i";
+                        //        break;
+                        //    case "j":
+                        //        variableAceptada = "_j";
+                        //        break;
+                        //    case "k":
+                        //        variableAceptada = "_k";
+                        //        break;
+                        //    case "l":
+                        //        variableAceptada = "_l";
+                        //        break;
+                        //    case "m":
+                        //        variableAceptada = "_m";
+                        //        break;
+                        //    case "n":
+                        //        variableAceptada = "_n";
+                        //        break;
+                        //    case "o":
+                        //        variableAceptada = "_o";
+                        //        break;
+                        //    case "p":
+                        //        variableAceptada = "_p";
+                        //        break;
+                        //    case "q":
+                        //        variableAceptada = "_q";
+                        //        break;
+                        //    case "r":
+                        //        variableAceptada = "_r";
+                        //        break;
+                        //    case "s":
+                        //        variableAceptada = "_s";
+                        //        break;
+                        //    case "t":
+                        //        variableAceptada = "_t";
+                        //        break;
+                        //    case "u":
+                        //        variableAceptada = "_u";
+                        //        break;
+                        //    case "v":
+                        //        variableAceptada = "_v";
+                        //        break;
+                        //    case "w":
+                        //        variableAceptada = "_w";
+                        //        break;
+                        //    case "x":
+                        //        variableAceptada = "_x";
+                        //        break;
+                        //    case "y":
+                        //        variableAceptada = "_y";
+                        //        break;
+                        //    case "z":
+                        //        variableAceptada = "_z";
+                        //        break;
+
+                        //}
+
+                        dgvAsignaVariable.Rows.Add(indiceVariable=indiceVariable+1, token, "vacio");
+                    }
+                }
+            }
+
+          
         }
         private void btnOrdenar_Click(object sender, EventArgs e)
         {
