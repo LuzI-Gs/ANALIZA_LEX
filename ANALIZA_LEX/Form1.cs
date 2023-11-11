@@ -91,10 +91,8 @@ namespace ANALIZA_LEX
                 string strPalabras = LenguajeNat; //TOMA LA ORACION DE CADA LINEA EN EL TEXTBOX INGRESADA
                 string[] Lenguajes = strPalabras.Split(del1);//METE LAS ORACIONES EN UN ARREGLO 
                 string evaluacion = "";
-                int linea = 0;               
-            
-                foreach (string palabras in Lenguajes)
-                {
+                int linea = 0;              
+                foreach (string palabras in Lenguajes) {
                     linea++;                  
                     char[] del = { ' ' };//AHORA TOMA CADA PALABRA DE CADA ORACION 
                     char chMuestra = ' ';                 
@@ -297,15 +295,13 @@ namespace ANALIZA_LEX
                 txtTokens.ReadOnly= true;                
                 string textoOriginal = txtTokens.Text;//metodo para quitar la sangria 
                 string[] lineas = textoOriginal.Split('\n'); // Dividir el texto en líneas
-                for (int i = 0; i < lineas.Length; i++)
-                {
+                for (int i = 0; i < lineas.Length; i++)                {
                     lineas[i] = lineas[i].TrimStart(); // Quitar espacios al inicio de cada línea
                 }
                 string textoModificado = string.Join("\n", lineas); // Unir las líneas modificadas
                 txtTokens.Text = textoModificado;
                 dgvIden.Rows.Clear();//mostrar la información en la tabla de simbolos
-                foreach (Identificador miIdentificador in unaLista)
-                {                   
+                foreach (Identificador miIdentificador in unaLista)                {                   
                     dgvIden.Rows.Add(miIdentificador.Numero, "IDE" + miIdentificador.Numero, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
                 }
                 dgvErroresLexicos.Rows.Clear();
@@ -316,64 +312,44 @@ namespace ANALIZA_LEX
         }
         public bool ValidarIDE(int Estado, char letra)
         {                 
-            bool seEncontroCaracter = false;                 // Variable para indicar si se encontró el carácter        
-            for (int i = 1; i < dtgMatriz.ColumnCount - 2; i++)  //RECORRE LAS COLUMAS DE LA TABLA OSEA EL ALFABETO-NUMEROS-OTROS
-            {
+            bool seEncontroCaracter = false; // Variable para indicar si se encontró el carácter        
+            for (int i = 1; i < dtgMatriz.ColumnCount - 2; i++) {   /*RECORRE LAS COLUMAS DE LA TABLA OSEA EL ALFABETO-NUMEROS-OTROS*/ 
                 //BUSCA POR LAS COLUMNAS  DESDE LA POSICION 1 OSEA DESDE LA lETRA -A- EN LA COLUMNA (0) QUE SON LOS NOMBRES DE LA TABLA 
-                //SI EL CARACTER  ES IGUAL A LA LETRA ENVIADA 
-                if (dtgMatriz.Columns[i].HeaderText[0] == letra )
-                {
-                    // EN CASO DE QUE NO SEA ALGO VALIDO VERIFICA QUE SU ESTADO SEA  
+                if (dtgMatriz.Columns[i].HeaderText[0] == letra ) { /*    //SI EL CARACTER  ES IGUAL A LA LETRA ENVIADA */                
                     if (dtgMatriz.Rows[Estado].Cells[i].Value.ToString() == "108")
-                    {
+                    { /*  // EN CASO DE QUE NO SEA ALGO VALIDO VERIFICA QUE SU ESTADO SEA  */
                         this.intEstado = int.Parse(dtgMatriz.Rows[Estado].Cells[i].Value.ToString());
-                    }
-                    else
-                    {
-                        //SI NO LO ES PINTA DE AZUL LA CELDA DEL CARACTER
-                        // Si encuentra el Letra, obtiene el estado correspondiente y retorna true y pinta la letra correspondiente 
-                        dtgMatriz.Rows[Estado].Cells[i].Style.BackColor = Color.Blue;
+                    }else  { //SI NO LO ES PINTA DE AZUL LA CELDA DEL CARACTER
+
+                        dtgMatriz.Rows[Estado].Cells[i].Style.BackColor = Color.Blue;// Si encuentra el Letra, obtiene el estado correspondiente y retorna true y pinta la letra correspondiente 
                         this.intEstado = int.Parse(dtgMatriz.Rows[Estado].Cells[i].Value.ToString());
-                    }
-                    //DEVUELVE UN TRUE REPRESENTADO QUE SE VALIDO EL IDE 
-                    seEncontroCaracter = true;
+                    }                    
+                    seEncontroCaracter = true;//DEVUELVE UN TRUE REPRESENTADO QUE SE VALIDO EL IDE 
                     break;
                 }
-            }            
-            return seEncontroCaracter;//DEVUELVE UN FALSE  REPRESENTADO QUE SE NO VALIDO EL IDE 
+            }  return seEncontroCaracter;//DEVUELVE UN FALSE  REPRESENTADO QUE SE NO VALIDO EL IDE 
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        private void Form1_Load(object sender, EventArgs e) {
             MostrarMatriz();
             txtTokens.ReadOnly= true;
         }
-        public void ChecarEspacios()
-        {
+        public void ChecarEspacios()        {
             string textp=txtSintactico.Text;
             textp= textp.TrimEnd(); 
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
+        private void button1_Click(object sender, EventArgs e) {
             Application.Restart();
         }  
-        private void txtTokens_TextChanged(object sender, EventArgs e)
-        {
+        private void txtTokens_TextChanged(object sender, EventArgs e) {
             unIdentificador = new Identificador();
         }
-        private void btnValidarSint_Click(object sender, EventArgs e)
-        {
-            try
-            {
+        private void btnValidarSint_Click(object sender, EventArgs e) {
+            try  {
                 string texto = txtTokens.Text;
                 EnviarLineasHastaDelimitador(texto);              
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            } catch (Exception ex) {MessageBox.Show(ex.Message); }
         }     
-        private void picMinimizar_Click(object sender, EventArgs e)
-        {
+        private void picMinimizar_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
         }
 
@@ -381,29 +357,24 @@ namespace ANALIZA_LEX
         {
             char[] del1 = { '\n' };
             string[] lineas = texto.Split(del1, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string linea in lineas)
-            {
+            foreach (string linea in lineas) {
                 bool esLineaValida = VerificarAsignacion(linea);
                 string mensaje = esLineaValida ? " --> VALIDA" : " --> NO VALIDA";
                 txtSintactico.AppendText(linea + mensaje + "\r\n");
             }
         }
-        private bool VerificarAsignacion(string linea)
-        {
-            //modificaciones para corchetes opraciones
-            string patronOperacion1 = @"CE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11";
+        private bool VerificarAsignacion(string linea) {           
+            string patronOperacion1 = @"CE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11"; //modificaciones para corchetes opraciones
             bool matchOperacion1 = Regex.IsMatch(linea, patronOperacion1, RegexOptions.IgnoreCase);
-
             string patronOperacion2 = @"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11\s\[\d+\]\s\[\d+\]$";//@"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11\s\[\d+\]\s\[\d+\]$";//CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11";                                                                                                             // string patronOperacion2 = @"CE10\s(?:ENTE|ES02|ES03)$\s(?:OPR[1-5])\sCE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11\sCE11";
             bool matchOperacion2 = Regex.IsMatch(linea, patronOperacion2, RegexOptions.IgnoreCase);
+            string patronEstructura1 = @"^IDE[12N]\sPR05\sCE06\s(?:ENTE|ES02|ES03)$"; 
             // Expresión regular para la estructura 1
-            string patronEstructura1 = @"^IDE[12N]\sPR05\sCE06\s(?:ENTE|ES02|ES03)$";
             string patronEstructura11 = @"^IDE[12N]\sPR08\sCE06\s(?:ES04|ES05|FLOT)$";
             string patronEstructura12 = @"^IDE[12N]\sPR18\sCE06\sES07$";
             string patronEstructura13 = @"^IDE[12N]\sPR18\sCE06\s(?:PR06|PR19)$";
             // Expresión regular para la estructura 2
             string patronEstructura2 = @"^PR14$|^CE05\sIDE[12N]\sOPR[1-5]\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]\sCE06\sIDE[12N]\sOPA[1-5]\sENTE$|^PR07$";// @"^PR14$|^CE05\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]\sCE06\sIDE[12N]\s(?:OPA[1-5])\sENTE$|^PR07$";
-           
             //Expresion regular para la estrucrura 3
             // string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|IDE)$|^PR07$|^CE05\sIDE\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sENTE\s(?:(?:OPR[1-5])|(?:OPL[1-3]))\sIDE\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sENTE\sCE03$";
             string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|sIDE[12N])$|^PR07$|^CE05\sIDE[12N]\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\s(?:(?:OPR[1-5])|(?:OPL[1-3]))\sIDE[12N]\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\sCE03$|^PR19$|^PR17$|^PR06$";
@@ -422,197 +393,131 @@ namespace ANALIZA_LEX
             bool matchEstructura5 = Regex.IsMatch(linea, patronEstructura5, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             return matchEstructura1 || matchEstructura11 || matchEstructura12 || matchEstructura13 || matchEstructura2 || matchEstructura3 || matchEstructura4 || matchEstructura5||matchOperacion1||matchOperacion2;
         }
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
+        private void btnLimpiar_Click(object sender, EventArgs e)        {
             Clear(); //ejecuta metodo que limpia tableros, variables globales
         }
-
         bool primerCambio = true;      
-
-        private void txtLenguaje_TextChanged(object sender, EventArgs e) //se agregan las lineas de codigo cada vez que se detecta el salto de linea
-        {          
-            string codigoEntrada = txtLenguaje.Text;  // Obtén el texto del primer TextBox
+        private void txtLenguaje_TextChanged(object sender, EventArgs e) { /*se agregan las lineas de codigo cada vez que se detecta el salto de linea */
+                        string codigoEntrada = txtLenguaje.Text;  // Obtén el texto del primer TextBox
             contadorLineas = 1; // Divide el texto en líneas usando el carácter de salto de línea ('\n')
              string[] lineasCodigo = codigoEntrada.Split('\n');          
             txtLineasLenguaje.Clear();  // Borra el contenido actual del segundo TextBox                                       
             int numeroDeLineas = lineasCodigo.Length;// Agrega cada línea al segundo TextBox     
             StringBuilder codigoConNumerosDeLinea = new StringBuilder();// Actualizar el contador de líneas y mostrarlo como números de línea de código.
-            if (primerCambio)
-            {
+            if (primerCambio) {
                 codigoConNumerosDeLinea.Append("\n");
                 primerCambio = false;
             }
-            for (int i = 0; i < numeroDeLineas; i++)
-            {
+            for (int i = 0; i < numeroDeLineas; i++) {
                 codigoConNumerosDeLinea.Append(contadorLineas + i + " " + "\n");
             }           
             txtLineasLenguaje.Text = codigoConNumerosDeLinea.ToString(); // Mostrar el código con números de línea en el TextBox.                    
             contadorLineas += numeroDeLineas; // Actualizar el contador de líneas para la próxima vez.
         }
-        private void btnValidar_Click_1(object sender, EventArgs e)
-        {           
+        private void btnValidar_Click_1(object sender, EventArgs e) {           
             unaLista.Clear();
             txtLineasLexico.Text = "";
             contador = 0;
-            try
-            {               
+            try {               
                 DescomponerCadenas(); //INVOCA EL METODO
                 LenguajeNat = "";
-                txtTokens.ReadOnly = true;
-                //metodo para quitar la sangria 
-                string textoOriginal = txtTokens.Text;
+                txtTokens.ReadOnly = true;               
+                string textoOriginal = txtTokens.Text; //metodo para quitar la sangria 
                 string[] lineas = textoOriginal.Split('\n'); // Dividir el texto en líneas
-                for (int i = 0; i < lineas.Length; i++)
-                {
+                for (int i = 0; i < lineas.Length; i++) {
                     lineas[i] = lineas[i].TrimStart(); // Quitar espacios al inicio de cada línea
                 }
                 string textoModificado = string.Join("\n", lineas); // Unir las líneas modificadas
-                txtTokens.Text = textoModificado;
-                //mostrar la información en la tabla de simbolos
-                dgvIden.Rows.Clear();
-               
-                foreach (Identificador miIdentificador in unaLista)
-                {
+                txtTokens.Text = textoModificado;                
+                dgvIden.Rows.Clear();//mostrar la información en la tabla de simbolos
+                foreach (Identificador miIdentificador in unaLista) {
                     dgvIden.Rows.Add(miIdentificador.Numero, miIdentificador.strIdentificador, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
-
                 }
                 dgvErroresLexicos.Rows.Clear();
-                foreach (Error error in errores)
-                {
+                foreach (Error error in errores) {
                     dgvErroresLexicos.Rows.Add(error.NomError, error.MostrarCaracteristica());
                 }
-                for (int i = 1; i < contadorLineas; i++)
-                {
+                for (int i = 1; i < contadorLineas; i++) {
                     txtLineasLexico.AppendText($"\n{i.ToString()}  ");
-                }
-                
+                }                
             }
-            catch (Exception)
-            {
-                MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            catch (Exception) { MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
-        private void btnValidarSint_Click_1(object sender, EventArgs e)
-        {
-            try
-            {
+        private void btnValidarSint_Click_1(object sender, EventArgs e) {
+            try{
                 string texto = txtTokens.Text;
                 EnviarLineasHastaDelimitador(texto);          
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            }catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        private void picSalir_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-        //METODO QUE COMPRUEBA LOS signos¿? y corchetes[]
-        private string EvaluarExpresion(string expresion)
-        {
+        private void picSalir_Click(object sender, EventArgs e) { Application.Exit(); }
+        private string EvaluarExpresion(string expresion) { /* METODO QUE COMPRUEBA LOS signos¿? y corchetes[] */
             ClasePila pila = new ClasePila();
             string cadena = expresion;
-            if (cadena.Contains("¿") || cadena.Contains("?"))
-            {
-                for (int i = 0; i < cadena.Length; i++)
-                {
-                    if (cadena.ElementAt(i) == '¿')
-                    {
+            if (cadena.Contains("¿") || cadena.Contains("?")) {
+                for (int i = 0; i < cadena.Length; i++) {
+                    if (cadena.ElementAt(i) == '¿') {
                         pila.Insertar(cadena.ElementAt(i));
-                    }
-                    else
-                    {
-                        if (cadena.ElementAt(i) == '?')
-                        {
-                            if (pila.Extraer() != '¿')
-                            {
+                    }else{
+                        if (cadena.ElementAt(i) == '?') {
+                            if (pila.Extraer() != '¿') {
                                 return "Expresion incorrecta fsi";//falta signo inicio
                             }
                         }
                     }
                 }
-                if (pila.Vacia())
-                {
+                if (pila.Vacia()) {
                     return "Expresion correcta";
-                }
-                else
-                {
-                    if (pila.Extraer() == '¿')
-                    {
+                } else {
+                    if (pila.Extraer() == '¿') {
                         return "Expresion incorrecta fsf";//falta signo final
-                    }
-                    else
-                    {
+                    } else {
                         return "Expresion incorrecta fsi";//falta signo inicio
                     }
                 }
             }
-            else
-            {
-                for (int i = 0; i < cadena.Length; i++)
-                {
-                    if (cadena.ElementAt(i) == '[')
-                    {
+            else {
+                for (int i = 0; i < cadena.Length; i++) {
+                    if (cadena.ElementAt(i) == '[') {
                         pila.Insertar(cadena.ElementAt(i));
-                    }
-                    else
-                    {
-                        if (cadena.ElementAt(i) == ']')
-                        {
-                            if (pila.Extraer() != '[')
-                            {
+                    }else{
+                        if (cadena.ElementAt(i) == ']') {
+                            if (pila.Extraer() != '[') {
                                 return "Expresion incorrecta fci";//falta corchete inicio
                             }
                         }
                     }
                 }
-                if (pila.Vacia())
-                {
+                if (pila.Vacia()) {
                     return "Expresion correcta";
-                }
-                else
-                {
-                    if (pila.Extraer() == '[')
-                    {
+                }else {
+                    if (pila.Extraer() == '[') {
                         return "Expresion incorrecta fcf";//falta corchete final
-                    }
-                    else
-                    {
+                    } else {
                         return "Expresion incorrecta fci";//falta corchete inicio
                     }
                 }
             }
-        }
-     
-       
+        } 
         private void btnOrdenar_Click(object sender, EventArgs e)
         {
-            if (radPreorden.Checked)
-            {
+            if (radPreorden.Checked) {
                 arbol.InsertarEnCola(txtLenguaje.Text);
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
-                rtxt.Text =arbol.InsertarPre(raiz);
-             
+                rtxt.Text =arbol.InsertarPre(raiz);            
             }
-            if (radPostorden.Checked)
-            {
+            if (radPostorden.Checked) {
                 arbol.InsertarEnCola(txtLenguaje.Text);
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
-                rtxt.Text = arbol.InsertarPost(raiz);
-               
+                rtxt.Text = arbol.InsertarPost(raiz);               
             }
-            if (radInOrden.Checked)
-            {
+            if (radInOrden.Checked) {
                 arbol.InsertarEnCola(txtLenguaje.Text);
                 raiz = arbol.CrearArbol();
                 arbol.Limpiar();
-                rtxt.Text = arbol.InsertarIn(raiz);
-             
+                rtxt.Text = arbol.InsertarIn(raiz);      
             }
-
         }
     }
 }
