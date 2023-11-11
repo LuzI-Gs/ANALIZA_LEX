@@ -24,12 +24,10 @@ namespace ANALIZA_LEX
         public Form1()
         {
             InitializeComponent();
-
             arbol = new Arbol();
             unIdentificador = new Identificador();           
         }
-        private void Clear()
-        {
+        private void Clear(){ /*Hugo Ramos - Metodo que limpia variables y dgv */
             intEstado = 0;                          //Variables
             contador = 0;
             contadorLineas = 1;
@@ -39,10 +37,8 @@ namespace ANALIZA_LEX
             tipoDato = "";
             strValorIde = "";
             yaExiste = false;
-            txtLineasLenguaje.Text = "";            //Contador de Lineas
-            //txtLenguaje.Text = "";                  //Ingresa lineas de codigo
-            txtLineasLexico.Text = "";              //Contador de lineas
-           // txtTokens.Text = "";                    //Mostrador de tokens
+            txtLineasLenguaje.Text = "";            //Contador de Lineas           
+            txtLineasLexico.Text = "";              //Contador de lineas        
             txtSintactico.Text = "";                //Mostrador de estados                                          
             dgvErroresSemanticos.Rows.Clear();      // Limpia todas las filas
             dgvErroresSemanticos.Columns.Clear();   // Limpia todas las columnas
@@ -50,34 +46,20 @@ namespace ANALIZA_LEX
             dgvIden.Columns.Clear();
             dgvErroresLexicos.Rows.Clear();
             dgvErroresLexicos.Columns.Clear();
-
         }
         int intEstado = 0, contador = 0, contadorLineas = 1;
         string token = "", sintactico = "", LenguajeNat = "", tipoDato = "", strValorIde = "";
-        bool yaExiste = false;
-        int contadorEnteros = 1;
-       
-        bool esUnaConstante= false,esUnaVariable=false,esUnaVarAceptable=false;
-        string[] varAceptablesEnString = { "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j", "_k", "_l", "_m", "_n", "_o", "_p", "_q", "_r", "_s", "_t", "_u", "_v", "_w", "_x", "_y", "_z" };
-        string[] varAceptablesEnChar = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
-        char[] charPosicionAbecedario = new char[]
-{
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-};
-
-        ConexionBD conexion = new ConexionBD();
-        //arreglo donde se almacenan la información para la tabla de simbolos
-        List<string> tablaSimbolo = new List<string>();
+        bool yaExiste = false;    
+        ConexionBD conexion = new ConexionBD();      
+        List<string> tablaSimbolo = new List<string>();  //arreglo donde se almacenan la información para la tabla de simbolos
         List<Error> errores = new List<Error>();             
         List<Identificador> unaLista = new List<Identificador>();
         Identificador unIdentificador;
         Error unError;        
-        public void MostrarMatriz()
+        public void MostrarMatriz() 
         {
             conexion.abrir();
-            SqlCommand query1 = new SqlCommand(" Select * from  Matriz", conexion.Conectarbd);
-            //SqlCommand query1 = new SqlCommand(" Select * from MANL", conexion.Conectarbd);
+            SqlCommand query1 = new SqlCommand(" Select * from  Matriz", conexion.Conectarbd); //SqlCommand query1 = new SqlCommand(" Select * from MANL", conexion.Conectarbd);
             SqlDataAdapter adaptador1 = new SqlDataAdapter();
             adaptador1.SelectCommand = query1;
             DataTable Matriz = new DataTable();
@@ -88,26 +70,21 @@ namespace ANALIZA_LEX
         public string BuscarToken(int Estado)
         {
             string tk="";           
-            for (int i = 0; i < dtgMatriz.ColumnCount; i++) //RECORRE TODAS LAS COLUMNAS DE LA TABLA 
-            {
-               
-                if (dtgMatriz.Columns[i].HeaderText == "FDC") //SI ENCUENTRA LA COLUMNA QUE SE LLAMA TOKEN PROCEDE A HACER LAS SIG INSTRUCCIONES
-                {               
+            for (int i = 0; i < dtgMatriz.ColumnCount; i++) { /*RECORRE TODAS LAS COLUMNAS DE LA TABLA */                          
+                if (dtgMatriz.Columns[i].HeaderText == "FDC") { /*SI ENCUENTRA LA COLUMNA QUE SE LLAMA TOKEN PROCEDE A HACER LAS SIG INSTRUCCIONES */                  
                     tk=dtgMatriz.Rows[Estado].Cells[i+1].Value.ToString();     //TOMA EL VALOR DEL TOKEN DEPENDIENDO DEL ESTADO Y LOS ALMACENA EN LA VARIABLE Y LOS VA SUMANDO PARA FORMAR LA CADENA DE TOKENS 
                     //PINTA DE COLOR AZUL LA CELDA DEL TOKEN 
                     dtgMatriz.Rows[Estado].Cells[i+1].Style.BackColor = Color.Blue; 
                 }
             }
-            if (string.IsNullOrWhiteSpace(tk))
-            {
+            if (string.IsNullOrWhiteSpace(tk)) {
                 MessageBox.Show("No se encontró un token para el estado especificado.");
             }                    
             return tk.TrimStart();            
         }
         public void DescomponerCadenas()
         {
-            try
-            {               
+            try{               
                 char[] del1 = { '\n' };
                 LenguajeNat = txtLenguaje.Text;
                 txtTokens.Text = "";               
@@ -115,44 +92,32 @@ namespace ANALIZA_LEX
                 string[] Lenguajes = strPalabras.Split(del1);//METE LAS ORACIONES EN UN ARREGLO 
                 string evaluacion = "";
                 int linea = 0;               
-                int palabrastotales = 0;
-               
+            
                 foreach (string palabras in Lenguajes)
                 {
                     linea++;                  
                     char[] del = { ' ' };//AHORA TOMA CADA PALABRA DE CADA ORACION 
-                    char chMuestra = ' ';
-                    int j = 0;
-                    palabrastotales = palabras.Length; //su funcion es contar cuantas letras hay en una oracion
-                   // MessageBox.Show($"Cantidad de letras totales: {palabrastotales}");                    
+                    char chMuestra = ' ';                 
                     string strPalabra = palabras;    //TOMA LA PALABRA DE LA ORACION  INGRESADA               
-                    string[] Lenguaje = strPalabra.Split(del);     //METE LAS PALABRAS EN UN ARREGLO
-                                      
-
-                    //INVOCA EL METODO DE LA PILA PARA VERIFICAR QUE ESTEN CORRECTAMENTE EL BALANCE DE LOS CORCHETES Y SIGNOS DE ?
-                    evaluacion = EvaluarExpresion(palabras);
-                    if (evaluacion == "Expresion incorrecta fsi")
-                    {
+                    string[] Lenguaje = strPalabra.Split(del);     //METE LAS PALABRAS EN UN ARREGLO                                           
+                    evaluacion = EvaluarExpresion(palabras);//INVOCA EL METODO DE LA PILA PARA VERIFICAR QUE ESTEN CORRECTAMENTE EL BALANCE DE LOS CORCHETES Y SIGNOS DE ?
+                    if (evaluacion == "Expresion incorrecta fsi") {
                         dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta signo de inicio");
                     }
                     else
-                    if (evaluacion == "Expresion incorrecta fsf")
-                    {
+                    if (evaluacion == "Expresion incorrecta fsf") {
                         dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta signo de final");
                     }
-                    if (evaluacion == "Expresion incorrecta fci")
-                    {
+                    if (evaluacion == "Expresion incorrecta fci") {
                         dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta corchete de inicio");
                     }
-                    else
+                    else 
                     if (evaluacion == "Expresion incorrecta fcf")
                     {
                         dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Falta corchete de final");
                     }
-                    foreach (string palabra in Lenguaje)//RECORRE EL ARREGLO DE LAS PALABRAS 
-                    {                       
-                        foreach (string valor in Lenguaje)
-                        {                          
+                    foreach (string palabra in Lenguaje) {/*RECORRE EL ARREGLO DE LAS PALABRAS*/                                            
+                        foreach (string valor in Lenguaje) {                          
                             strValorIde = valor; // toma el ultimo valor de la linea
                             if (valor == "ent" || valor == "flo" || valor == "boo" || valor == "car" || valor == "txt")
                             {
@@ -160,63 +125,41 @@ namespace ANALIZA_LEX
                             }
                         }
                         string strIDE = palabra;
-                        switch (palabra)
-                        {
-                            case "ent":
-                                token = "PR05";
-                                break;
-                            case "flo":
-                                token = "PR08";
-                                break;
-                            case "txt":
-                                token = "PR018";
-                                break;
-                            case "boo":
-                                token = "PR02";
-                                break;
+                        switch (palabra){
+                            case "ent": token = "PR05"; break;
+                            case "flo": token = "PR08"; break;
+                            case "txt": token = "PR018";break;
+                            case "boo": token = "PR02"; break;
                         }
-                        if (strIDE.StartsWith("_"))//sirve para dectectar los identificadores ya que inician con un _
-                        {                            
+                        if (strIDE.StartsWith("_")) { /* Sirve para dectectar los identificadores ya que inician con un _ */                             
                             yaExiste = false;
-                            foreach (string elemento in tablaSimbolo)
-                            {
-                                if (strIDE == elemento)
-                                {
-                                    yaExiste = true;
+                            foreach (string elemento in tablaSimbolo){
+                                if (strIDE == elemento){ yaExiste = true;                                    
                                     break; // Ya encontramos una coincidencia, no es necesario seguir buscando
                                 }
                             }
-                            if (!yaExiste)
-                            {            
-                                // si no existe el identificador anteriormente se agrega al objeto
+                            if (!yaExiste){ /* si no existe el identificador anteriormente se agrega al objeto*/
                                 unIdentificador.Nombre = strIDE;
                                 unIdentificador.Valor = strValorIde;
                             }
                         }
-
-                        switch (token)
-                        {
+                        switch (token) {
                             case "PR018":
                                 int banderainicio = 0;
                                 for (int i = 0; i < strValorIde.Length; i++)
                                 {
-                                    if (strValorIde[i] == '"')
-                                    {
+                                    if (strValorIde[i] == '"') {
                                         banderainicio++;
                                     }
                                 }
-                                if (banderainicio != 2)
-                                {
+                                if (banderainicio != 2) {
                                     dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Cadena Invalida.");
                                 }
                                 break;
                             case "PR05":
-                                if (char.IsDigit(strValorIde[0]) || strValorIde[0] == '+' || strValorIde[0] == '-')
-                                {
-                                    if (char.IsDigit(strValorIde[0]))
-                                    {
-                                        for (int i = 0; i < strValorIde.Length; i++)
-                                        {
+                                if (char.IsDigit(strValorIde[0]) || strValorIde[0] == '+' || strValorIde[0] == '-'){
+                                    if (char.IsDigit(strValorIde[0])) {
+                                        for (int i = 0; i < strValorIde.Length; i++) {
                                             // MessageBox.Show($"Empieza en : {i}");  // MessageBox.Show($"{strValorIde[i]}");
                                             char miCaracter2 = strValorIde[i];
                                             int valorAscii2 = (int)miCaracter2;
@@ -239,83 +182,61 @@ namespace ANALIZA_LEX
                                 }
                                 break;
                             case "PR08":
-
-                                if (strValorIde[0] != '+' && strValorIde[0] != '-' && !char.IsDigit(strValorIde[0]))
-                                {
+                                if (strValorIde[0] != '+' && strValorIde[0] != '-' && !char.IsDigit(strValorIde[0])) {
                                     dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: El primer carácter debe ser '+' o '-' o un numero");
                                 }
-                                else
-                                {
+                                else {
                                     bool caracteresNumericos = true;
-                                    for (int i = 1; i < strValorIde.Length; i++)
-                                    {
-                                        if (!char.IsDigit(strValorIde[i]) && strValorIde[i] != '.')
-                                        {
+                                    for (int i = 1; i < strValorIde.Length; i++) {
+                                        if (!char.IsDigit(strValorIde[i]) && strValorIde[i] != '.')                                        {
                                             caracteresNumericos = false;
                                             break; // Salir del bucle si se encuentra un carácter no numérico
                                         }
                                     }
-                                    if (caracteresNumericos == true)
-                                    {
+                                    if (caracteresNumericos == true) {
                                         //MessageBox.Show("El formato es válido: " + strValorIde);
                                     }
-                                    else
-                                    {
+                                    else {
                                         dgvErroresSemanticos.Rows.Add(BuscarLineaError(strValorIde), "Error: Se encontraron valores no numéricos");
                                     }
                                 }
                                 break;
                             case "PR02":
-                                if (strValorIde[0] == 'v' && strValorIde[1] == 'e' && strValorIde[2] == 'r' && strValorIde[3] == 'd')
-                                {
+                                if (strValorIde[0] == 'v' && strValorIde[1] == 'e' && strValorIde[2] == 'r' && strValorIde[3] == 'd') {
                                     MessageBox.Show("Es correcto");
                                 }
-                                else
-                                {
-                                    if (strValorIde[0] == 'f' && strValorIde[1] == 'a' && strValorIde[2] == 'l')
-                                    {
+                                else {
+                                    if (strValorIde[0] == 'f' && strValorIde[1] == 'a' && strValorIde[2] == 'l') {
                                         MessageBox.Show("Es correcto");
-                                    }
-                                    else
-                                    {
+                                    }else {
                                         MessageBox.Show("Se esperaba un fal o un verd");
                                     }
                                 }
                                 break;
                         }
-
-                        for (int i = 0; i < strIDE.Length; i++) //CICLO QUE EXTRAE CADA LETRA DE CADA PALABRA
-                        { 
-                            //Validar tipo de dato string que este completo
-                            chMuestra = strIDE[i];                                                                         
-
+                        for (int i = 0; i < strIDE.Length; i++) { /* CICLO QUE EXTRAE CADA LETRA DE CADA PALABRA */                          
+                            chMuestra = strIDE[i];            //Validar tipo de dato string que este completo                                                              
                             ValidarIDE(intEstado, char.ToUpper(chMuestra));  //INVOCA UN METODO QUE TIPO BOOLEANO EL VERIFICA SI EL IDE ES ACEPTABLE
-                        }   
-                        
+                        }                           
                         if (intEstado != 0) //MIENTRAS EL ESTADO SEA DIFERENTE DE 0 BUSCARA EL TOKEN AL QUE CORRESPONDE INVOCANDO UN METODO 
                         {                          
                             token = BuscarToken(intEstado);  //BUSCA EL TOKEN DE CADA PALABRA DESPUES DE VALIDAR EL IDE
                             //VA CONCATENANDO CADA TOKEN
                             //////////////////////////  es para cuando detecta que es un identificador  ////////////////////////////////////////////////////////
                             //si detecta que es un identificador le agrega un valor a un objeto de la clase Identificador
-                            if (token.Trim() == "IDE"  )
-                            {
+                            if (token.Trim() == "IDE"  ){
                                 //código anterior
                                 /*contador++;
                                 unIdentificador.Numero = contador;                                
                                 unIdentificador.TipoDato = tipoDato;  */
-
-                                foreach (var identificador in unaLista)
-                                {
-                                    if (identificador.Nombre == strIDE)
-                                    {
+                                foreach (var identificador in unaLista) {
+                                    if (identificador.Nombre == strIDE) {
                                         yaExiste = true;
                                         token = identificador.strIdentificador;
                                         identificador.Valor = strValorIde;
                                     }
                                 }
-                                if (!yaExiste)
-                                {
+                                if (!yaExiste) {
                                     contador++;
                                     unIdentificador.strIdentificador = "IDE" + contador;
                                     unIdentificador.Numero = contador;
@@ -334,21 +255,13 @@ namespace ANALIZA_LEX
                                 Error unError = new Error();
                                 unError.NomError = token.Trim();
                                 errores.Add(unError);
-                            }
-                       
-                            txtTokens.Text = txtTokens.Text +" "+token.Trim();
-                            //INICIALIZA DE NUEVO LA VARIABLE 
-                            intEstado = 0;
+                            }                       
+                            txtTokens.Text = txtTokens.Text +" "+token.Trim();                             
+                            intEstado = 0;//INICIALIZA DE NUEVO LA VARIABLE
                         }
-                        else
-                        {
-                            //si no encuenta el caracter que se ingreso mandara un mensaje diciendo ese mensaje 
-                            string strCadenaError ="CARACTER NO VALIDO";
-                          
-                            
-                                MessageBox.Show($"El caracter ->  {chMuestra}  <- no es valido en este lenguaje por favor ingresa uno que lo sea ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            
-                          
+                        else { /*  si no encuenta el caracter que se ingreso mandara un mensaje diciendo ese mensaje */                           
+                            string strCadenaError ="CARACTER NO VALIDO";                              
+                            MessageBox.Show($"El caracter ->  {chMuestra}  <- no es valido en este lenguaje por favor ingresa uno que lo sea ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);   
                             txtTokens.Text = txtTokens.Text + " " +strCadenaError;                        
                         }
                     }                
@@ -359,27 +272,15 @@ namespace ANALIZA_LEX
                     if (palabras != " ")
                     {
                         txtTokens.Text =txtTokens.Text +"";   
-                    }
-                    
+                    }   
                 }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-        }
-        //método para buscar las lineas donde surge el error
+            } catch (Exception){MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);}
+        }      
         int numeroDeLinea = -1;
-        private string BuscarLineaError(string valor)
-        {
-            // Dividir el texto del TextBox en líneas utilizando '\n' como separador.
-            string[] lineas = txtLenguaje.Text.Split('\n');
-            // Buscar "ES03" en cada línea.
-            for (int i = 0; i < lineas.Length; i++)
-            {
-                if (lineas[i].Contains(valor))
-                {
+        private string BuscarLineaError(string valor) { /* Buscar "ES03" en cada línea. */
+            string[] lineas = txtLenguaje.Text.Split('\n');// Dividir el texto del TextBox en líneas utilizando '\n' como separador.
+            for (int i = 0; i < lineas.Length; i++) { /* // Buscar "ES03" en cada línea.*/
+                if (lineas[i].Contains(valor)) {
                     numeroDeLinea = i + 1; // Se suma 1 para obtener el número de línea correcto.
                     break; // Detener la búsqueda una vez que se encuentre la primera ocurrencia.
                 }
@@ -408,19 +309,10 @@ namespace ANALIZA_LEX
                     dgvIden.Rows.Add(miIdentificador.Numero, "IDE" + miIdentificador.Numero, miIdentificador.Nombre, miIdentificador.TipoDato, miIdentificador.Valor);
                 }
                 dgvErroresLexicos.Rows.Clear();
-                foreach(Error error in errores)
-                {
-                    dgvErroresLexicos.Rows.Add(error.NomError, error.MostrarCaracteristica());
-                }
-                for (int i = 1; i < contadorLineas; i++)
-                {
-                    txtLineasLexico.AppendText(i.ToString());
-                }          
+                foreach(Error error in errores){ dgvErroresLexicos.Rows.Add(error.NomError, error.MostrarCaracteristica()); }
+                for (int i = 1; i < contadorLineas; i++) { txtLineasLexico.AppendText(i.ToString()); }          
             }
-            catch (Exception)
-            {
-                MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            catch (Exception) { MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
         public bool ValidarIDE(int Estado, char letra)
         {                 
@@ -593,7 +485,7 @@ namespace ANALIZA_LEX
                 {
                     txtLineasLexico.AppendText($"\n{i.ToString()}  ");
                 }
-                evaluaExPresionVariableConstante();
+                
             }
             catch (Exception)
             {
@@ -692,123 +584,8 @@ namespace ANALIZA_LEX
                 }
             }
         }
-        int indiceConstante = 0,indiceVariable;
-        string variableAceptada= "";
-        public void evaluaExPresionVariableConstante()
-        {
-            string primerLinea = "";
-            int numeroDeLineas = txtLenguaje.Lines.Length;
-
-            for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
-            {
-                primerLinea= txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty;
-                string expression = primerLinea;
-                string[] tokens = expression.Split(' '); // Dividimos la expresión en tokens por espacios en blanco
-            
-                for (int i = 0; i < tokens.Length; i++)
-                {
-                    string token = tokens[i];
-              
-                   if (token.All(char.IsDigit))
-                    {
-                        // El token es una constante numérica
-                        //MessageBox.Show($"{token} es una constante.");
-                        dgvAsignacionConstantes.Rows.Add(indiceConstante=indiceConstante+1,token,"entero");
-                    }
-                    else if (token.All(char.IsLetter))
-                    {
-                        // El token es una variable
-                        //MessageBox.Show($"{token} es una variable.");
-                        //switch (token)
-                        //{
-                        //    case "a":
-                        //        variableAceptada = "_a";
-                        //        break;
-                        //    case "b":
-                        //        variableAceptada = "_b";
-                        //        break;
-                        //    case "c":
-                        //        variableAceptada = "_c";
-                        //        break;
-                        //    case "d":
-                        //        variableAceptada = "_d";
-                        //        break;
-                        //    case "e":
-                        //        variableAceptada = "_e";
-                        //        break;
-                        //    case "f":
-                        //        variableAceptada = "_f";
-                        //        break;
-                        //    case "g":
-                        //        variableAceptada = "_g";
-                        //        break;
-                        //    case "h":
-                        //        variableAceptada = "_h";
-                        //        break;
-                        //    case "i":
-                        //        variableAceptada = "_i";
-                        //        break;
-                        //    case "j":
-                        //        variableAceptada = "_j";
-                        //        break;
-                        //    case "k":
-                        //        variableAceptada = "_k";
-                        //        break;
-                        //    case "l":
-                        //        variableAceptada = "_l";
-                        //        break;
-                        //    case "m":
-                        //        variableAceptada = "_m";
-                        //        break;
-                        //    case "n":
-                        //        variableAceptada = "_n";
-                        //        break;
-                        //    case "o":
-                        //        variableAceptada = "_o";
-                        //        break;
-                        //    case "p":
-                        //        variableAceptada = "_p";
-                        //        break;
-                        //    case "q":
-                        //        variableAceptada = "_q";
-                        //        break;
-                        //    case "r":
-                        //        variableAceptada = "_r";
-                        //        break;
-                        //    case "s":
-                        //        variableAceptada = "_s";
-                        //        break;
-                        //    case "t":
-                        //        variableAceptada = "_t";
-                        //        break;
-                        //    case "u":
-                        //        variableAceptada = "_u";
-                        //        break;
-                        //    case "v":
-                        //        variableAceptada = "_v";
-                        //        break;
-                        //    case "w":
-                        //        variableAceptada = "_w";
-                        //        break;
-                        //    case "x":
-                        //        variableAceptada = "_x";
-                        //        break;
-                        //    case "y":
-                        //        variableAceptada = "_y";
-                        //        break;
-                        //    case "z":
-                        //        variableAceptada = "_z";
-                        //        break;
-
-                        //}
-
-                        dgvAsignaVariable.Rows.Add(indiceVariable=indiceVariable+1, token, "vacio");
-                    }
-                }
-            }
-
-          
-        }
+     
+       
         private void btnOrdenar_Click(object sender, EventArgs e)
         {
             if (radPreorden.Checked)
@@ -819,7 +596,6 @@ namespace ANALIZA_LEX
                 rtxt.Text =arbol.InsertarPre(raiz);
              
             }
-
             if (radPostorden.Checked)
             {
                 arbol.InsertarEnCola(txtLenguaje.Text);
@@ -828,7 +604,6 @@ namespace ANALIZA_LEX
                 rtxt.Text = arbol.InsertarPost(raiz);
                
             }
-
             if (radInOrden.Checked)
             {
                 arbol.InsertarEnCola(txtLenguaje.Text);

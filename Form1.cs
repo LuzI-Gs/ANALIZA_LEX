@@ -28,8 +28,7 @@ namespace ANALIZA_LEX
         ConexionBD conexion= new ConexionBD();
         public void MostrarMatriz()
         {
-            conexion.abrir();
-            //comentario
+            conexion.abrir();           
             SqlCommand query1 = new SqlCommand(" Select * from  Matriz", conexion.Conectarbd);
             //SqlCommand query1 = new SqlCommand(" Select * from MANL", conexion.Conectarbd);
             SqlDataAdapter adaptador1 = new SqlDataAdapter();

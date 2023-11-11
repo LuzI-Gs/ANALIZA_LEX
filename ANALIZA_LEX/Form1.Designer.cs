@@ -54,15 +54,6 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.rtxt = new System.Windows.Forms.RichTextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.dgvAsignacionConstantes = new System.Windows.Forms.DataGridView();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvAsignaVariable = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtLineasLexico = new System.Windows.Forms.TextBox();
             this.txtLineasLenguaje = new System.Windows.Forms.TextBox();
             this.txtTokens = new System.Windows.Forms.RichTextBox();
@@ -90,9 +81,6 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvErroresSemanticos)).BeginInit();
             this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAsignacionConstantes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAsignaVariable)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -352,87 +340,12 @@
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.dgvAsignacionConstantes);
-            this.tabPage5.Controls.Add(this.dgvAsignaVariable);
             this.tabPage5.Location = new System.Drawing.Point(4, 27);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(1018, 234);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Expresion_Asignacion";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // dgvAsignacionConstantes
-            // 
-            this.dgvAsignacionConstantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsignacionConstantes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column4,
-            this.Column5,
-            this.Column6});
-            this.dgvAsignacionConstantes.Location = new System.Drawing.Point(426, 15);
-            this.dgvAsignacionConstantes.Name = "dgvAsignacionConstantes";
-            this.dgvAsignacionConstantes.Size = new System.Drawing.Size(339, 150);
-            this.dgvAsignacionConstantes.TabIndex = 4;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Indice";
-            this.Column4.Name = "Column4";
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Nombre";
-            this.Column5.Name = "Column5";
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Tipo Dato";
-            this.Column6.Name = "Column6";
-            // 
-            // dgvAsignaVariable
-            // 
-            this.dgvAsignaVariable.AllowUserToAddRows = false;
-            this.dgvAsignaVariable.AllowUserToDeleteRows = false;
-            this.dgvAsignaVariable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvAsignaVariable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsignaVariable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn7});
-            this.dgvAsignaVariable.Location = new System.Drawing.Point(8, 15);
-            this.dgvAsignaVariable.Name = "dgvAsignaVariable";
-            this.dgvAsignaVariable.ReadOnly = true;
-            this.dgvAsignaVariable.RowHeadersWidth = 51;
-            this.dgvAsignaVariable.Size = new System.Drawing.Size(386, 201);
-            this.dgvAsignaVariable.TabIndex = 3;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Indice";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Nombre";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "TipoDato";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "Contenido";
-            this.dataGridViewTextBoxColumn7.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
             // 
             // txtLineasLexico
             // 
@@ -667,9 +580,6 @@
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvErroresSemanticos)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAsignacionConstantes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAsignaVariable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -716,15 +626,6 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.RichTextBox rtxt;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.DataGridView dgvAsignacionConstantes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridView dgvAsignaVariable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
     }
 }
 
