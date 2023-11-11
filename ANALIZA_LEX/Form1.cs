@@ -14,7 +14,6 @@ using System.Windows.Forms;
 using System.Drawing;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.LinkLabel;
-
 namespace ANALIZA_LEX
 {
     public partial class Form1 : Form
@@ -123,12 +122,7 @@ namespace ANALIZA_LEX
                             }
                         }
                         string strIDE = palabra;
-                        switch (palabra){
-                            case "ent": token = "PR05"; break;
-                            case "flo": token = "PR08"; break;
-                            case "txt": token = "PR018";break;
-                            case "boo": token = "PR02"; break;
-                        }
+                       
                         if (strIDE.StartsWith("_")) { /* Sirve para dectectar los identificadores ya que inician con un _ */                             
                             yaExiste = false;
                             foreach (string elemento in tablaSimbolo){
@@ -140,6 +134,13 @@ namespace ANALIZA_LEX
                                 unIdentificador.Nombre = strIDE;
                                 unIdentificador.Valor = strValorIde;
                             }
+                        }
+                        switch (palabra)
+                        {
+                            case "ent": token = "PR05"; break;
+                            case "flo": token = "PR08"; break;
+                            case "txt": token = "PR018"; break;
+                            case "boo": token = "PR02"; break;
                         }
                         switch (token) {
                             case "PR018":
@@ -288,8 +289,7 @@ namespace ANALIZA_LEX
         private void btnValidar_Click(object sender, EventArgs e)
         {
             unaLista.Clear();
-            try
-            {              
+            try {              
                 DescomponerCadenas();  //INVOCA EL METODO
                 LenguajeNat ="";
                 txtTokens.ReadOnly= true;                
@@ -307,11 +307,9 @@ namespace ANALIZA_LEX
                 dgvErroresLexicos.Rows.Clear();
                 foreach(Error error in errores){ dgvErroresLexicos.Rows.Add(error.NomError, error.MostrarCaracteristica()); }
                 for (int i = 1; i < contadorLineas; i++) { txtLineasLexico.AppendText(i.ToString()); }          
-            }
-            catch (Exception) { MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            }catch (Exception) { MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
-        public bool ValidarIDE(int Estado, char letra)
-        {                 
+        public bool ValidarIDE(int Estado, char letra) {                 
             bool seEncontroCaracter = false; // Variable para indicar si se encontró el carácter        
             for (int i = 1; i < dtgMatriz.ColumnCount - 2; i++) {   /*RECORRE LAS COLUMAS DE LA TABLA OSEA EL ALFABETO-NUMEROS-OTROS*/ 
                 //BUSCA POR LAS COLUMNAS  DESDE LA POSICION 1 OSEA DESDE LA lETRA -A- EN LA COLUMNA (0) QUE SON LOS NOMBRES DE LA TABLA 
@@ -333,7 +331,7 @@ namespace ANALIZA_LEX
             MostrarMatriz();
             txtTokens.ReadOnly= true;
         }
-        public void ChecarEspacios()        {
+        public void ChecarEspacios() {
             string textp=txtSintactico.Text;
             textp= textp.TrimEnd(); 
         }
@@ -398,9 +396,9 @@ namespace ANALIZA_LEX
         }
         bool primerCambio = true;      
         private void txtLenguaje_TextChanged(object sender, EventArgs e) { /*se agregan las lineas de codigo cada vez que se detecta el salto de linea */
-                        string codigoEntrada = txtLenguaje.Text;  // Obtén el texto del primer TextBox
+            string codigoEntrada = txtLenguaje.Text;  // Obtén el texto del primer TextBox
             contadorLineas = 1; // Divide el texto en líneas usando el carácter de salto de línea ('\n')
-             string[] lineasCodigo = codigoEntrada.Split('\n');          
+            string[] lineasCodigo = codigoEntrada.Split('\n');          
             txtLineasLenguaje.Clear();  // Borra el contenido actual del segundo TextBox                                       
             int numeroDeLineas = lineasCodigo.Length;// Agrega cada línea al segundo TextBox     
             StringBuilder codigoConNumerosDeLinea = new StringBuilder();// Actualizar el contador de líneas y mostrarlo como números de línea de código.
