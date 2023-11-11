@@ -69,6 +69,21 @@
             this.radPreorden = new System.Windows.Forms.RadioButton();
             this.radPostorden = new System.Windows.Forms.RadioButton();
             this.btnOrdenar = new System.Windows.Forms.Button();
+            this.dgvVariables = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvConstantes = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.dgvTriplos = new System.Windows.Forms.DataGridView();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSalir)).BeginInit();
@@ -81,6 +96,11 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvErroresSemanticos)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVariables)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConstantes)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTriplos)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -150,6 +170,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 440);
             this.tabControl1.Name = "tabControl1";
@@ -340,6 +361,8 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.dgvConstantes);
+            this.tabPage5.Controls.Add(this.dgvVariables);
             this.tabPage5.Location = new System.Drawing.Point(4, 27);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(1018, 234);
@@ -471,7 +494,7 @@
             this.btnValidar.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnValidar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnValidar.Location = new System.Drawing.Point(58, 378);
+            this.btnValidar.Location = new System.Drawing.Point(59, 378);
             this.btnValidar.Margin = new System.Windows.Forms.Padding(2);
             this.btnValidar.Name = "btnValidar";
             this.btnValidar.Size = new System.Drawing.Size(212, 39);
@@ -494,7 +517,7 @@
             // 
             this.radInOrden.AutoSize = true;
             this.radInOrden.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radInOrden.Location = new System.Drawing.Point(530, 425);
+            this.radInOrden.Location = new System.Drawing.Point(537, 398);
             this.radInOrden.Name = "radInOrden";
             this.radInOrden.Size = new System.Drawing.Size(85, 24);
             this.radInOrden.TabIndex = 46;
@@ -505,7 +528,7 @@
             // 
             this.radPreorden.AutoSize = true;
             this.radPreorden.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radPreorden.Location = new System.Drawing.Point(530, 402);
+            this.radPreorden.Location = new System.Drawing.Point(537, 378);
             this.radPreorden.Name = "radPreorden";
             this.radPreorden.Size = new System.Drawing.Size(95, 24);
             this.radPreorden.TabIndex = 45;
@@ -517,7 +540,7 @@
             this.radPostorden.AutoSize = true;
             this.radPostorden.Checked = true;
             this.radPostorden.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radPostorden.Location = new System.Drawing.Point(530, 375);
+            this.radPostorden.Location = new System.Drawing.Point(537, 359);
             this.radPostorden.Name = "radPostorden";
             this.radPostorden.Size = new System.Drawing.Size(103, 24);
             this.radPostorden.TabIndex = 44;
@@ -528,13 +551,116 @@
             // btnOrdenar
             // 
             this.btnOrdenar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOrdenar.Location = new System.Drawing.Point(370, 378);
+            this.btnOrdenar.Location = new System.Drawing.Point(393, 359);
             this.btnOrdenar.Name = "btnOrdenar";
             this.btnOrdenar.Size = new System.Drawing.Size(119, 39);
             this.btnOrdenar.TabIndex = 43;
             this.btnOrdenar.Text = "ordenar";
             this.btnOrdenar.UseVisualStyleBackColor = true;
             this.btnOrdenar.Click += new System.EventHandler(this.btnOrdenar_Click);
+            // 
+            // dgvVariables
+            // 
+            this.dgvVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVariables.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.Column3,
+            this.Column4});
+            this.dgvVariables.Location = new System.Drawing.Point(8, 11);
+            this.dgvVariables.Name = "dgvVariables";
+            this.dgvVariables.Size = new System.Drawing.Size(434, 150);
+            this.dgvVariables.TabIndex = 32;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Indice";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Variable";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Tipo Dato";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Valor";
+            this.Column4.Name = "Column4";
+            // 
+            // dgvConstantes
+            // 
+            this.dgvConstantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvConstantes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5});
+            this.dgvConstantes.Location = new System.Drawing.Point(467, 11);
+            this.dgvConstantes.Name = "dgvConstantes";
+            this.dgvConstantes.Size = new System.Drawing.Size(434, 150);
+            this.dgvConstantes.TabIndex = 34;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Indice";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Valor";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Tipo Dato";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.dgvTriplos);
+            this.tabPage6.Location = new System.Drawing.Point(4, 27);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(1018, 234);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Triplos";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // dgvTriplos
+            // 
+            this.dgvTriplos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTriplos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column5,
+            this.Column6,
+            this.Column7,
+            this.Column8});
+            this.dgvTriplos.Location = new System.Drawing.Point(3, 0);
+            this.dgvTriplos.Name = "dgvTriplos";
+            this.dgvTriplos.Size = new System.Drawing.Size(930, 306);
+            this.dgvTriplos.TabIndex = 35;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Dato Objeto";
+            this.Column5.Name = "Column5";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Dato Fuente";
+            this.Column6.Name = "Column6";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Operador";
+            this.Column7.Name = "Column7";
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Descripcion";
+            this.Column8.Name = "Column8";
             // 
             // Form1
             // 
@@ -580,6 +706,11 @@
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvErroresSemanticos)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVariables)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConstantes)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTriplos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -626,6 +757,21 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.RichTextBox rtxt;
         private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.DataGridView dgvVariables;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridView dgvConstantes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.DataGridView dgvTriplos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
     }
 }
 
