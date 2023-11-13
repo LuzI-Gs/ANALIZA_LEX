@@ -54,6 +54,22 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.rtxt = new System.Windows.Forms.RichTextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.dgvConstantes = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvVariables = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.btnDocumento = new System.Windows.Forms.Button();
+            this.dgvTriplos = new System.Windows.Forms.DataGridView();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtLineasLexico = new System.Windows.Forms.TextBox();
             this.txtLineasLenguaje = new System.Windows.Forms.TextBox();
             this.txtTokens = new System.Windows.Forms.RichTextBox();
@@ -69,21 +85,7 @@
             this.radPreorden = new System.Windows.Forms.RadioButton();
             this.radPostorden = new System.Windows.Forms.RadioButton();
             this.btnOrdenar = new System.Windows.Forms.Button();
-            this.dgvVariables = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvConstantes = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.dgvTriplos = new System.Windows.Forms.DataGridView();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rch = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSalir)).BeginInit();
@@ -97,8 +99,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvErroresSemanticos)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVariables)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConstantes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVariables)).BeginInit();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTriplos)).BeginInit();
             this.SuspendLayout();
@@ -125,7 +127,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1036, 44);
+            this.panel1.Size = new System.Drawing.Size(1034, 44);
             this.panel1.TabIndex = 26;
             // 
             // picMinimizar
@@ -370,6 +372,127 @@
             this.tabPage5.Text = "Expresion_Asignacion";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // dgvConstantes
+            // 
+            this.dgvConstantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvConstantes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5});
+            this.dgvConstantes.Location = new System.Drawing.Point(467, 11);
+            this.dgvConstantes.Name = "dgvConstantes";
+            this.dgvConstantes.Size = new System.Drawing.Size(434, 150);
+            this.dgvConstantes.TabIndex = 34;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Indice";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Valor";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Tipo Dato";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dgvVariables
+            // 
+            this.dgvVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVariables.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.Column3,
+            this.Column4});
+            this.dgvVariables.Location = new System.Drawing.Point(8, 11);
+            this.dgvVariables.Name = "dgvVariables";
+            this.dgvVariables.Size = new System.Drawing.Size(434, 150);
+            this.dgvVariables.TabIndex = 32;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Indice";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Variable";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Tipo Dato";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Valor";
+            this.Column4.Name = "Column4";
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.rch);
+            this.tabPage6.Controls.Add(this.btnDocumento);
+            this.tabPage6.Controls.Add(this.dgvTriplos);
+            this.tabPage6.Location = new System.Drawing.Point(4, 27);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(1018, 234);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Triplos";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // btnDocumento
+            // 
+            this.btnDocumento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.btnDocumento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDocumento.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDocumento.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnDocumento.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDocumento.Location = new System.Drawing.Point(752, 3);
+            this.btnDocumento.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDocumento.Name = "btnDocumento";
+            this.btnDocumento.Size = new System.Drawing.Size(263, 44);
+            this.btnDocumento.TabIndex = 47;
+            this.btnDocumento.Text = "Generar Doc ensamblador";
+            this.btnDocumento.UseVisualStyleBackColor = false;
+            this.btnDocumento.Click += new System.EventHandler(this.btnDocumento_Click);
+            // 
+            // dgvTriplos
+            // 
+            this.dgvTriplos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTriplos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column5,
+            this.Column6,
+            this.Column7,
+            this.Column8});
+            this.dgvTriplos.Location = new System.Drawing.Point(8, 3);
+            this.dgvTriplos.Name = "dgvTriplos";
+            this.dgvTriplos.Size = new System.Drawing.Size(715, 306);
+            this.dgvTriplos.TabIndex = 35;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Dato Objeto";
+            this.Column5.Name = "Column5";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Dato Fuente";
+            this.Column6.Name = "Column6";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Operador";
+            this.Column7.Name = "Column7";
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Descripcion";
+            this.Column8.Name = "Column8";
+            // 
             // txtLineasLexico
             // 
             this.txtLineasLexico.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -559,115 +682,25 @@
             this.btnOrdenar.UseVisualStyleBackColor = true;
             this.btnOrdenar.Click += new System.EventHandler(this.btnOrdenar_Click);
             // 
-            // dgvVariables
+            // rch
             // 
-            this.dgvVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVariables.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.Column3,
-            this.Column4});
-            this.dgvVariables.Location = new System.Drawing.Point(8, 11);
-            this.dgvVariables.Name = "dgvVariables";
-            this.dgvVariables.Size = new System.Drawing.Size(434, 150);
-            this.dgvVariables.TabIndex = 32;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Indice";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Variable";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Tipo Dato";
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Valor";
-            this.Column4.Name = "Column4";
-            // 
-            // dgvConstantes
-            // 
-            this.dgvConstantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvConstantes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5});
-            this.dgvConstantes.Location = new System.Drawing.Point(467, 11);
-            this.dgvConstantes.Name = "dgvConstantes";
-            this.dgvConstantes.Size = new System.Drawing.Size(434, 150);
-            this.dgvConstantes.TabIndex = 34;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Indice";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Valor";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Tipo Dato";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.dgvTriplos);
-            this.tabPage6.Location = new System.Drawing.Point(4, 27);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1018, 234);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "Triplos";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // dgvTriplos
-            // 
-            this.dgvTriplos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTriplos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column5,
-            this.Column6,
-            this.Column7,
-            this.Column8});
-            this.dgvTriplos.Location = new System.Drawing.Point(3, 0);
-            this.dgvTriplos.Name = "dgvTriplos";
-            this.dgvTriplos.Size = new System.Drawing.Size(930, 306);
-            this.dgvTriplos.TabIndex = 35;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Dato Objeto";
-            this.Column5.Name = "Column5";
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Dato Fuente";
-            this.Column6.Name = "Column6";
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Operador";
-            this.Column7.Name = "Column7";
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "Descripcion";
-            this.Column8.Name = "Column8";
+            this.rch.BackColor = System.Drawing.Color.White;
+            this.rch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rch.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.rch.Location = new System.Drawing.Point(752, 75);
+            this.rch.Margin = new System.Windows.Forms.Padding(2);
+            this.rch.Multiline = true;
+            this.rch.Name = "rch";
+            this.rch.Size = new System.Drawing.Size(236, 153);
+            this.rch.TabIndex = 47;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(1036, 640);
+            this.ClientSize = new System.Drawing.Size(1034, 706);
             this.Controls.Add(this.radInOrden);
             this.Controls.Add(this.radPreorden);
             this.Controls.Add(this.radPostorden);
@@ -707,9 +740,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvErroresSemanticos)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVariables)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConstantes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVariables)).EndInit();
             this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTriplos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -772,6 +806,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.Button btnDocumento;
+        private System.Windows.Forms.TextBox rch;
     }
 }
 

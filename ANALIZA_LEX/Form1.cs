@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.LinkLabel;
 namespace ANALIZA_LEX
@@ -356,6 +357,11 @@ namespace ANALIZA_LEX
             this.WindowState = FormWindowState.Minimized;
         }
 
+        private void btnDocumento_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void EnviarLineasHastaDelimitador(string texto)
         {
             char[] del1 = { '\n' };
@@ -671,11 +677,52 @@ namespace ANALIZA_LEX
         {
             switch (operador)
             {
-                case "+": return "suma"; break;
-                case "-": return "resta"; break;
-                case "*": return "multiplica"; break;
-                case "/": return "divide"; break;
+                case "add": return "suma"; break;
+                case "dec": return "resta"; break;
+                case "mul": return "multiplica"; break;
+                case "div": return "divide"; break;
+                case "|y|": return "operador and"; break;
+                case "|o|": return "operador or"; break;
+                case "|no|": return "operador not"; break;
+                case ">":return "operador mayor que"; break;
+                case "<": return "operador menor que"; break;
                 default: return "realiza una operación desconocida";
+            }
+        }
+        //METODO PARA CREAR EL ARCHIVO RECIBE COMO PARAMETRO LA RUTA Y EL NOMBRE DEL ARCHIVO
+        public void crear(string nombre)
+        {
+            //PROPIEDAD QUE VA A ESCRIBIR LO QUEBTENEMOS EN EL TRIPLO 
+            StreamWriter sw = new StreamWriter(nombre, true);
+            //AQUI ESCRIBE LAS LINEAS POR DEAFULT .DATA Y .MODEL STACK
+            sw.WriteLine(".data \n.model stack");
+            //DESPUES AGREGA LO QUE UNO ESCRIBA EN EL RICHTEXBOX
+            sw.WriteLine("\n MOV AX, X \n");
+            sw.WriteLine("\n MOV BX, Y \n");
+            sw.WriteLine("\n ADD BX, AX \n");
+            sw.Close();
+
+
+        }
+        //CON ESTE METODO SE VA ABRIR EL ARCHIVO QUE SE CREO 
+        public void Leer(string ruta)
+        {
+            StreamReader leer = new StreamReader(ruta, true);
+            string linea;
+            try
+            {
+                linea = leer.ReadLine();
+                while (linea != null)
+                {
+
+                    rch.AppendText(linea + "\n");
+                    linea = leer.ReadLine();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("error");
             }
         }
     }
