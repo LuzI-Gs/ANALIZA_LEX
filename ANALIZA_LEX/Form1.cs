@@ -356,10 +356,42 @@ namespace ANALIZA_LEX
         private void picMinimizar_Click(object sender, EventArgs e) {
             this.WindowState = FormWindowState.Minimized;
         }
+        //METODO PARA CREAR EL ARCHIVO RECIBE COMO PARAMETRO LA RUTA Y EL NOMBRE DEL ARCHIVO
+        public void crear(string nombre)
+        {
+            //PROPIEDAD QUE VA A ESCRIBIR LO QUEBTENEMOS EN EL TRIPLO 
+            StreamWriter sw = new StreamWriter(nombre, true);
+            //AQUI ESCRIBE LAS LINEAS POR DEAFULT .DATA Y .MODEL STACK
+            sw.WriteLine(".data \n.model stack");
+            //DESPUES AGREGA LO QUE UNO ESCRIBA EN EL RICHTEXBOX
+            sw.WriteLine("\n" + rch.Text + "\n");
+            sw.Close();
 
+
+        }
+        //METODO PARA CREAR EL ARCHIVO RECIBE COMO PARAMETRO LA RUTA Y EL NOMBRE DEL ARCHIVO
+        public void crearA(string nombre)
+        {
+            //PROPIEDAD QUE VA A ESCRIBIR LO QUEBTENEMOS EN EL TRIPLO 
+            StreamWriter sw = new StreamWriter(nombre, true);
+            //AQUI ESCRIBE LAS LINEAS POR DEAFULT .DATA Y .MODEL STACK
+            sw.WriteLine(".data \n.model stack");
+            //DESPUES AGREGA LO QUE UNO ESCRIBA EN EL RICHTEXBOX
+            sw.WriteLine("\n MOV AX, X \n");
+            sw.WriteLine("\n MOV BX, Y \n");
+            sw.WriteLine("\n ADD BX, AX \n");
+            sw.Close();
+
+
+        }
         private void btnDocumento_Click(object sender, EventArgs e)
         {
-
+            //GUARDA EL ARHIVO EN LA RUTA Y CON EL NOMBRE ESPECIFICADO
+            if (spF.ShowDialog() == DialogResult.OK)
+            {
+                //INVOCA AL MET
+                crear(spF.FileName);
+            }
         }
 
         private void EnviarLineasHastaDelimitador(string texto)
@@ -689,21 +721,7 @@ namespace ANALIZA_LEX
                 default: return "realiza una operación desconocida";
             }
         }
-        //METODO PARA CREAR EL ARCHIVO RECIBE COMO PARAMETRO LA RUTA Y EL NOMBRE DEL ARCHIVO
-        public void crear(string nombre)
-        {
-            //PROPIEDAD QUE VA A ESCRIBIR LO QUEBTENEMOS EN EL TRIPLO 
-            StreamWriter sw = new StreamWriter(nombre, true);
-            //AQUI ESCRIBE LAS LINEAS POR DEAFULT .DATA Y .MODEL STACK
-            sw.WriteLine(".data \n.model stack");
-            //DESPUES AGREGA LO QUE UNO ESCRIBA EN EL RICHTEXBOX
-            sw.WriteLine("\n MOV AX, X \n");
-            sw.WriteLine("\n MOV BX, Y \n");
-            sw.WriteLine("\n ADD BX, AX \n");
-            sw.Close();
-
-
-        }
+      
         //CON ESTE METODO SE VA ABRIR EL ARCHIVO QUE SE CREO 
         public void Leer(string ruta)
         {

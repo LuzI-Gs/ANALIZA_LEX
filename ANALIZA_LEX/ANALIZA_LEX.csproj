@@ -92,5 +92,41 @@
   <ItemGroup>
     <None Include="Resources\cerrar.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disquete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agregar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agregar %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agregar %282%291.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agregar %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agregar %281%291.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agregar %284%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\salvar %284%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disquete %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editar %283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editar %284%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editar %283%291.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
