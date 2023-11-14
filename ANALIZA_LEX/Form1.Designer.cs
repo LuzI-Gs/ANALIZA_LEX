@@ -130,7 +130,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1034, 44);
+            this.panel1.Size = new System.Drawing.Size(1050, 44);
             this.panel1.TabIndex = 26;
             // 
             // picMinimizar
@@ -180,7 +180,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 440);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1026, 265);
+            this.tabControl1.Size = new System.Drawing.Size(1038, 265);
             this.tabControl1.TabIndex = 35;
             // 
             // tabPage1
@@ -459,7 +459,7 @@
             this.tabPage6.Controls.Add(this.dgvTriplos);
             this.tabPage6.Location = new System.Drawing.Point(4, 27);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1018, 234);
+            this.tabPage6.Size = new System.Drawing.Size(1030, 234);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Triplos";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -472,7 +472,7 @@
             this.btnGenerar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnGenerar.Image = global::ANALIZA_LEX.Properties.Resources.editar__3_1;
             this.btnGenerar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnGenerar.Location = new System.Drawing.Point(752, 3);
+            this.btnGenerar.Location = new System.Drawing.Point(720, 3);
             this.btnGenerar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnGenerar.Name = "btnGenerar";
             this.btnGenerar.Size = new System.Drawing.Size(55, 44);
@@ -486,12 +486,13 @@
             this.rch.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rch.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.rch.Location = new System.Drawing.Point(752, 50);
+            this.rch.Location = new System.Drawing.Point(720, 51);
             this.rch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rch.Multiline = true;
             this.rch.Name = "rch";
-            this.rch.Size = new System.Drawing.Size(263, 177);
+            this.rch.Size = new System.Drawing.Size(298, 177);
             this.rch.TabIndex = 47;
+            this.rch.TextChanged += new System.EventHandler(this.rch_TextChanged);
             // 
             // btnGuardar
             // 
@@ -519,7 +520,7 @@
             this.dgvTriplos.Location = new System.Drawing.Point(8, 3);
             this.dgvTriplos.Name = "dgvTriplos";
             this.dgvTriplos.RowHeadersWidth = 51;
-            this.dgvTriplos.Size = new System.Drawing.Size(715, 306);
+            this.dgvTriplos.Size = new System.Drawing.Size(701, 306);
             this.dgvTriplos.TabIndex = 35;
             // 
             // Column5
@@ -748,7 +749,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(1034, 640);
+            this.ClientSize = new System.Drawing.Size(1050, 731);
             this.Controls.Add(this.radInOrden);
             this.Controls.Add(this.radPreorden);
             this.Controls.Add(this.radPostorden);

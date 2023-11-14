@@ -417,21 +417,131 @@ namespace ANALIZA_LEX
                     case "=":
                         if (triplo.DatoObjeto == "T1")
                         {
-                            textoARch = textoARch + "\n MOV AX, " + triplo.DatoFuente + "\n";
+                            textoARch += " MOV AX," + triplo.DatoFuente + Environment.NewLine;
                         }
                         else
                         {
-                            textoARch = textoARch + "\n MOV " + triplo.DatoObjeto + ",  AX"  + "\n";
+                            textoARch += " MOV " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
                         }
                         break;
-                    case "add":
+                    case "add" :
                         if (triplo.DatoObjeto == "T1")
                         {
-                            textoARch = textoARch + "\n ADD AX, " + triplo.DatoFuente + "\n";
+                            textoARch += " ADD AX," + triplo.DatoFuente + Environment.NewLine;
                         }
                         else
                         {
-                            textoARch = textoARch + "\n ADD " + triplo.DatoObjeto + ",  AX" + "\n";
+                            textoARch += " ADD " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                        }
+                        break;
+                    case "dec":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "SUB AX," + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch +=  "SUB " + triplo.DatoObjeto + ", AX" + Environment.NewLine;
+                        }
+                        break;
+                    case "div":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "DIV AX," + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "DIV " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                        }
+                        break;
+                    case "mul":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "MUL AX," + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch +=  "MUL " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                        }
+                        break;
+                    case "|y|":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "AND AX, " + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "AND " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                        }
+                        break;
+                    case "|o|":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "OR AX, " + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "OR " + triplo.DatoObjeto + ",  AX" + Environment.NewLine;
+                        }
+                        break;
+                    case "|no|":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "NOT AX" + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "NOT " + triplo.DatoObjeto + Environment.NewLine;
+                        }
+                        break;
+                     case "<":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "CMP AX, " + triplo.DatoFuente + Environment.NewLine + " JL <InstruccionMenor>" + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch +=  "CMP " + triplo.DatoObjeto + ", AX" + Environment.NewLine  + " JL <InstruccionMenor>" + Environment.NewLine;
+                        }
+                        break;
+                    case ">":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "CMP AX," + triplo.DatoFuente + Environment.NewLine + " JG <InstruccionMayor>" + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "CMP " + triplo.DatoObjeto + ",AX" + Environment.NewLine  + " JG <InstruccionMayor>" + Environment.NewLine;
+                        }
+                        break;
+                    case "<>": // DIFERENTE
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "CMP AX, " + triplo.DatoFuente + Environment.NewLine  + "JNE <InstruccionDiferente>" + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "CMP " + triplo.DatoObjeto + ",AX" + Environment.NewLine + "JNE <InstruccionDiferente>" + Environment.NewLine;
+                        }
+                        break;
+                    case "<=": // MENOR O IGUAL
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "CMP AX," + triplo.DatoFuente + Environment.NewLine  + "JG <InstruccionMayorOIgual>" + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch +="CMP " + triplo.DatoObjeto + ",AX" + Environment.NewLine  + "JG <InstruccionMayorOIgual>" + Environment.NewLine;
+                        }
+                        break;
+                    case ">=": // MAYOR O IGUAL
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "CMP AX, " + triplo.DatoFuente + Environment.NewLine + "\n JLE <InstruccionMenorOIgual>" + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "CMP " + triplo.DatoObjeto + ",AX" + Environment.NewLine + "\n JLE <InstruccionMenorOIgual>" + Environment.NewLine;
                         }
                         break;
                     default:
@@ -440,6 +550,11 @@ namespace ANALIZA_LEX
             }
 
             rch.Text = textoARch;
+        }
+
+        private void rch_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private bool VerificarAsignacion(string linea) {           
@@ -668,7 +783,7 @@ namespace ANALIZA_LEX
                     string[] elemento = inputExpression.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);// Dividir la expresión en tokens   
                     asignacionInicial = string.Format(resultadoEsperado, "T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");  //Hugo Ramos - Asignación inicial - Asigna el valor cuando es =, por ejemplo: Asigna el valor de '{elemento[2]}' a una variable temporal (t1)
                     //MessageBox.Show("asignacion inicial: " + asignacionInicial); Imprime la asignacion inicial para saber cual es la primera, se guarda para saber posteriormente si es inicial y si no lo es guardar en la variable que se asigna el resultado
-                     triplo = new Triplo();
+                    triplo = new Triplo();
                     triplo.DatoObjeto = "T1";
                     triplo.DatoFuente = elemento[2];
                     triplo.Operador = "=";
@@ -775,6 +890,9 @@ namespace ANALIZA_LEX
                 case "|no|": return "operador not"; break;
                 case ">":return "operador mayor que"; break;
                 case "<": return "operador menor que"; break;
+                case "<>": return "operador diferente"; break;
+                case "<=": return "menor que"; break;
+                case ">=": return "mayor que"; break;
                 default: return "realiza una operación desconocida";
             }
         }
