@@ -59,7 +59,9 @@ namespace ANALIZA_LEX
         List<string> tablaSimbolo = new List<string>();  //arreglo donde se almacenan la información para la tabla de simbolos
         List<Error> errores = new List<Error>();             
         List<Identificador> unaLista = new List<Identificador>();
+        List<Triplo> listaTriplo = new List<Triplo>();
         Identificador unIdentificador;
+        Triplo triplo;
         Error unError;        
         public void MostrarMatriz() 
         {
@@ -404,6 +406,42 @@ namespace ANALIZA_LEX
                 txtSintactico.AppendText(linea + mensaje + "\r\n");
             }
         }
+
+        private void btnGenerar_Click(object sender, EventArgs e)
+        {
+           string textoARch = "";
+            foreach (var triplo in listaTriplo)
+            {
+                switch (triplo.Operador)
+                {
+                    case "=":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch = textoARch + "\n MOV AX, " + triplo.DatoFuente + "\n";
+                        }
+                        else
+                        {
+                            textoARch = textoARch + "\n MOV " + triplo.DatoObjeto + ",  AX"  + "\n";
+                        }
+                        break;
+                    case "add":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch = textoARch + "\n ADD AX, " + triplo.DatoFuente + "\n";
+                        }
+                        else
+                        {
+                            textoARch = textoARch + "\n ADD " + triplo.DatoObjeto + ",  AX" + "\n";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            rch.Text = textoARch;
+        }
+
         private bool VerificarAsignacion(string linea) {           
             string patronOperacion1 = @"CE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11"; //modificaciones para corchetes opraciones
             bool matchOperacion1 = Regex.IsMatch(linea, patronOperacion1, RegexOptions.IgnoreCase);
@@ -458,6 +496,8 @@ namespace ANALIZA_LEX
         private void btnValidar_Click_1(object sender, EventArgs e) {           
             unaLista.Clear();
             txtLineasLexico.Text = "";
+            listaTriplo.Clear();
+            dgvTriplos.Rows.Clear();
             contador = 0;
             try {               
                 DescomponerCadenas(); //INVOCA EL METODO
@@ -615,8 +655,10 @@ namespace ANALIZA_LEX
         public void Triplos() //Hugo Ramos - Proceso de triplos - Identifica Dato Objeto, Dato Fuente, Operador y una descripcion de la expresion
         {
             int numeroDeLineas = txtLenguaje.Lines.Length;
+            // se genera un objeto nuevo de la clase Triplo
             for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
             {
+                
                 primerLinea = txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty;
                 string[] tokens = primerLinea.Split(' '); // Dividimos la expresión en tokens por espacios en blanco
                 if (EsExpresion(primerLinea))
@@ -626,17 +668,32 @@ namespace ANALIZA_LEX
                     string[] elemento = inputExpression.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);// Dividir la expresión en tokens   
                     asignacionInicial = string.Format(resultadoEsperado, "T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");  //Hugo Ramos - Asignación inicial - Asigna el valor cuando es =, por ejemplo: Asigna el valor de '{elemento[2]}' a una variable temporal (t1)
                     //MessageBox.Show("asignacion inicial: " + asignacionInicial); Imprime la asignacion inicial para saber cual es la primera, se guarda para saber posteriormente si es inicial y si no lo es guardar en la variable que se asigna el resultado
+                     triplo = new Triplo();
+                    triplo.DatoObjeto = "T1";
+                    triplo.DatoFuente = elemento[2];
+                    triplo.Operador = "=";
+                    listaTriplo.Add(triplo);
                     dgvTriplos.Rows.Add("T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");
                     logicLines.Add(asignacionInicial);
+                    triplo = new Triplo();
                     for (int i = 3; i < elemento.Length; i += 2) //Hugo Ramos - Procesar las operaciones
                     {
                         operador = elemento[i]; //Hugo Ramos -  almancena temporalmente el operador 
                         operando = elemento[i + 1]; //Hugo Ramos -  Almacena temporalmente  el operando para usos de iteracion
                         operacionDescripcion = $"Se {ObtenerDescripcionOperacion(operador)} el valor de '{operando}' a la variable temporal (T1)";
                         operacion1 = string.Format(resultadoEsperado, "T1", operando, operador, operacionDescripcion); //Hugo Ramos - valor que se mando a LogicLines que contiene operando, operador, operacion descripcion
+                        triplo.DatoObjeto = "T1";
+                        triplo.DatoFuente = operando;
+                        triplo.Operador = operador;
                         dgvTriplos.Rows.Add("T1", operando, operador, operacionDescripcion);//Hugo Ramos -  Agrega ala tabla la informacion recabada de t1, operador, operacion descripcion
                         logicLines.Add(operacion1);
                     }
+                    listaTriplo.Add(triplo);
+                    triplo = new Triplo();
+                    triplo.DatoObjeto = elemento[0];
+                    triplo.DatoFuente = "T1";
+                    triplo.Operador = "=";
+                    listaTriplo.Add(triplo);
                     asignacionFinal = string.Format(resultadoEsperado, elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");// Hugo Ramos - Asignación final -  variable que almacena la cadena y concatenacionn de resultadoEsperado y elemento, Se asigna la variable temporal al identificador final
                     //MessageBox.Show("asignacion final: "+asignacionFinal);  //Hugo Ramos -  Mensaje de pantalla que ayuda a imprimir asignacion final                                                                                                                       
                     dgvTriplos.Rows.Add(elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");
