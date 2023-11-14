@@ -367,6 +367,7 @@ namespace ANALIZA_LEX
             sw.WriteLine(".data \n.model stack");
             //DESPUES AGREGA LO QUE UNO ESCRIBA EN EL RICHTEXBOX
             sw.WriteLine("\n" + rch.Text + "\n");
+            sw.WriteLine(".MOV AH, 4CH\n.INT 21H");
             sw.Close();
 
 
@@ -409,7 +410,7 @@ namespace ANALIZA_LEX
 
         private void btnGenerar_Click(object sender, EventArgs e)
         {
-           string textoARch = "";
+           string textoARch = ".data \n.model stack" + Environment.NewLine;
             foreach (var triplo in listaTriplo)
             {
                 switch (triplo.Operador)
@@ -548,7 +549,7 @@ namespace ANALIZA_LEX
                         break;
                 }
             }
-
+            textoARch += ".MOV AH, 4CH\n.INT 21H";
             rch.Text = textoARch;
         }
 
