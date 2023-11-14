@@ -15,10 +15,10 @@ namespace ANALIZA_LEX
         //string conexion = ("server = ARQUITECTURA\\MSSQLSERVER01  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
 
         //gema
-        string conexion = ("server = GEMA\\SQLEXPRESS01  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
+       // string conexion = ("server = GEMA\\SQLEXPRESS01  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
 
         //luz
-        //string conexion = ("server = PCGSIL  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
+        string conexion = ("server = PCGSIL  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
 
         //sarahi
         //  string conexion = ("server = DESKTOP-GO5913E  ;database = MatrizAnalizadorLexicoLARS; integrated security = true");
