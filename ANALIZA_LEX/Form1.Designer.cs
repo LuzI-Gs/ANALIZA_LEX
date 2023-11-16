@@ -129,7 +129,7 @@
             this.panel1.Controls.Add(this.picSalir);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1400, 54);
             this.panel1.TabIndex = 26;
@@ -139,7 +139,7 @@
             this.picMinimizar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picMinimizar.Image = global::ANALIZA_LEX.Properties.Resources.minimazar;
             this.picMinimizar.Location = new System.Drawing.Point(1297, 12);
-            this.picMinimizar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picMinimizar.Margin = new System.Windows.Forms.Padding(4);
             this.picMinimizar.Name = "picMinimizar";
             this.picMinimizar.Size = new System.Drawing.Size(25, 33);
             this.picMinimizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -164,7 +164,7 @@
             this.picSalir.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picSalir.Image = global::ANALIZA_LEX.Properties.Resources.cerrar;
             this.picSalir.Location = new System.Drawing.Point(1337, 12);
-            this.picSalir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picSalir.Margin = new System.Windows.Forms.Padding(4);
             this.picSalir.Name = "picSalir";
             this.picSalir.Size = new System.Drawing.Size(25, 33);
             this.picSalir.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -182,7 +182,7 @@
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 542);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1384, 326);
@@ -192,9 +192,9 @@
             // 
             this.tabPage1.Controls.Add(this.dtgMatriz);
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage1.Size = new System.Drawing.Size(1376, 289);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Recorrido de la matriz";
@@ -223,9 +223,9 @@
             this.tabPage2.Controls.Add(this.dgvErroresLexicos);
             this.tabPage2.Controls.Add(this.dgvIden);
             this.tabPage2.Location = new System.Drawing.Point(4, 33);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage2.Size = new System.Drawing.Size(1376, 289);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabla de simbolos";
@@ -241,7 +241,7 @@
             this.Error,
             this.Caracteristica});
             this.dgvErroresLexicos.Location = new System.Drawing.Point(812, 31);
-            this.dgvErroresLexicos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvErroresLexicos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvErroresLexicos.Name = "dgvErroresLexicos";
             this.dgvErroresLexicos.ReadOnly = true;
             this.dgvErroresLexicos.RowHeadersWidth = 51;
@@ -275,7 +275,7 @@
             this.strTipoDato,
             this.strValor});
             this.dgvIden.Location = new System.Drawing.Point(41, 31);
-            this.dgvIden.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvIden.Margin = new System.Windows.Forms.Padding(4);
             this.dgvIden.Name = "dgvIden";
             this.dgvIden.ReadOnly = true;
             this.dgvIden.RowHeadersWidth = 51;
@@ -321,7 +321,7 @@
             // 
             this.tabPage3.Controls.Add(this.dgvErroresSemanticos);
             this.tabPage3.Location = new System.Drawing.Point(4, 33);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(1376, 289);
             this.tabPage3.TabIndex = 2;
@@ -336,7 +336,7 @@
             this.Column1,
             this.Column2});
             this.dgvErroresSemanticos.Location = new System.Drawing.Point(48, 14);
-            this.dgvErroresSemanticos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvErroresSemanticos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvErroresSemanticos.Name = "dgvErroresSemanticos";
             this.dgvErroresSemanticos.RowHeadersWidth = 51;
             this.dgvErroresSemanticos.Size = new System.Drawing.Size(1231, 185);
@@ -380,7 +380,7 @@
             this.tabPage5.Controls.Add(this.dgvConstantes);
             this.tabPage5.Controls.Add(this.dgvVariables);
             this.tabPage5.Location = new System.Drawing.Point(4, 33);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(1376, 289);
             this.tabPage5.TabIndex = 4;
@@ -389,13 +389,14 @@
             // 
             // dgvConstantes
             // 
+            this.dgvConstantes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvConstantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvConstantes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5});
             this.dgvConstantes.Location = new System.Drawing.Point(623, 14);
-            this.dgvConstantes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvConstantes.Margin = new System.Windows.Forms.Padding(4);
             this.dgvConstantes.Name = "dgvConstantes";
             this.dgvConstantes.RowHeadersWidth = 51;
             this.dgvConstantes.Size = new System.Drawing.Size(579, 185);
@@ -406,24 +407,22 @@
             this.dataGridViewTextBoxColumn3.HeaderText = "Indice";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 125;
             // 
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.HeaderText = "Valor";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 125;
             // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.HeaderText = "Tipo Dato";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 125;
             // 
             // dgvVariables
             // 
+            this.dgvVariables.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVariables.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -431,7 +430,7 @@
             this.Column3,
             this.Column4});
             this.dgvVariables.Location = new System.Drawing.Point(11, 14);
-            this.dgvVariables.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvVariables.Margin = new System.Windows.Forms.Padding(4);
             this.dgvVariables.Name = "dgvVariables";
             this.dgvVariables.RowHeadersWidth = 51;
             this.dgvVariables.Size = new System.Drawing.Size(579, 185);
@@ -442,28 +441,24 @@
             this.dataGridViewTextBoxColumn1.HeaderText = "Indice";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 125;
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "Variable";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 125;
             // 
             // Column3
             // 
             this.Column3.HeaderText = "Tipo Dato";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
-            this.Column3.Width = 125;
             // 
             // Column4
             // 
             this.Column4.HeaderText = "Valor";
             this.Column4.MinimumWidth = 6;
             this.Column4.Name = "Column4";
-            this.Column4.Width = 125;
             // 
             // tabPage6
             // 
@@ -472,7 +467,7 @@
             this.tabPage6.Controls.Add(this.btnGuardar);
             this.tabPage6.Controls.Add(this.dgvTriplos);
             this.tabPage6.Location = new System.Drawing.Point(4, 33);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(1376, 289);
             this.tabPage6.TabIndex = 5;
@@ -526,14 +521,17 @@
             // 
             // dgvTriplos
             // 
+            this.dgvTriplos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTriplos.BackgroundColor = System.Drawing.Color.White;
             this.dgvTriplos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTriplos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column5,
             this.Column6,
             this.Column7,
             this.Column8});
+            this.dgvTriplos.GridColor = System.Drawing.Color.White;
             this.dgvTriplos.Location = new System.Drawing.Point(11, 4);
-            this.dgvTriplos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvTriplos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvTriplos.Name = "dgvTriplos";
             this.dgvTriplos.RowHeadersWidth = 51;
             this.dgvTriplos.Size = new System.Drawing.Size(935, 377);
@@ -544,28 +542,24 @@
             this.Column5.HeaderText = "Dato Objeto";
             this.Column5.MinimumWidth = 6;
             this.Column5.Name = "Column5";
-            this.Column5.Width = 125;
             // 
             // Column6
             // 
             this.Column6.HeaderText = "Dato Fuente";
             this.Column6.MinimumWidth = 6;
             this.Column6.Name = "Column6";
-            this.Column6.Width = 125;
             // 
             // Column7
             // 
             this.Column7.HeaderText = "Operador";
             this.Column7.MinimumWidth = 6;
             this.Column7.Name = "Column7";
-            this.Column7.Width = 125;
             // 
             // Column8
             // 
             this.Column8.HeaderText = "Descripcion";
             this.Column8.MinimumWidth = 6;
             this.Column8.Name = "Column8";
-            this.Column8.Width = 125;
             // 
             // txtLineasLexico
             // 
@@ -700,7 +694,7 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Location = new System.Drawing.Point(260, 73);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(100, 28);
             this.btnLimpiar.TabIndex = 39;
@@ -713,7 +707,7 @@
             this.radInOrden.AutoSize = true;
             this.radInOrden.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radInOrden.Location = new System.Drawing.Point(716, 490);
-            this.radInOrden.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radInOrden.Margin = new System.Windows.Forms.Padding(4);
             this.radInOrden.Name = "radInOrden";
             this.radInOrden.Size = new System.Drawing.Size(104, 29);
             this.radInOrden.TabIndex = 46;
@@ -725,7 +719,7 @@
             this.radPreorden.AutoSize = true;
             this.radPreorden.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPreorden.Location = new System.Drawing.Point(716, 465);
-            this.radPreorden.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radPreorden.Margin = new System.Windows.Forms.Padding(4);
             this.radPreorden.Name = "radPreorden";
             this.radPreorden.Size = new System.Drawing.Size(118, 29);
             this.radPreorden.TabIndex = 45;
@@ -738,7 +732,7 @@
             this.radPostorden.Checked = true;
             this.radPostorden.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPostorden.Location = new System.Drawing.Point(716, 442);
-            this.radPostorden.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radPostorden.Margin = new System.Windows.Forms.Padding(4);
             this.radPostorden.Name = "radPostorden";
             this.radPostorden.Size = new System.Drawing.Size(127, 29);
             this.radPostorden.TabIndex = 44;
@@ -750,7 +744,7 @@
             // 
             this.btnOrdenar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOrdenar.Location = new System.Drawing.Point(524, 442);
-            this.btnOrdenar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOrdenar.Margin = new System.Windows.Forms.Padding(4);
             this.btnOrdenar.Name = "btnOrdenar";
             this.btnOrdenar.Size = new System.Drawing.Size(159, 48);
             this.btnOrdenar.TabIndex = 43;
