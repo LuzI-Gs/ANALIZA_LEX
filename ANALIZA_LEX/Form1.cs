@@ -15,6 +15,8 @@ using System.Drawing;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.LinkLabel;
+using System.Linq.Expressions;
+
 namespace ANALIZA_LEX
 {
     public partial class Form1 : Form
@@ -729,46 +731,60 @@ namespace ANALIZA_LEX
             }
         }
         /*---------------*/
-        public void metodoBusqueda() //Hugo Ramos - realiza la busqueda de variables en la tabla para poder hacer la nueva expresion con asignacion
+        // realiza la busqueda de variables en la tabla para poder hacer la nueva expresion con asignacion
+        public void metodoBusqueda() 
         {
             int numeroDeLineas = txtLenguaje.Lines.Length;
             for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
             {
                 primerLinea = txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty;
-                string[] tokens = primerLinea.Split(' '); // Dividimos la expresión en tokens por espacios en blanco
-                if (EsExpresion(primerLinea)) //Hugo Ramos evalua la linea si es es expresion 
+                // Dividimos la expresión en tokens por espacios en blanco
+                string[] tokens = primerLinea.Split(' ');
+                //evalua la linea si es es expresion
+                if (EsExpresion(primerLinea))  
                 {
                     int numeroDeFilas = dgvVariables.Rows.Count;
                     for (int i = 0; i < tokens.Length; i++)
                     {
-                        if (i == 0)//Compara la posicion de la palaraba(token) donde esta la linea en que se encuentra la expresion aritmetica 
+                        //Compara la posicion de la palaraba(token) donde esta la linea en que se encuentra la expresion aritmetica 
+                        if (i == 0)
                         {
-                            nuevaExpresion = tokens[i];  // MessageBox.Show("Variable en donde se guardara el valor: "+nuevaExpresion); //Mensaje de pantalla que ayuda visualmente saber cual es la variable donde se guardara el valor de la expresion
+                            //Mensaje de pantalla que ayuda visualmente saber cual es la variable donde se guardara el valor de la expresion
+                            nuevaExpresion = tokens[i]; 
                         }
                         if (i == 1)
                         {
-                            nuevaExpresion = nuevaExpresion + " " + tokens[i];// MessageBox.Show("Identifica si despues de la variable donde se almacenara el valor si es = "+nuevaExpresion);
+                            // MessageBox.Show("Identifica si despues de la variable donde se almacenara el valor si es = "+nuevaExpresion);
+                            nuevaExpresion = nuevaExpresion + " " + tokens[i];
                         }
-                        if (EsEntero(tokens[i]) || tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*") //Hugo Ramos - Verifica si es un entero y si la linea contiene algun operador, logicamente indica que sea una expresion y no otra instruccion
+                        // - Verifica si es un entero y si la linea contiene algun operador, logicamente indica que sea una expresion y no otra instruccion
+                        if (EsEntero(tokens[i]) || tokens[i] == "add" || tokens[i] == "dec" || tokens[i] == "mul") 
                         {
                             if (EsEntero(tokens[i]))
-                            { //Hugo Ramos - Verifica si es un entero y si si concatena el valor 
-                                nuevaExpresion = nuevaExpresion + " " + tokens[i]; //MessageBox.Show(nuevaExpresion); //Hugo Ramos - Hice este metodo que detecta que valor tiene la variable en la expresion e imprime el valor
+                            { //Verifica si es un entero y si si concatena el valor 
+                                nuevaExpresion = nuevaExpresion + " " + tokens[i]; // -  metodo que detecta que valor tiene la variable en la expresion e imprime el valor
                             }
-                            else { nuevaExpresion = nuevaExpresion + " " + tokens[i];  /*MessageBox.Show(nuevaExpresion); Hugo Ramos - Nos ayuda a identificar el cual es el valor de la variable que se encuentra en la expresion aritmetica, nos ayudara en un fururo para realizar las operaciones y su postfijo */}
+                            else
+                            {   /*Nos ayuda a identificar el cual es el valor de la variable que se encuentra en la expresion aritmetica,
+                                 * nos ayudara en un fururo para realizar las operaciones y su postfijo */
+                                nuevaExpresion = nuevaExpresion + " " + tokens[i]; 
+                            }
                         }
                         else
                         {
                             foreach (DataGridViewRow fila in dgvVariables.Rows)
-                            { /*Hugo Ramos - Recorre las filas y columnas de datagridview */
+                            { /*Recorre las filas y columnas de datagridview */
                                 object valorCelda = fila.Cells[1].Value;
                                 if (valorCelda != null)
-                                { /* Hugo Ramos - Como aveces los valores de las celdas son vacios - ayuda a que no tome en cuenta ese valor y solo los que si tienen */
+                                { /* Como aveces los valores de las celdas son vacios - ayuda a que no tome en cuenta ese valor y solo los que si tienen */
                                     string variablesDeLaColumna = valorCelda.ToString(); //convierte el valor de la tabla en un string para poder manejarlo
                                     if (variablesDeLaColumna == tokens[i] && variablesDeLaColumna != tokens[0])
                                     {
-                                        igualacionValorVariable = fila.Cells[3].Value.ToString(); //Hugo Ramos - Obtiene el valor de variable segun la fila y columna de variable
-                                        nuevaExpresion = nuevaExpresion + " " + igualacionValorVariable;//MessageBox.Show(nuevaExpresion);//Hugo Ramos - Nos ayuda a identificar el cual es el valor de la variable que se encuentra en la expresion aritmetica, nos ayudara en un fururo para realizar las operaciones y su postfijo
+                                        //Obtiene el valor de variable segun la fila y columna de variable
+                                        igualacionValorVariable = fila.Cells[3].Value.ToString();
+                                        // Nos ayuda a identificar el cual es el valor de la variable que se encuentra en la expresion aritmetica,
+                                        // nos ayudara en un fururo para realizar las operaciones y su postfijo
+                                        nuevaExpresion = nuevaExpresion + " " + igualacionValorVariable;
                                     }
                                 }
                             }
@@ -779,7 +795,7 @@ namespace ANALIZA_LEX
             }
             MessageBox.Show($"Expresion con asignacion de valores: {nuevaExpresion}"); //Resultado final de la identificacion de la variables dentro de la expresion       
         }
-        public void Triplos() //Hugo Ramos - Proceso de triplos - Identifica Dato Objeto, Dato Fuente, Operador y una descripcion de la expresion
+        public void Triplos() //Proceso de triplos - Identifica Dato Objeto, Dato Fuente, Operador y una descripcion de la expresion
         {
             int numeroDeLineas = txtLenguaje.Lines.Length;
             // se genera un objeto nuevo de la clase Triplo
@@ -791,10 +807,13 @@ namespace ANALIZA_LEX
                 if (EsExpresion(primerLinea))
                 {
                     int numeroDeFilas = dgvVariables.Rows.Count; //Cuenta el numero de filas para saber en que fila se ira imprimiendo los mensajes de ayuda  
-                    inputExpression = primerLinea.ToString();  //MessageBox.Show("Esta es la expresion aritmetica a resolver: "+inputExpression); //Imprime en pantalla la expresion aritmetica
+                    //MessageBox.Show("Esta es la expresion aritmetica a resolver: "+inputExpression); //Imprime en pantalla la expresion aritmetica
+                    inputExpression = primerLinea.ToString(); 
                     string[] elemento = inputExpression.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);// Dividir la expresión en tokens   
-                    asignacionInicial = string.Format(resultadoEsperado, "T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");  //Hugo Ramos - Asignación inicial - Asigna el valor cuando es =, por ejemplo: Asigna el valor de '{elemento[2]}' a una variable temporal (t1)
-                    //MessageBox.Show("asignacion inicial: " + asignacionInicial); Imprime la asignacion inicial para saber cual es la primera, se guarda para saber posteriormente si es inicial y si no lo es guardar en la variable que se asigna el resultado
+                    //Asignación inicial - Asigna el valor cuando es =, por ejemplo: Asigna el valor de '{elemento[2]}' a una variable temporal (t1)
+                    asignacionInicial = string.Format(resultadoEsperado, "T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");  
+                    //Imprime la asignacion inicial para saber cual es la primera, se guarda para saber posteriormente si es inicial y si no lo es guardar
+                    //en la variable que se asigna el resultado
                     triplo = new Triplo();
                     triplo.DatoObjeto = "T1";
                     triplo.DatoFuente = elemento[2];
@@ -803,16 +822,17 @@ namespace ANALIZA_LEX
                     dgvTriplos.Rows.Add("T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");
                     logicLines.Add(asignacionInicial);
                     triplo = new Triplo();
-                    for (int i = 3; i < elemento.Length; i += 2) //Hugo Ramos - Procesar las operaciones
+                    for (int i = 3; i < elemento.Length; i += 2) //Procesar las operaciones
                     {
-                        operador = elemento[i]; //Hugo Ramos -  almancena temporalmente el operador 
-                        operando = elemento[i + 1]; //Hugo Ramos -  Almacena temporalmente  el operando para usos de iteracion
+                        operador = elemento[i]; //almancena temporalmente el operador 
+                        operando = elemento[i + 1]; //Almacena temporalmente  el operando para usos de iteracion
                         operacionDescripcion = $"Se {ObtenerDescripcionOperacion(operador)} el valor de '{operando}' a la variable temporal (T1)";
-                        operacion1 = string.Format(resultadoEsperado, "T1", operando, operador, operacionDescripcion); //Hugo Ramos - valor que se mando a LogicLines que contiene operando, operador, operacion descripcion
+                        //valor que se mando a LogicLines que contiene operando, operador, operacion descripcion
+                        operacion1 = string.Format(resultadoEsperado, "T1", operando, operador, operacionDescripcion); 
                         triplo.DatoObjeto = "T1";
                         triplo.DatoFuente = operando;
                         triplo.Operador = operador;
-                        dgvTriplos.Rows.Add("T1", operando, operador, operacionDescripcion);//Hugo Ramos -  Agrega ala tabla la informacion recabada de t1, operador, operacion descripcion
+                        dgvTriplos.Rows.Add("T1", operando, operador, operacionDescripcion);//Agrega a la tabla la informacion recabada de t1, operador, operacion descripcion
                         logicLines.Add(operacion1);
                     }
                     listaTriplo.Add(triplo);
@@ -821,21 +841,21 @@ namespace ANALIZA_LEX
                     triplo.DatoFuente = "T1";
                     triplo.Operador = "=";
                     listaTriplo.Add(triplo);
-                    asignacionFinal = string.Format(resultadoEsperado, elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");// Hugo Ramos - Asignación final -  variable que almacena la cadena y concatenacionn de resultadoEsperado y elemento, Se asigna la variable temporal al identificador final
-                    //MessageBox.Show("asignacion final: "+asignacionFinal);  //Hugo Ramos -  Mensaje de pantalla que ayuda a imprimir asignacion final                                                                                                                       
+                    //Asignación final -  variable que almacena la cadena y concatenacionn de resultadoEsperado y elemento, Se asigna la variable temporal al identificador final
+                    asignacionFinal = string.Format(resultadoEsperado, elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");
+                    //Mensaje de pantalla que ayuda a imprimir asignacion final                                                                                                                       
                     dgvTriplos.Rows.Add(elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");
-                    logicLines.Add(asignacionFinal); //Hugo Ramos - Imprimir la lógica generada de linea por linea de triplos por si se ocupa a futuro
-                    //foreach (var line in logicLines){MessageBox.Show(line);}
+                    logicLines.Add(asignacionFinal); //Imprimir la lógica generada de linea por linea de triplos por si se ocupa a futuro
                 }
             }
         }
         public void Ejecucion()
         {
-            int numeroDeLineas = txtLenguaje.Lines.Length; //Hugo Ramos Zarate - Se obtiene el texto y se define el tamano 
+            int numeroDeLineas = txtLenguaje.Lines.Length; //Se obtiene el texto y se define el tamano 
             for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
             {
-                primerLinea = txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty; //Hugo Ramos - Se fragmenta en lineas del texto completo
-                string[] tokens = primerLinea.Split(' '); //Hugo Ramos Zarate - Dividimos la expresión en tokens por espacios en blanco
+                primerLinea = txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty; //Se fragmenta en lineas del texto completo
+                string[] tokens = primerLinea.Split(' '); //Dividimos la expresión en tokens por espacios en blanco
                 if (EsDeclaracionVariable(primerLinea))
                 {
                     var datosVariable = ObtenerDatosDeclaracionVariable(primerLinea);
@@ -844,52 +864,59 @@ namespace ANALIZA_LEX
                 }
                 else if (EsExpresion(primerLinea))
                 {
-                    string patron = @"(?<variable>\w+)\s*=\s*(?<operacion>.*)";  //Hugo Ramos - Patrón para buscar la variable y la operación
-                    Match match = Regex.Match(primerLinea, patron); //Hugo Ramos - Buscar coincidencias en la expresión 
+                    string patron = @"(?<variable>\w+)\s*=\s*(?<operacion>.*)";  //Patrón para buscar la variable y la operación
+                    Match match = Regex.Match(primerLinea, patron); //Buscar coincidencias en la expresión 
                     for (int i = 0; i < tokens.Length; i++)
                     {
                         string token = tokens[i];
-                        if (token.All(c => char.IsDigit(c) || c == '.')) //Hugo Ramos -compara que sea digito entero o db, si es db debe aceptar .
+                        if (token.All(c => char.IsDigit(c) || c == '.')) //compara que sea digito entero o db, si es db debe aceptar .
                         {
                             if (EsEntero(token)) { tipoDatoConstante = "Entero"; }
                             else if (EsDouble(token)) { tipoDatoConstante = "Double"; }
-                            else {/*MessageBox.Show("El valor ingresado no es ni un entero ni un double válido."); //Hugo Ramos - Detecta que no sea una expresion, ayuda a identificar que hacer cuando no sea y seguir su proceso por ejemplo luego puede seguir con una iteracion o etc*/}
-                            dgvConstantes.Rows.Add(indiceConstante = indiceConstante + 1, token, tipoDatoConstante);//Hugo Ramos - Agrega a la tabla de constantes, la constante que se detecto en la expresion                                               
+                            else {/*MessageBox.Show("El valor ingresado no es ni un entero ni un double válido."); //Detecta que no sea una expresion, ayuda a identificar 
+                                   * que hacer cuando no sea y seguir su proceso por ejemplo luego puede seguir con una iteracion o etc*/}
+                            //Agrega a la tabla de constantes, la constante que se detecto en la expresion  
+                            dgvConstantes.Rows.Add(indiceConstante = indiceConstante + 1, token, tipoDatoConstante);                                             
                         }
                     }
                 }
-                else {/*MessageBox.Show("No es una declaracion de variable ni una expresion valida"); //Hugo Ramos Zarate - Lo puse por si en un furuto se necesita identificar que no sea variable o constante */ }
+                else {/* Lo puse por si en un furuto se necesita identificar que no sea variable o constante */}
             }
-            metodoBusqueda(); //Hugo Ramos - ejecuta el metodo de busqueda de datos
-            Triplos();//Hugo Ramos - ejecuta el metodo de triplos
+            metodoBusqueda(); //ejecuta el metodo de busqueda de datos
+            Triplos();//ejecuta el metodo de triplos
         }
         static bool EsDeclaracionVariable(string entrada)
         {
+            //Utiliza una expresión regular para verificar si la entrada coincide con un patrón de declaración de variable.
             string patron = @"^\s*(\w+)\s+(\w+)\s*=\s*(\d+)\s*$";
-            return Regex.IsMatch(entrada, patron);//Hugo Ramos - Utiliza una expresión regular para verificar si la entrada coincide con un patrón de declaración de variable.
+            return Regex.IsMatch(entrada, patron);
         }
         static (string Nombre, string TipoDato, string Valor) ObtenerDatosDeclaracionVariable(string entrada)
         {
+            // Utiliza una expresión regular para extraer el nombre de la variable, el tipo de dato y el valor de una declaración de variable.
             string patron = @"^\s*(\w+)\s+(\w+)\s*=\s*(\d+)\s*$";
-            Match coincidencia = Regex.Match(entrada, patron);// Utiliza una expresión regular para extraer el nombre de la variable, el tipo de dato y el valor de una declaración de variable.
+            Match coincidencia = Regex.Match(entrada, patron);
             return (coincidencia.Groups[1].Value, coincidencia.Groups[2].Value, coincidencia.Groups[3].Value);
         }
         static bool EsExpresion(string entrada)
         {
             string patron = @"^\w+\s*=\s*(.*)$";
-            return Regex.IsMatch(entrada, patron); //Hugo Ramos -  Utiliza una expresión regular para verificar si la entrada es una expresión válida.
+            return Regex.IsMatch(entrada, patron); //Utiliza una expresión regular para verificar si la entrada es una expresión válida.
         }
         static bool EsEntero(string input)
         {
+            //Metodo que ingresa una entrada y verifica si puede convertirse a int y si si, devuelve que tipo de dato es 
             int resultado;
-            return int.TryParse(input, out resultado);//Hugo Ramos - Metodo que ingresa una entrada y verifica si puede convertirse a int y si si, devuelve que tipo de dato es  
+            return int.TryParse(input, out resultado); 
         }
         static bool EsDouble(string input)
         {
+            //Metodo que ingresa una entrada y verifica si puede convertirse a db y si si, devuelve que tipo de dato es 
             double resultado;
-            return double.TryParse(input, out resultado);//Hugo Ramos - Metodo que ingresa una entrada y verifica si puede convertirse a db y si si, devuelve que tipo de dato es 
+            return double.TryParse(input, out resultado);
         }
-        static string ObtenerDescripcionOperacion(string operador) //Hugo Ramos Zarate - Metodo que ingresa un operador y devuelve una cadena segun su tipo, para imprimir la descripcion de la tabla de triplos
+        //Metodo que ingresa un operador y devuelve una cadena segun su tipo, para imprimir la descripcion de la tabla de triplos
+        static string ObtenerDescripcionOperacion(string operador) 
         {
             switch (operador)
             {
