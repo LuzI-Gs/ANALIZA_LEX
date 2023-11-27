@@ -409,51 +409,61 @@ namespace ANALIZA_LEX
                     case "=":
                         if (triplo.DatoObjeto == "T1")
                         {
-                            textoARch += " MOV AX," + triplo.DatoFuente + Environment.NewLine;
+                            
+                            textoARch += "SUB AL,30h \r\nMOV AL," + triplo.DatoFuente + Environment.NewLine;
                         }
                         else
                         {
-                            textoARch += " MOV " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                           // textoARch += "MOV " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+                     
                         }
                         break;
                     case "add" :
                         if (triplo.DatoObjeto == "T1")
                         {
-                            textoARch += " ADD AX," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "ADD AL," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MOV ah,09h\r\nmov dl,AL\r\nadd dl,30h\r\nmov ah,02h\r\nint 21h";
                         }
                         else
                         {
-                            textoARch += " ADD " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                            textoARch += " ADD " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+                         
                         }
                         break;
                     case "dec":
                         if (triplo.DatoObjeto == "T1")
                         {
-                            textoARch += "SUB AX," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "SUB AL," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MOV ah,09h\r\nmov dl,AL\r\nadd dl,30h\r\nmov ah,02h\r\nint 21h";
                         }
                         else
                         {
-                            textoARch +=  "SUB " + triplo.DatoObjeto + ", AX" + Environment.NewLine;
+                           // textoARch +=  "SUB " + triplo.DatoObjeto + ", AL" + Environment.NewLine;
+                           
                         }
                         break;
                     case "div":
                         if (triplo.DatoObjeto == "T1")
                         {
-                            textoARch += "DIV AX," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "DIV AL," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MOV ah,09h\r\nmov dl,AL\r\nadd dl,30h\r\nmov ah,02h\r\nint 21h";
                         }
                         else
                         {
-                            textoARch += "DIV " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                           // textoARch += "DIV " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+                          
                         }
                         break;
                     case "mul":
                         if (triplo.DatoObjeto == "T1")
                         {
-                            textoARch += "MUL AX," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MUL AL," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MOV ah,09h\r\nmov dl,AL\r\nadd dl,30h\r\nmov ah,02h\r\nint 21h";
                         }
                         else
                         {
-                            textoARch +=  "MUL " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                           // textoARch +=  "MUL " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+                           
                         }
                         break;
                     case "|y|":
@@ -540,7 +550,7 @@ namespace ANALIZA_LEX
                         break;
                 }
             }
-            textoARch += ".MOV AH, 4CH\n.INT 21H";
+            textoARch += "\r\nMOV AH, 4CH\r\nINT 21H \r\nend";
             rch.Text = textoARch;
         }
 
