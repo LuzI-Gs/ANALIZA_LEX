@@ -369,7 +369,7 @@ namespace ANALIZA_LEX
             //AQUI ESCRIBE LAS LINEAS POR DEAFULT .DATA Y .MODEL STACK
            // sw.WriteLine(".model small \n.stack 100h\n.data\n.code");
             //DESPUES AGREGA LO QUE UNO ESCRIBA EN EL RICHTEXBOX
-            sw.WriteLine("\n" + rch.Text + "\n");
+            sw.WriteLine(rch.Text + "\n");
          //   sw.WriteLine(".MOV AH, 4CH\n.INT 21H");
             sw.Close();
 
