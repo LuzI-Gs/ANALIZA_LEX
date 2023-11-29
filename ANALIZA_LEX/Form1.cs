@@ -1208,7 +1208,7 @@ namespace ANALIZA_LEX
                         case "ente": token = "PR05"; break;
                         case "flo": token = "PR08"; break;
                         case "txt": token = "PR018"; break;
-                        case "boo": token = "PR02";MessageBox.Show("bandera"); break;
+                        case "boo": token = "PR02"; break;
                     }
                 }              
 
@@ -1292,7 +1292,7 @@ namespace ANALIZA_LEX
                         }
                         break;
                     case "PR02":
-                        MessageBox.Show("otra bandera");
+                        //MessageBox.Show("otra bandera");
                         if (arregloDeCaracteres.Contains('v') && arregloDeCaracteres.Contains('e') && arregloDeCaracteres.Contains('r') && arregloDeCaracteres.Contains('d'))
                         {
                            // MessageBox.Show("Es correcto");
