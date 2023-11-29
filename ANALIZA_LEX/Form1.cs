@@ -69,6 +69,8 @@ namespace ANALIZA_LEX
         Error unError;
         List<TriploVerdadero> listaTriploVerdadero = new List<TriploVerdadero>();
         List<TriploFalso> listaTriploFalso = new List<TriploFalso>();
+        TriploVerdadero triploVerdadero;
+        TriploFalso triploFalso;
         public void MostrarMatriz()
         {
             conexion.abrir();
@@ -803,7 +805,11 @@ namespace ANALIZA_LEX
             txtLineasLexico.Text = "";
             listaTriplo.Clear();
             dgvTriplos.Rows.Clear();
-           
+            listaTriplo.Clear();
+            listaTriploVerdadero.Clear();
+            listaTriploFalso.Clear();
+            dgvTriploVerdadero.Visible = false;
+            dgvTriploFalso.Visible = false;
             contador = 0;
             try
             {
@@ -836,6 +842,7 @@ namespace ANALIZA_LEX
             }
             catch (Exception) { MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             InstruccionesSeleccion();
+            CicloMientras();
 
         }
         private void btnValidarSint_Click_1(object sender, EventArgs e)
@@ -1393,7 +1400,7 @@ namespace ANALIZA_LEX
                             {
                                 if (token.StartsWith("IDE"))
                                 {
-                                    Ejecucion();
+                                    TriplosVerdaderos();
                                 }
                                 else if (cadena == true)
                                 {
@@ -1424,7 +1431,7 @@ namespace ANALIZA_LEX
                             {
                                 if (token.StartsWith("IDE"))
                                 {
-                                    Ejecucion();
+                                    TriplosFalso();
                                 }
                                 else if (cadena == true)
                                 {
@@ -1487,6 +1494,306 @@ namespace ANALIZA_LEX
                         dgvTriploFalso.Visible = true;
                         dgvTriploFalso.Rows.Add(triploFalso.DatoObjeto, triploFalso.DatoFuente, triploFalso.Operador);
                     }
+                }
+            }
+        }
+
+        public void CicloMientras()
+        {
+            bool palabraReservada = false;
+            bool inicioCondicion = false;
+            bool finCondicion = false;
+            int contadorTemporales = 1;
+            string operador = "";
+            bool secuenciaVerdadera = false;
+            bool secuenciaFalsa = false;
+            bool esSeleccion = false;
+            bool cadena = false;
+            bool comparacion = false;
+
+            int numeroDeLineas = txtTokens.Lines.Length - 1; //Se obtiene el texto y se define el tamano 
+            int numeroDeLineasLenguaje = txtLenguaje.Lines.Length;
+            int indexToken = 0;
+            for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
+            {
+                primerLinea = txtTokens.Lines.Length > 0 ? txtTokens.Lines[miPosicionLinea] : string.Empty; //Se fragmenta en lineas del texto completo
+                string[] tokens = primerLinea.Split(' '); //Dividimos la expresión en tokens por espacios en blanco
+                string lineasLenguaje = txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty;
+                string[] lenguaje = lineasLenguaje.Split(' ');
+
+
+
+
+
+                foreach (var token in tokens)
+                {
+                    if (token == "PR14")
+                    {
+                        esSeleccion = true;
+                    }
+                    if (esSeleccion == true)
+                    {
+                        if (token == "CE05")
+                        {
+                            inicioCondicion = true;
+                        }
+                        if (inicioCondicion == true)
+                        {
+                            if (token.StartsWith("ENTE") || token.StartsWith("IDE"))
+                            {
+                                Triplo miObjetoTriplo = new Triplo();
+                                miObjetoTriplo.DatoObjeto = "T" + contadorTemporales;
+                                miObjetoTriplo.DatoFuente = lenguaje[indexToken];
+                                miObjetoTriplo.Operador = "=";
+                                listaTriplo.Add(miObjetoTriplo);
+                                contadorTemporales++;
+                            }
+                        }
+                        if (token == "CE03")
+                        {
+                            inicioCondicion = false;
+                        }
+
+                        if (token.StartsWith("OP"))
+                        {
+                            operador = token;
+                        }
+                        if (comparacion == true)
+                        {
+                            Triplo miObjetoTriplo = new Triplo();
+                            miObjetoTriplo.DatoObjeto = "T1";
+                            miObjetoTriplo.DatoFuente = "T2";
+                            miObjetoTriplo.Operador = operador;
+                            listaTriplo.Add(miObjetoTriplo);
+                            comparacion = false;
+                        }
+                        if (inicioCondicion == false && listaTriplo.Count == 2)
+                        {
+
+                            comparacion = true;
+
+
+                        }
+
+
+                        if (token == "PR11")
+                        {
+                            secuenciaVerdadera = true;
+
+                        }
+                        if (secuenciaVerdadera == true)
+                        {
+                            if (secuenciaVerdadera == true && token != "PR19")
+                            {
+                                if (token.StartsWith("IDE"))
+                                {
+                                    TriplosVerdaderos();
+                                }
+                                else if (cadena == true)
+                                {
+                                    TriploVerdadero miObjetoTriplo = new TriploVerdadero();
+                                    miObjetoTriplo.DatoObjeto = lenguaje[1];
+                                    miObjetoTriplo.Operador = "PR10";
+                                    listaTriploVerdadero.Add(miObjetoTriplo);
+                                    cadena = false;
+                                }
+                                else if (token == "PR10")
+                                {
+                                    cadena = true;
+                                }
+
+
+                            }
+                        }
+
+                        //if (token == "PR17")
+                        //{
+                        //    secuenciaVerdadera = false;
+                        //    secuenciaFalsa = true;
+
+                        //}
+                        //if (secuenciaFalsa)
+                        //{
+                        //    if (secuenciaFalsa == true && token != "PR06")
+                        //    {
+                        //        if (token.StartsWith("IDE"))
+                        //        {
+                        //            Ejecucion();
+                        //        }
+                        //        else if (cadena == true)
+                        //        {
+                        //            TriploFalso miObjetoTriplo = new TriploFalso();
+                        //            miObjetoTriplo.DatoObjeto = lenguaje[1];
+                        //            miObjetoTriplo.Operador = "PR10";
+                        //            listaTriploFalso.Add(miObjetoTriplo);
+                        //            cadena = false;
+                        //        }
+                        //        else if (token == "PR10")
+                        //        {
+                        //            cadena = true;
+                        //        }
+
+                        //    }
+                        //}
+
+                        if (token == "PR07")
+                        {
+                            Triplo miObjetoTriplo = new Triplo();
+                            miObjetoTriplo.DatoObjeto = "ET";
+                            miObjetoTriplo.DatoFuente = "TRTRUE";
+
+                            listaTriplo.Add(miObjetoTriplo);
+
+                            if (secuenciaFalsa == true)
+                            {
+                                Triplo tr = new Triplo();
+                                tr.DatoObjeto = "ET";
+                                tr.DatoFuente = "TRFALSE";
+
+                                listaTriplo.Add(tr);
+                            }
+                        }
+
+                        indexToken++;
+                    }
+
+                }
+
+
+
+
+            }
+
+            foreach (var triplo in listaTriplo)
+            {
+
+                dgvTriplos.Rows.Add(triplo.DatoObjeto, triplo.DatoFuente, triplo.Operador, "des");
+                if (triplo.DatoFuente == "TRTRUE")
+                {
+                    foreach (var triploVerdadero in listaTriploVerdadero)
+                    {
+                        dgvTriploVerdadero.Visible = true;
+                        dgvTriploVerdadero.Rows.Add(triploVerdadero.DatoObjeto, triploVerdadero.DatoFuente, triploVerdadero.Operador);
+                    }
+                }
+                if (triplo.DatoFuente == "TRFALSE")
+                {
+                    foreach (var triploFalso in listaTriploFalso)
+                    {
+                        dgvTriploFalso.Visible = true;
+                        dgvTriploFalso.Rows.Add(triploFalso.DatoObjeto, triploFalso.DatoFuente, triploFalso.Operador);
+                    }
+                }
+            }
+
+        }
+
+        public void TriplosVerdaderos() //Proceso de triplos - Identifica Dato Objeto, Dato Fuente, Operador y una descripcion de la expresion
+        {
+            int numeroDeLineas = txtLenguaje.Lines.Length;
+            // se genera un objeto nuevo de la clase Triplo
+            for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
+            {
+
+                primerLinea = txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty;
+                string[] tokens = primerLinea.Split(' '); // Dividimos la expresión en tokens por espacios en blanco
+                if (EsExpresion(primerLinea))
+                {
+                    int numeroDeFilas = dgvVariables.Rows.Count; //Cuenta el numero de filas para saber en que fila se ira imprimiendo los mensajes de ayuda  
+                    //MessageBox.Show("Esta es la expresion aritmetica a resolver: "+inputExpression); //Imprime en pantalla la expresion aritmetica
+                    inputExpression = primerLinea.ToString();
+                    string[] elemento = inputExpression.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);// Dividir la expresión en tokens   
+                    //Asignación inicial - Asigna el valor cuando es =, por ejemplo: Asigna el valor de '{elemento[2]}' a una variable temporal (t1)
+                    asignacionInicial = string.Format(resultadoEsperado, "T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");
+                    //Imprime la asignacion inicial para saber cual es la primera, se guarda para saber posteriormente si es inicial y si no lo es guardar
+                    //en la variable que se asigna el resultado
+                    triploVerdadero = new TriploVerdadero();
+                    triploVerdadero.DatoObjeto = "T1";
+                    triploVerdadero.DatoFuente = elemento[2];
+                    triploVerdadero.Operador = "=";
+                    listaTriploVerdadero.Add(triploVerdadero);
+                    //dgvTriplos.Rows.Add("T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");
+                    logicLines.Add(asignacionInicial);
+                    triploVerdadero = new TriploVerdadero();
+                    for (int i = 3; i < elemento.Length; i += 2) //Procesar las operaciones
+                    {
+                        operador = elemento[i]; //almancena temporalmente el operador 
+                        operando = elemento[i + 1]; //Almacena temporalmente  el operando para usos de iteracion
+                        operacionDescripcion = $"Se {ObtenerDescripcionOperacion(operador)} el valor de '{operando}' a la variable temporal (T1)";
+                        //valor que se mando a LogicLines que contiene operando, operador, operacion descripcion
+                        operacion1 = string.Format(resultadoEsperado, "T1", operando, operador, operacionDescripcion);
+                        triploVerdadero.DatoObjeto = "T1";
+                        triploVerdadero.DatoFuente = operando;
+                        triploVerdadero.Operador = operador;
+                        //dgvTriplos.Rows.Add("T1", operando, operador, operacionDescripcion);//Agrega a la tabla la informacion recabada de t1, operador, operacion descripcion
+                        logicLines.Add(operacion1);
+                    }
+                    listaTriploVerdadero.Add(triploVerdadero);
+                    triploVerdadero = new TriploVerdadero();
+                    triploVerdadero.DatoObjeto = elemento[0];
+                    triploVerdadero.DatoFuente = "T1";
+                    triploVerdadero.Operador = "=";
+                    listaTriploVerdadero.Add(triploVerdadero);
+                    //Asignación final -  variable que almacena la cadena y concatenacionn de resultadoEsperado y elemento, Se asigna la variable temporal al identificador final
+                    asignacionFinal = string.Format(resultadoEsperado, elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");
+                    //Mensaje de pantalla que ayuda a imprimir asignacion final                                                                                                                       
+                    //dgvTriplos.Rows.Add(elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");
+                    logicLines.Add(asignacionFinal); //Imprimir la lógica generada de linea por linea de triplos por si se ocupa a futuro
+                }
+            }
+        }
+
+        public void TriplosFalso() //Proceso de triplos - Identifica Dato Objeto, Dato Fuente, Operador y una descripcion de la expresion
+        {
+            int numeroDeLineas = txtLenguaje.Lines.Length;
+            // se genera un objeto nuevo de la clase Triplo
+            for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
+            {
+
+                primerLinea = txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty;
+                string[] tokens = primerLinea.Split(' '); // Dividimos la expresión en tokens por espacios en blanco
+                if (EsExpresion(primerLinea))
+                {
+                    int numeroDeFilas = dgvVariables.Rows.Count; //Cuenta el numero de filas para saber en que fila se ira imprimiendo los mensajes de ayuda  
+                    //MessageBox.Show("Esta es la expresion aritmetica a resolver: "+inputExpression); //Imprime en pantalla la expresion aritmetica
+                    inputExpression = primerLinea.ToString();
+                    string[] elemento = inputExpression.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);// Dividir la expresión en tokens   
+                    //Asignación inicial - Asigna el valor cuando es =, por ejemplo: Asigna el valor de '{elemento[2]}' a una variable temporal (t1)
+                    asignacionInicial = string.Format(resultadoEsperado, "T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");
+                    //Imprime la asignacion inicial para saber cual es la primera, se guarda para saber posteriormente si es inicial y si no lo es guardar
+                    //en la variable que se asigna el resultado
+                    triploFalso = new TriploFalso();
+                    triploFalso.DatoObjeto = "T1";
+                    triploFalso.DatoFuente = elemento[2];
+                    triploFalso.Operador = "=";
+                    listaTriploFalso.Add(triploFalso);
+                    //dgvTriplos.Rows.Add("T1", elemento[2], "=", $"Asigna el valor de '{elemento[2]}' a una variable temporal (t1)");
+                    logicLines.Add(asignacionInicial);
+                    triploFalso = new TriploFalso();
+                    for (int i = 3; i < elemento.Length; i += 2) //Procesar las operaciones
+                    {
+                        operador = elemento[i]; //almancena temporalmente el operador 
+                        operando = elemento[i + 1]; //Almacena temporalmente  el operando para usos de iteracion
+                        operacionDescripcion = $"Se {ObtenerDescripcionOperacion(operador)} el valor de '{operando}' a la variable temporal (T1)";
+                        //valor que se mando a LogicLines que contiene operando, operador, operacion descripcion
+                        operacion1 = string.Format(resultadoEsperado, "T1", operando, operador, operacionDescripcion);
+                        triploFalso.DatoObjeto = "T1";
+                        triploFalso.DatoFuente = operando;
+                        triploFalso.Operador = operador;
+                        //dgvTriplos.Rows.Add("T1", operando, operador, operacionDescripcion);//Agrega a la tabla la informacion recabada de t1, operador, operacion descripcion
+                        logicLines.Add(operacion1);
+                    }
+                    listaTriploFalso.Add(triploFalso);
+                    triploFalso = new TriploFalso();
+                    triploFalso.DatoObjeto = elemento[0];
+                    triploFalso.DatoFuente = "T1";
+                    triploFalso.Operador = "=";
+                    listaTriploFalso.Add(triploFalso);
+                    //Asignación final -  variable que almacena la cadena y concatenacionn de resultadoEsperado y elemento, Se asigna la variable temporal al identificador final
+                    asignacionFinal = string.Format(resultadoEsperado, elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");
+                    //Mensaje de pantalla que ayuda a imprimir asignacion final                                                                                                                       
+                    //dgvTriplos.Rows.Add(elemento[0], "T1", "=", "Se asigna la variable temporal al identificador final");
+                    logicLines.Add(asignacionFinal); //Imprimir la lógica generada de linea por linea de triplos por si se ocupa a futuro
                 }
             }
         }
