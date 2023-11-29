@@ -372,7 +372,7 @@ namespace ANALIZA_LEX
 
         private void btnGenerar_Click(object sender, EventArgs e)
         {
-            string textoARch = ".model small \n.stack 100h\n.data\n.code" + Environment.NewLine;
+            string textoARch = ".model small\n.stack 100h\n.data\nmsg db 10,13,\"Es mayor$\",0\nmsg1 db 10,13,\"Es menor$\",0\n.code" + Environment.NewLine;
             foreach (var triplo in listaTriplo)
             {
                 switch (triplo.Operador)
@@ -552,9 +552,190 @@ namespace ANALIZA_LEX
             my = e.Y;
         }
 
+        private void btnGenerar_Click_1(object sender, EventArgs e)
+        {
+            string textoARch = ".model small\n.stack 100h\n.data\nmsg db 10,13,\"Es mayor$\",0\nmsg1 db 10,13,\"Es menor$\",0\n.code\r\nmov ax, @data\r\nmov ds, ax" + Environment.NewLine;
+            foreach (var triplo in listaTriplo)
+            {
+                switch (triplo.Operador)
+                {
+                    case "=":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+
+                            textoARch += "SUB AL,30h \r\nMOV AL," + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            // textoARch += "MOV " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+
+                        }
+                        if (triplo.DatoObjeto == "T2")
+                        {
+
+                            textoARch += "SUB BL,30h \r\nMOV BL," + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            // textoARch += "MOV " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+
+                        }
+                        break;
+                  
+                    case "add":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "ADD AL," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MOV ah,09h\r\nmov dl,AL\r\nadd dl,30h\r\nmov ah,02h\r\nint 21h";
+                        }
+                        else
+                        {
+                            textoARch += " ADD " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+
+                        }
+                        break;
+                    case "dec":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "SUB AL," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MOV ah,09h\r\nmov dl,AL\r\nadd dl,30h\r\nmov ah,02h\r\nint 21h";
+                        }
+                        else
+                        {
+                            // textoARch +=  "SUB " + triplo.DatoObjeto + ", AL" + Environment.NewLine;
+
+                        }
+                        break;
+                    case "div":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "DIV AL," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MOV ah,09h\r\nmov dl,AL\r\nadd dl,30h\r\nmov ah,02h\r\nint 21h";
+                        }
+                        else
+                        {
+                            // textoARch += "DIV " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+
+                        }
+                        break;
+                    case "mul":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "MUL AL," + triplo.DatoFuente + Environment.NewLine;
+                            textoARch += "MOV ah,09h\r\nmov dl,AL\r\nadd dl,30h\r\nmov ah,02h\r\nint 21h";
+                        }
+                        else
+                        {
+                            // textoARch +=  "MUL " + triplo.DatoObjeto + ",AL" + Environment.NewLine;
+
+                        }
+                        break;
+                    case "|y|":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "AND AX, " + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "AND " + triplo.DatoObjeto + ",AX" + Environment.NewLine;
+                        }
+                        break;
+                    case "|o|":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "OR AX, " + triplo.DatoFuente + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "OR " + triplo.DatoObjeto + ",  AX" + Environment.NewLine;
+                        }
+                        break;
+                    case "|no|":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                            textoARch += "NOT AX" + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "NOT " + triplo.DatoObjeto + Environment.NewLine;
+                        }
+                        break;
+                    case "OPR3":
+                        if (triplo.DatoObjeto == "T1")
+                        {
+                           
+                            
+                            textoARch += "CMP AL,BL "  + Environment.NewLine + " jg _if_true\r\nlea dx, msg1\r\n mov ah, 9 \r\nmov cx, 10\r\nint 21h\r\n jmp exit_program\r\n_if_true:\r\nlea dx, msg\r\nmov ah, 9\r\nmov cx, 10\r\nint 21h\r\nexit_program:\r\nmov ah, 4ch\r\nint 21h " + Environment.NewLine;
+                        }
+                        else
+                        {
+                            textoARch += "CMP " + triplo.DatoObjeto + ", AX" + Environment.NewLine + "  " + Environment.NewLine;
+                        }
+                        break;
+                   
+                    /* case ">":
+                         if (triplo.DatoObjeto == "T1")
+                         {
+                             textoARch += "CMP AX," + triplo.DatoFuente + Environment.NewLine + " JG <InstruccionMayor>" + Environment.NewLine;
+                         }
+                         else
+                         {
+                             textoARch += "CMP " + triplo.DatoObjeto + ",AX" + Environment.NewLine + " JG <InstruccionMayor>" + Environment.NewLine;
+                         }
+                         break;
+                     case "<>": // DIFERENTE
+                         if (triplo.DatoObjeto == "T1")
+                         {
+                             textoARch += "CMP AX, " + triplo.DatoFuente + Environment.NewLine + "JNE <InstruccionDiferente>" + Environment.NewLine;
+                         }
+                         else
+                         {
+                             textoARch += "CMP " + triplo.DatoObjeto + ",AX" + Environment.NewLine + "JNE <InstruccionDiferente>" + Environment.NewLine;
+                         }
+                         break;
+                     case "<=": // MENOR O IGUAL
+                         if (triplo.DatoObjeto == "T1")
+                         {
+                             textoARch += "CMP AX," + triplo.DatoFuente + Environment.NewLine + "JG <InstruccionMayorOIgual>" + Environment.NewLine;
+                         }
+                         else
+                         {
+                             textoARch += "CMP " + triplo.DatoObjeto + ",AX" + Environment.NewLine + "JG <InstruccionMayorOIgual>" + Environment.NewLine;
+                         }
+                         break;
+                     case ">=": // MAYOR O IGUAL
+                         if (triplo.DatoObjeto == "T1")
+                         {
+                             textoARch += "CMP AX, " + triplo.DatoFuente + Environment.NewLine + "\n JLE <InstruccionMenorOIgual>" + Environment.NewLine;
+                         }
+                         else
+                         {
+                             textoARch += "CMP " + triplo.DatoObjeto + ",AX" + Environment.NewLine + "\n JLE <InstruccionMenorOIgual>" + Environment.NewLine;
+                         }
+                         break;*/
+                    default:
+                        break;
+                }
+            }
+            textoARch += "\r\nMOV AH, 4CH\r\nINT 21H \r\nend";
+            rch.Text = textoARch;
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sapF = new SaveFileDialog();
+            sapF.Filter = "Assembler source|*.asm";
+            if (sapF.ShowDialog() == DialogResult.OK)
+            {
+
+                //INVOCA AL MET
+                crear(sapF.FileName);
+            }
+        }
+
         private bool VerificarAsignacion(string linea)
         {
-            string patronOperacion1 = @"CE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11"; //modificaciones para corchetes opraciones
+            string patronOperacion1 = @"^IDE[12N]\sCE06\sENTE\s(?:OPA[1-5])\sENTE"; //ya
             bool matchOperacion1 = Regex.IsMatch(linea, patronOperacion1, RegexOptions.IgnoreCase);
             string patronOperacion2 = @"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11\s\[\d+\]\s\[\d+\]$";//@"CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11\s\[\d+\]\s\[\d+\]$";//CE10\sENTE\s(?:OPR[1-5])\sCE10\sENTE\sOPA2\sENTE\sCE11\sCE11";                                                                                                             // string patronOperacion2 = @"CE10\s(?:ENTE|ES02|ES03)$\s(?:OPR[1-5])\sCE10\sENTE\s(?:OPA[1-5])\sENTE\sCE11\sCE11";
             bool matchOperacion2 = Regex.IsMatch(linea, patronOperacion2, RegexOptions.IgnoreCase);
@@ -564,15 +745,23 @@ namespace ANALIZA_LEX
             string patronEstructura12 = @"^IDE[12N]\sPR18\sCE06\sES07$";
             string patronEstructura13 = @"^IDE[12N]\sPR18\sCE06\s(?:PR06|PR19)$";
             // Expresión regular para la estructura 2
-            string patronEstructura2 = @"^PR14$|^CE05\sIDE[12N]\sOPR[1-5]\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]\sCE06\sIDE[12N]\sOPA[1-5]\sENTE$|^PR07$";// @"^PR14$|^CE05\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]\sCE06\sIDE[12N]\s(?:OPA[1-5])\sENTE$|^PR07$";
+            // string patronEstructura2 = @"^PR14$|^CE05\sIDE[12N]\sOPR[1-5]\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]\sCE06\sIDE[12N]\sOPA[1-5]\sENTE$|^PR07$";// @"^PR14$|^CE05\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]\sCE06\sIDE[12N]\s(?:OPA[1-5])\sENTE$|^PR07$";
+            string patronEstructura2 = @"^PR14$|^CE05\sIDE[12N]\sOPR[1-5]\sENTE\sCE03$|^PR11$|^PR10\sIDE[12N]$|^IDE[0-9]+\sCE06\sIDE[0-9]+\sOPA[1-5]\sENTE$|^PR07$";//ya
             //Expresion regular para la estrucrura 3
             // string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|IDE)$|^PR07$|^CE05\sIDE\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sENTE\s(?:(?:OPR[1-5])|(?:OPL[1-3]))\sIDE\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sENTE\sCE03$";
-            string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|sIDE[12N])$|^PR07$|^CE05\sIDE[12N]\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\s(?:(?:OPR[1-5])|(?:OPL[1-3]))\sIDE[12N]\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\sCE03$|^PR19$|^PR17$|^PR06$";
+               // string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|IDE[12N])$|^PR07$|^CE05\sENTE\s(?:OPR[1-5])\sENTE\sCE03$|^PR19$|^PR17$|^PR06$";
+                //string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|IDE[12N])$|^PR07$|^CE05\sENTE\s(?:OPR[1-5])\sENTE\sCE03$|^PR19$|^PR17$|^PR06$";
+                string patronEstructura3 = @"^PR16\sCE05\sENTE\sOPR3\sENTE\sCE03$|^PR11$|^PR19$|^PR10\sES07$|^PR17$|^PR06$|^PR10\sES07$|^PR07$";
+
+            //string patronEstructura3 = @"^PR16$|^PR11$|^PR10\s(?:ES07|sIDE[12N])$|^PR07$|^CE05\sIDE[12N]\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\s(?:(?:OPR[1-5])|(?:OPL[1-3]))\sIDE[12N]\s(?:(?:OPA[1-5])|(?:OPR[1-5]))\sFLOT\sCE03$|^PR19$|^PR17$|^PR06$";
             //Expresion regular para la estrucrura 4
-            string patronEstructura4 = @"^PR15$|^CE05\sIDE[12N]\sPR05\sCE06\sENTE\sCE02\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE02\sIDE[12]\sCE06\sIDE[12N]\sOPA1\sENTE\sCE03$|^PR11$|^PR10\s(?:ES07|sIDE[12N])$|^PR07$";
+            // string patronEstructura4 = @"^PR15$|^CE05\sIDE[12N]\sPR05\sCE06\sENTE\sCE02\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE02\sIDE[12]\sCE06\sIDE[12N]\sOPA1\sENTE\sCE03$|^PR11$|^PR10\s(?:ES07|sIDE[12N])$|^PR07$";
+            string patronEstructura4 = @"^PR15$|^CE05\sIDE1\sPR05\sCE06\sENTE\sCE02\sIDE2\sOPR2\sENTE\sCE02\sIDE3\sCE06\sIDE4\sOPA1\sENTE\sCE03$|^PR11$|^PR10\sIDE5$|^PR07$";
+
             //Expresion regular para la estrucrura 5
-            string patronEstructura5 = @"^PR09$|^PR11$|^IDE[12N]\sCE06\sIDE[12N]\sOPA1\sENTE$|^PR10\sES07$|^PR14$|^CE05\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE03$|^PR07$";
-            // string patronEstructura4 = @"^PR15$|^CE05\sIDE\sPR05\sCE06\sENTE\sCE02\sIDE\sOPR2\sENTE\sCE02\sIDE\sCE06\sIDE\sOPA1\sENTE\sCE03$|^PR11$|^PR10\sIDE$|^PR07$";
+            string patronEstructura5 = @"^IDE[0-9]+\sPR05\sCE06\sENTE$|^PR09$|^PR11$|^IDE[0-9]+\sCE06\sIDE[0-9]+\sOPA1\sENTE$|^PR10\sES07$|^PR14$|^CE05\sIDE[0-9]+\sOPR3\sENTE\sCE03$|^PR07$";//ya
+                                                                                                                                                                                              // string patronEstructura5 = @"^PR09$|^PR11$|^IDE[12N]\sCE06\sIDE[12N]\sOPA1\sENTE$|^PR10\sES07$|^PR14$|^CE05\sIDE[12N]\s(?:OPR[1-5])\sENTE\sCE03$|^PR07$";
+                                                                                                                                                                                              // string patronEstructura4 = @"^PR15$|^CE05\sIDE\sPR05\sCE06\sENTE\sCE02\sIDE\sOPR2\sENTE\sCE02\sIDE\sCE06\sIDE\sOPA1\sENTE\sCE03$|^PR11$|^PR10\sIDE$|^PR07$";
             bool matchEstructura1 = Regex.IsMatch(linea, patronEstructura1, RegexOptions.IgnoreCase);
             bool matchEstructura11 = Regex.IsMatch(linea, patronEstructura11, RegexOptions.IgnoreCase);
             bool matchEstructura12 = Regex.IsMatch(linea, patronEstructura12, RegexOptions.IgnoreCase);
