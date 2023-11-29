@@ -67,6 +67,8 @@ namespace ANALIZA_LEX
         Identificador unIdentificador;
         Triplo triplo;
         Error unError;
+        List<TriploVerdadero> listaTriploVerdadero = new List<TriploVerdadero>();
+        List<TriploFalso> listaTriploFalso = new List<TriploFalso>();
         public void MostrarMatriz()
         {
             conexion.abrir();
@@ -612,6 +614,7 @@ namespace ANALIZA_LEX
             txtLineasLexico.Text = "";
             listaTriplo.Clear();
             dgvTriplos.Rows.Clear();
+           
             contador = 0;
             try
             {
@@ -643,6 +646,7 @@ namespace ANALIZA_LEX
                 ErroresSemanticos();
             }
             catch (Exception) { MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            InstruccionesSeleccion();
 
         }
         private void btnValidarSint_Click_1(object sender, EventArgs e)
@@ -1109,6 +1113,191 @@ namespace ANALIZA_LEX
 
 
                         break;
+                }
+            }
+        }
+        //MÉTODO PARA CUANDO ES UNA INSTRUCCION DE SELECCION 
+        public void InstruccionesSeleccion()
+        {
+            bool inicioCondicion = false;
+            bool finCondicion = false;
+            int contadorTemporales = 1;
+            string operador = "";
+            bool secuenciaVerdadera = false;
+            bool secuenciaFalsa = false;
+            bool esSeleccion = false;
+            bool cadena = false;
+            bool comparacion = false;
+
+            int numeroDeLineas = txtTokens.Lines.Length - 1; //Se obtiene el texto y se define el tamano 
+            int numeroDeLineasLenguaje = txtLenguaje.Lines.Length;
+            int indexToken = 0;
+            for (int miPosicionLinea = 0; miPosicionLinea < numeroDeLineas; miPosicionLinea++)
+            {
+                primerLinea = txtTokens.Lines.Length > 0 ? txtTokens.Lines[miPosicionLinea] : string.Empty; //Se fragmenta en lineas del texto completo
+                string[] tokens = primerLinea.Split(' '); //Dividimos la expresión en tokens por espacios en blanco
+                string lineasLenguaje = txtLenguaje.Lines.Length > 0 ? txtLenguaje.Lines[miPosicionLinea] : string.Empty;
+                string[] lenguaje = lineasLenguaje.Split(' ');
+
+                if (tokens[0] == "PR16")
+                {
+                    esSeleccion = true;
+                }
+
+
+
+                if (esSeleccion == true)
+                {
+                    foreach (var token in tokens)
+                    {
+                        if (token == "CE05")
+                        {
+                            inicioCondicion = true;
+                        }
+                        if (inicioCondicion == true)
+                        {
+                            if (token.StartsWith("ENTE") || token.StartsWith("IDE"))
+                            {
+                                Triplo miObjetoTriplo = new Triplo();
+                                miObjetoTriplo.DatoObjeto = "T" + contadorTemporales;
+                                miObjetoTriplo.DatoFuente = lenguaje[indexToken];
+                                miObjetoTriplo.Operador = "=";
+                                listaTriplo.Add(miObjetoTriplo);
+                                contadorTemporales++;
+                            }
+                        }
+                        if (token == "CE03")
+                        {
+                            inicioCondicion = false;
+                        }
+
+                        if (token.StartsWith("OP"))
+                        {
+                            operador = token;
+                        }
+                        if (comparacion == true)
+                        {
+                            Triplo miObjetoTriplo = new Triplo();
+                            miObjetoTriplo.DatoObjeto = "T1";
+                            miObjetoTriplo.DatoFuente = "T2";
+                            miObjetoTriplo.Operador = operador;
+                            listaTriplo.Add(miObjetoTriplo);
+                            comparacion = false;
+                        }
+                        if (inicioCondicion == false && listaTriplo.Count == 2)
+                        {
+
+                            comparacion = true;
+
+
+                        }
+
+
+                        if (token == "PR11")
+                        {
+                            secuenciaVerdadera = true;
+
+                        }
+                        if (secuenciaVerdadera == true)
+                        {
+                            if (secuenciaVerdadera == true && token != "PR19")
+                            {
+                                if (token.StartsWith("IDE"))
+                                {
+                                    Ejecucion();
+                                }
+                                else if (cadena == true)
+                                {
+                                    TriploVerdadero miObjetoTriplo = new TriploVerdadero();
+                                    miObjetoTriplo.DatoObjeto = lenguaje[1];
+                                    miObjetoTriplo.Operador = "PR10";
+                                    listaTriploVerdadero.Add(miObjetoTriplo);
+                                    cadena = false;
+                                }
+                                else if (token == "PR10")
+                                {
+                                    cadena = true;
+                                }
+
+
+                            }
+                        }
+
+                        if (token == "PR17")
+                        {
+                            secuenciaVerdadera = false;
+                            secuenciaFalsa = true;
+
+                        }
+                        if (secuenciaFalsa)
+                        {
+                            if (secuenciaFalsa == true && token != "PR06")
+                            {
+                                if (token.StartsWith("IDE"))
+                                {
+                                    Ejecucion();
+                                }
+                                else if (cadena == true)
+                                {
+                                    TriploFalso miObjetoTriplo = new TriploFalso();
+                                    miObjetoTriplo.DatoObjeto = lenguaje[1];
+                                    miObjetoTriplo.Operador = "PR10";
+                                    listaTriploFalso.Add(miObjetoTriplo);
+                                    cadena = false;
+                                }
+                                else if (token == "PR10")
+                                {
+                                    cadena = true;
+                                }
+
+                            }
+                        }
+
+                        if (token == "PR07")
+                        {
+                            Triplo miObjetoTriplo = new Triplo();
+                            miObjetoTriplo.DatoObjeto = "ET";
+                            miObjetoTriplo.DatoFuente = "TRTRUE";
+
+                            listaTriplo.Add(miObjetoTriplo);
+
+                            if (secuenciaFalsa == true)
+                            {
+                                Triplo tr = new Triplo();
+                                tr.DatoObjeto = "ET";
+                                tr.DatoFuente = "TRFALSE";
+
+                                listaTriplo.Add(tr);
+                            }
+                        }
+
+                        indexToken++;
+                    }
+
+
+
+                }
+            }
+
+            foreach (var triplo in listaTriplo)
+            {
+
+                dgvTriplos.Rows.Add(triplo.DatoObjeto, triplo.DatoFuente, triplo.Operador, "des");
+                if (triplo.DatoFuente == "TRTRUE")
+                {
+                    foreach (var triploVerdadero in listaTriploVerdadero)
+                    {
+                        dgvTriploVerdadero.Visible = true;
+                        dgvTriploVerdadero.Rows.Add(triploVerdadero.DatoObjeto, triploVerdadero.DatoFuente, triploVerdadero.Operador);
+                    }
+                }
+                if (triplo.DatoFuente == "TRFALSE")
+                {
+                    foreach (var triploFalso in listaTriploFalso)
+                    {
+                        dgvTriploFalso.Visible = true;
+                        dgvTriploFalso.Rows.Add(triploFalso.DatoObjeto, triploFalso.DatoFuente, triploFalso.Operador);
+                    }
                 }
             }
         }
