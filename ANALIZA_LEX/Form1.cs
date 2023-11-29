@@ -918,7 +918,7 @@ namespace ANALIZA_LEX
         static bool EsDeclaracionVariable(string entrada)
         {
             //Utiliza una expresión regular para verificar si la entrada coincide con un patrón de declaración de variable.
-          //  string patron = @"^\s*(\w+)\s+(\w+)\s*=\s*(\d+)\s*$";
+           //  string patron = @"^\s*(\w+)\s+(\w+)\s*=\s*(\d+)\s*$"; //por si falla el patron de una variable xd
             string patron = @"^\s*(_?\w+)\s+(\w+)\s*=\s*(\w+)\s*$";
 
             return Regex.IsMatch(entrada, patron);
