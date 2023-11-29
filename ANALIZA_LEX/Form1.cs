@@ -662,13 +662,15 @@ namespace ANALIZA_LEX
                 }                
             }
             catch (Exception) { MessageBox.Show("Por favor ingresa una cadena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-            Ejecucion();
+           
         }
         private void btnValidarSint_Click_1(object sender, EventArgs e) {
             try{
                 string texto = txtTokens.Text;
-                EnviarLineasHastaDelimitador(texto);          
-            }catch (Exception ex) { MessageBox.Show(ex.Message); }
+                EnviarLineasHastaDelimitador(texto);
+                Ejecucion();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void picSalir_Click(object sender, EventArgs e) { Application.Exit(); }
         private string EvaluarExpresion(string expresion) { /* METODO QUE COMPRUEBA LOS signos¿? y corchetes[] */
